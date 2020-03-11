@@ -1,22 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:postgres/postgres.dart';
+import 'login_page.dart';
+import 'home_widget.dart';
+import 'dart:io';
+import 'dart:async';
+import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:async' show Future;
 
 void main() => runApp(MyApp());
+
+Future<String> loadAsset() async {
+  return await rootBundle.loadString('assets/book.csv');
+}
 
 void testing() async {
   var connection = new PostgreSQLConnection("ec2-184-72-236-3.compute-1.amazonaws.com", 5432, "d3bujikbsk6o86", username: "ajomrhjjziksqi", password: "b5ee3764068c5cbfa5a9534565e4a367d8d235ea42fdb326e67b98b8f72ca274", useSSL: true);
   print("after connect");
   await connection.open();
   print("Poop");
-  List<List<dynamic>> results = await connection.query("select * from takes");
-  print(results.toString() + "This is result");
-  for (final row in results) {
-    var a = row[0];
-    var b = row[1];
+  // List<List<dynamic>> results = await connection.query("select * from takes");
+  // print(results.toString() + "This is result");
+  // for (final row in results) {
+  //   var a = row[0];
+  //   var b = row[1];
 
-    print("This is "+a);
-    print("That was "+b);
-  }
+  //   print("This is "+a);
+  //   print("That was "+b);
+  // }
+
+
+  loadAsset();
+
+
+  final File file = new File('assets/book.csv');
+
+  Stream<List> inputStream = file.openRead();
+
+  inputStream
+      .transform(utf8.decoder)       // Decode bytes to UTF-8.
+      .transform(new LineSplitter()) // Convert stream to individual lines.
+      .listen((String line) {        // Process results.
+
+       List row = line.split(','); // split by comma
+
+        String id = row[0];
+        String symbol = row[1];
+        String open = row[2];
+        String low = row[3];
+        String high = row[4];
+        String close = row[5];
+        String volume = row[6];
+        String exchange = row[7];
+        String timestamp = row[8];
+        String date = row[9];
+        String poop = row[10];
+        String peep = row[11];
+
+        print('$id, $symbol, $open');
+
+      },
+      onDone: () { print('File is now closed.'); },
+      onError: (e) { print(e.toString()); });
+
+
 }
 
 class MyApp extends StatelessWidget {
@@ -25,7 +72,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'STDY',
+      // initialRoute: '/',
+      // routes: {
+      //   // When navigating to the "/" route, build the FirstScreen widget.
+      //   '/': (context) => LoginScreen(),
+      //   // When navigating to the "/second" route, build the SecondScreen widget.
+      //   '/second': (context) => Home(),
+      // },
       theme: ThemeData(
         // This is the theme of your application.
         //
