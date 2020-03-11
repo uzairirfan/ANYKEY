@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:postgres/postgres.dart';
-import 'login_page.dart';
-import 'home_widget.dart';
 import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
+import 'book.dart';
 
 void main() => runApp(MyApp());
 
 Future<String> loadAsset() async {
-  return await rootBundle.loadString('assets/book.csv');
+  return await rootBundle.loadString('assets/BookData.json');
 }
 
 void testing() async {
   var connection = new PostgreSQLConnection("ec2-184-72-236-3.compute-1.amazonaws.com", 5432, "d3bujikbsk6o86", username: "ajomrhjjziksqi", password: "b5ee3764068c5cbfa5a9534565e4a367d8d235ea42fdb326e67b98b8f72ca274", useSSL: true);
   print("after connect");
   await connection.open();
-  print("Poop");
+  print("Poopy");
   // List<List<dynamic>> results = await connection.query("select * from takes");
   // print(results.toString() + "This is result");
   // for (final row in results) {
@@ -30,40 +29,12 @@ void testing() async {
   // }
 
 
-  loadAsset();
-
-
-  final File file = new File('assets/book.csv');
-
-  Stream<List> inputStream = file.openRead();
-
-  inputStream
-      .transform(utf8.decoder)       // Decode bytes to UTF-8.
-      .transform(new LineSplitter()) // Convert stream to individual lines.
-      .listen((String line) {        // Process results.
-
-       List row = line.split(','); // split by comma
-
-        String id = row[0];
-        String symbol = row[1];
-        String open = row[2];
-        String low = row[3];
-        String high = row[4];
-        String close = row[5];
-        String volume = row[6];
-        String exchange = row[7];
-        String timestamp = row[8];
-        String date = row[9];
-        String poop = row[10];
-        String peep = row[11];
-
-        print('$id, $symbol, $open');
-
-      },
-      onDone: () { print('File is now closed.'); },
-      onError: (e) { print(e.toString()); });
-
-
+String jsonString = await loadAsset();
+  final jsonResponse = json.decode(jsonString);
+  BookList bookData = new BookList.fromJson(jsonResponse);
+  for(int i = 0;i<20;i++){
+  print("books " + bookData.books[i].title);
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -126,7 +97,9 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+      print("poop");
       testing();
+      print("pee");
     });
   }
 
