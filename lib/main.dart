@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:postgres/postgres.dart';
-import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
@@ -13,27 +12,38 @@ Future<String> loadAsset() async {
   return await rootBundle.loadString('assets/BookData.json');
 }
 
-void testing() async {
+Future<BookList> printBook() async{
+  String jsonString = await loadAsset();
+  final jsonResponse = json.decode(jsonString);
+  BookList bookData = new BookList.fromJson(jsonResponse);
+  return bookData;
+}
+
+ testing() async {
   var connection = new PostgreSQLConnection("ec2-184-72-236-3.compute-1.amazonaws.com", 5432, "d3bujikbsk6o86", username: "ajomrhjjziksqi", password: "b5ee3764068c5cbfa5a9534565e4a367d8d235ea42fdb326e67b98b8f72ca274", useSSL: true);
   print("after connect");
   await connection.open();
-  print("Poopy");
-  // List<List<dynamic>> results = await connection.query("select * from takes");
-  // print(results.toString() + "This is result");
-  // for (final row in results) {
-  //   var a = row[0];
-  //   var b = row[1];
+  // print("Poopy");
+  connection.query("drop table bookData");
+  connection.query("create table bookData (title varchar(500), author varchar(1000), price varchar(6), isbn varchar(30), primary key (isbn))");
 
-  //   print("This is "+a);
-  //   print("That was "+b);
-  // }
+  BookList booklist = await printBook();
 
+  for(int i=0;i<booklist.books.length;i++){
+    String query = "insert into bookData values ('${booklist.books[i].title}', '${booklist.books[i].author}', '${booklist.books[i].price}', '${booklist.books[i].isbn}') on conflict do nothing";
+    print(query);
+    if (booklist.books[i].isbn.length < 30) connection.query(query);
+  }
 
-String jsonString = await loadAsset();
-  final jsonResponse = json.decode(jsonString);
-  BookList bookData = new BookList.fromJson(jsonResponse);
-  for(int i = 0;i<20;i++){
-  print("books " + bookData.books[i].title);
+  List<List<dynamic>> results = await connection.query("select * from bookData");
+
+  for (final row in results) {
+    var a = row[0];
+    var b = row[1];
+    var c = row[2];
+    var d = row[3];
+
+    print("Title: "+a+" Author: "+b+" Price: "+c+" isbn: "+d);
   }
 }
 

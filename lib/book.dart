@@ -10,7 +10,7 @@ class Book {
   String publisher;
   String pageCount;
   String generes;
-  String iSBN;
+  String isbn;
   String language;
   String publishedDate;
 
@@ -26,7 +26,7 @@ class Book {
       this.publisher,
       this.pageCount,
       this.generes,
-      this.iSBN,
+      this.isbn,
       this.language,
       this.publishedDate});
 
@@ -43,7 +43,7 @@ class Book {
     publisher: json['publisher'],
     pageCount: json['page_count'],
     generes: json['generes'],
-    iSBN: json['ISBN'],
+    isbn: json['ISBN'],
     language: json['language'],
     publishedDate: json['published_date']
       );
