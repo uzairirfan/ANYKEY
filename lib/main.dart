@@ -4,18 +4,18 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
-import 'book.dart';
+import 'game.dart';
 
 void main() => runApp(MyApp());
 
 Future<String> loadAsset() async {
-  return await rootBundle.loadString('assets/BookData.json');
+  return await rootBundle.loadString('assets/GameData.json');
 }
 
-Future<BookList> printBook() async{
+Future<GameList> printGame() async{
   String jsonString = await loadAsset();
   final jsonResponse = json.decode(jsonString);
-  BookList bookData = new BookList.fromJson(jsonResponse);
+  GameList bookData = new GameList.fromJson(jsonResponse);
   return bookData;
 }
 
@@ -24,18 +24,20 @@ Future<BookList> printBook() async{
   print("after connect");
   await connection.open();
   // print("Poopy");
-  connection.query("drop table bookData");
-  connection.query("create table bookData (title varchar(500), author varchar(1000), price varchar(6), isbn varchar(30), primary key (isbn))");
+  connection.query("drop table gamedata");
+  connection.query("create table gamedata (name varchar(500), developer varchar(1000), price numeric(4,2), appid numeric(10,0), primary key (appid))");
 
-  BookList booklist = await printBook();
+  GameList gamelist = await printGame();
 
-  for(int i=0;i<booklist.books.length;i++){
-    String query = "insert into bookData values ('${booklist.books[i].title}', '${booklist.books[i].author}', '${booklist.books[i].price}', '${booklist.books[i].isbn}') on conflict do nothing";
-    print(query);
-    if (booklist.books[i].isbn.length < 30) connection.query(query);
+  for(int i=0;i<gamelist.games.length;i++){
+    String query = "insert into gamedata values ('${gamelist.games[i].name}', '${gamelist.games[i].developer}', '${gamelist.games[i].price}', '${gamelist.games[i].appid}')";
+    // print(query);
+    await connection.query(query);
+    print("added number "+i.toString());
   }
-
-  List<List<dynamic>> results = await connection.query("select * from bookData");
+  print("Before *");
+  List<List<dynamic>> results = await connection.query("select * from gamedata");
+  print("After *");
 
   for (final row in results) {
     var a = row[0];
@@ -43,7 +45,7 @@ Future<BookList> printBook() async{
     var c = row[2];
     var d = row[3];
 
-    print("Title: "+a+" Author: "+b+" Price: "+c+" isbn: "+d);
+    print("Title: "+a+" Developer: "+b+" Price: "+c+" Appid: "+d.toString());
   }
 }
 
