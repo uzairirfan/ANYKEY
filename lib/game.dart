@@ -62,8 +62,6 @@ class Game {
   }
 }
 
-
-
 class GameList {
   final List<Game> games;
 

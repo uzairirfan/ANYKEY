@@ -27,7 +27,59 @@ testing() async {
   GameList gamelist = await printGame();
 
   for(int i=0;i<gamelist.games.length;i++){
-    String query = "insert into gamedata values ('${gamelist.games[i].name}', '${gamelist.games[i].developer}', '${gamelist.games[i].price}', '${gamelist.games[i].appid}')";
+    //insert into pub
+    List<List<dynamic>> results = await connection.query("select exists (select *"
+        " from publisher where publisher = '${gamelist.games[i].publisher})");
+
+    var exists = "false";
+    String id = (new DateTime.now().millisecondsSinceEpoch).toString();
+    id = id.substring(id.length - 10);
+    for (final row in results) {
+      exists = row[0];
+    }
+
+    if (exists == "false") {
+      String query = "insert into publisher values ('$id', '${gamelist.games[i]
+          .publisher}')";
+      await connection.query(query);
+    }
+
+    //insert into dev
+    results = await connection.query("select exists (select *"
+        " from publisher where publisher = '${gamelist.games[i].publisher})");
+    for (final row in results) {
+      exists = row[0];
+    }
+    if (exists == "false") {
+      String query = "insert into developer values ('$id', '${gamelist.games[i]
+          .developer}')";
+      await connection.query(query);
+    }
+    //insert into genre
+    results = await connection.query("select * from publisher where publisher = '${gamelist.games[i].publisher}'");
+
+    var pubid;
+
+    for (final row in results) {
+      pubid = row[0];
+    }
+    results = await connection.query("select * from developer where developer = '${gamelist.games[i].developer}'");
+
+    var devid;
+
+    for (final row in results) {
+      devid = row[0];
+    }
+    String query = "insert into genre values ('${gamelist.games[i].genres}') on conflict do nothing";
+    await connection.query(query);
+
+    query = "insert into warehouse values ('123456789', 10, '${gamelist.games[i].appid}') on conflict do nothing";
+    await connection.query(query);
+
+    //insert into game
+    query = "insert into game values ('${gamelist.games[i].appid}', '${devid}', '${pubid}', "
+        "'123456789','${gamelist.games[i].genres}','${gamelist.games[i].name}',${gamelist.games[i].averagePlaytime}"
+        ",${gamelist.games[i].positiveRatings},${gamelist.games[i].price}, 4)";
     // print(query);
     await connection.query(query);
     print("added number "+i.toString());
