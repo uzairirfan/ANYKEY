@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'main.dart';
-import 'main.dart';
-import 'main.dart';
-import 'main.dart';
+import 'package:bookeep/OwnerPage.dart';
+import 'package:bookeep/UserPage.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -13,8 +11,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   final _formKey = GlobalKey<FormState>();
-  String _password = "fdd";
-  String _email = "dfsdf";
+  String _password;
+  String _email;
   bool owner = false;
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,12 +60,12 @@ class _LoginPageState extends State<LoginPage> {
                   if (owner) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MyHomePage(title: "Owner Page",)),
+                      MaterialPageRoute(builder: (context) => MyOwnerPage(title: "Owner Page",)),
                     );
                   } else {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => MyHomePage(title: "User Page",)),
+                        MaterialPageRoute(builder: (context) => MyUserPage(title: "User Page",)),
                       );
                   }
                   //ROUTING
