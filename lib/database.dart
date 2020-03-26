@@ -6,7 +6,7 @@ import 'dart:async' show Future;
 import 'game.dart';
 
 Future<String> loadAsset() async {
-  return await rootBundle.loadString('assets/gamedata.json');
+  return await rootBundle.loadString('assets/GameData.json');
 }
 
 Future<GameList> printGame() async{
