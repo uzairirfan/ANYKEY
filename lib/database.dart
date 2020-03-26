@@ -25,21 +25,26 @@ testing() async {
 
   for(int i=823;i<gamelist.games.length;i++){
     //insert into pub
-    List<List<dynamic>> results = await connection.query("select exists (select * from publisher where publisher = '${gamelist.games[i].publisher}')");
-
+    var pubs = (gamelist.games[i].publisher.split(','));
+    List<List<dynamic>> results;
     var exists;
-    String id = (new DateTime.now().millisecondsSinceEpoch).toString();
-    id = id.substring(id.length - 10);
-    for (final row in results) {
-      exists = row[0].toString();
+    for (String p in pubs){
+      results = await connection.query("select exists (select * from publisher where publisher = '${p}')");
+      for (final row in results) {
+        exists = row[0].toString();
+      }
+      String id = (new DateTime.now().millisecondsSinceEpoch).toString();
+      id = id.substring(id.length - 10);
+      if (exists == "false") {
+        String query = "insert into publisher values ('$id', '${p}')";
+        await connection.query(query);
+      }
     }
 
-    if (exists == "false") {
-      String query = "insert into publisher values ('$id', '${gamelist.games[i].publisher}')";
-      await connection.query(query);
-    }
 
     //insert into dev
+    String id = (new DateTime.now().millisecondsSinceEpoch).toString();
+    id = id.substring(id.length - 10);
     results = await connection.query("select exists (select *"
         " from developer where name = '${gamelist.games[i].developer}')");
     for (final row in results) {
