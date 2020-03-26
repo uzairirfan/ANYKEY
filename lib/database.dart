@@ -9,11 +9,11 @@ Future<String> loadAsset() async {
   return await rootBundle.loadString('assets/gamedata.json');
 }
 
-Future<GameList> printGame() async{
+Future<GameList> getGames() async{
   String jsonString = await loadAsset();
   final jsonResponse = json.decode(jsonString);
-  GameList bookData = new GameList.fromJson(jsonResponse);
-  return bookData;
+  GameList gameData = new GameList.fromJson(jsonResponse);
+  return gameData;
 }
 
 testing() async {
@@ -24,14 +24,13 @@ testing() async {
   connection.query("drop table gamedata");
   connection.query("create table gamedata (name varchar(500), developer varchar(1000), price numeric(4,2), appid numeric(10,0), primary key (appid))");
 
-  GameList gamelist = await printGame();
+  GameList gamelist = await getGames();
 
   for(int i=0;i<gamelist.games.length;i++){
     //insert into pub
-    List<List<dynamic>> results = await connection.query("select exists (select *"
-        " from publisher where publisher = '${gamelist.games[i].publisher}')");
+    List<List<dynamic>> results = await connection.query("select exists (select * from publisher where publisher = '${gamelist.games[i].publisher}')");
 
-    var exists = "false";
+    var exists;
     String id = (new DateTime.now().millisecondsSinceEpoch).toString();
     id = id.substring(id.length - 10);
     for (final row in results) {
@@ -40,20 +39,18 @@ testing() async {
     }
 
     if (exists == "false") {
-      String query = "insert into publisher values ('$id', '${gamelist.games[i]
-          .publisher}')";
+      String query = "insert into publisher values ('$id', '${gamelist.games[i].publisher}')";
       await connection.query(query);
     }
 
     //insert into dev
     results = await connection.query("select exists (select *"
-        " from publisher where publisher = '${gamelist.games[i].publisher}')");
+        " from developer where name = '${gamelist.games[i].developer}')");
     for (final row in results) {
       exists = row[0].toString();
     }
     if (exists == "false") {
-      String query = "insert into developer values ('$id', '${gamelist.games[i]
-          .developer}')";
+      String query = "insert into developer values ('$id', '${gamelist.games[i].developer}')";
       await connection.query(query);
     }
     //insert into genre
@@ -64,7 +61,7 @@ testing() async {
     for (final row in results) {
       pubid = row[0];
     }
-    results = await connection.query("select * from developer where developer = '${gamelist.games[i].developer}'");
+    results = await connection.query("select * from developer where name = '${gamelist.games[i].developer}'");
 
     var devid;
 
@@ -74,11 +71,12 @@ testing() async {
     String query = "insert into genre values ('${gamelist.games[i].genres}') on conflict do nothing";
     await connection.query(query);
 
+    
     query = "insert into warehouse values ('123456789', 10, '${gamelist.games[i].appid}') on conflict do nothing";
     await connection.query(query);
 
     //insert into game
-    query = "insert into game values ('${gamelist.games[i].appid}', '${devid}', '${pubid}', "
+    query = "insert into game values ('${gamelist.games[i].appid}', '$devid', '$pubid', "
         "'123456789','${gamelist.games[i].genres}','${gamelist.games[i].name}',${gamelist.games[i].averagePlaytime}"
         ",${gamelist.games[i].positiveRatings},${gamelist.games[i].price}, 4)";
     // print(query);
