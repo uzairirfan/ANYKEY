@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:bookeep/OwnerPage.dart';
-import 'package:bookeep/UserPage.dart';
+import 'package:bookeep/Owner/OwnerPage.dart';
+import 'package:bookeep/User/UserPage.dart';
 
 class LoginPage extends StatefulWidget {
   @override

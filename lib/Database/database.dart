@@ -3,7 +3,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
-import 'game.dart';
+import '../Helper/game.dart';
+
 
 Future<String> loadAsset() async {
   return await rootBundle.loadString('assets/GameData.json');

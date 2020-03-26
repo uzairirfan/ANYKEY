@@ -1,6 +1,6 @@
-import 'package:bookeep/LoginPage.dart';
+import 'package:bookeep/Main/LoginPage.dart';
 import 'package:flutter/material.dart';
-import 'database.dart';
+import '../Database/database.dart';
 
 void main() => runApp(MyApp());
 
