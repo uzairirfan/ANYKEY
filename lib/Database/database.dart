@@ -3,8 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
-import 'game.dart';
-import 'Dart:io';
+import '../Helper/game.dart';
 
 Future<String> loadAsset() async {
   return await rootBundle.loadString('assets/GameData.json');
@@ -42,7 +41,6 @@ testing() async {
       for (final row in results) {
         exists = row[0].toString();
       }
-      sleep(Duration(seconds: 1));
       String id = (new DateTime.now().millisecondsSinceEpoch).toString();
       id = id.substring(id.length - 10);
       if (exists == "false") {
