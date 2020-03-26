@@ -29,13 +29,14 @@ testing() async {
   for(int i=0;i<gamelist.games.length;i++){
     //insert into pub
     List<List<dynamic>> results = await connection.query("select exists (select *"
-        " from publisher where publisher = '${gamelist.games[i].publisher})");
+        " from publisher where publisher = '${gamelist.games[i].publisher}')");
 
     var exists = "false";
     String id = (new DateTime.now().millisecondsSinceEpoch).toString();
     id = id.substring(id.length - 10);
     for (final row in results) {
-      exists = row[0];
+      print(row[0]);
+      exists = row[0].toString();
     }
 
     if (exists == "false") {
@@ -46,9 +47,9 @@ testing() async {
 
     //insert into dev
     results = await connection.query("select exists (select *"
-        " from publisher where publisher = '${gamelist.games[i].publisher})");
+        " from publisher where publisher = '${gamelist.games[i].publisher}')");
     for (final row in results) {
-      exists = row[0];
+      exists = row[0].toString();
     }
     if (exists == "false") {
       String query = "insert into developer values ('$id', '${gamelist.games[i]
