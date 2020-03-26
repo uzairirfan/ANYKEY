@@ -21,24 +21,20 @@ Future<GameList> getGames() async{
 Future<List> searchGames(String s) async{
   var connection = new PostgreSQLConnection("ec2-184-72-236-3.compute-1.amazonaws.com", 5432, "d3bujikbsk6o86", username: "ajomrhjjziksqi", password: "b5ee3764068c5cbfa5a9534565e4a367d8d235ea42fdb326e67b98b8f72ca274", useSSL: true);
   await connection.open();
-  List<Game> games;
+  List<Game> games = new List<Game>();
   String query = "SELECT  * FROM  game WHERE LOWER(title) LIKE  ANY(SELECT '%' || '${s}'|| '%' FROM game WHERE title IS NOT NULL)";
   var results = await connection.query(query);
   for (final row in results) {
-    print(row[0]);
-    print(row[1]);
-    print(row[2]);
+    print(row.toString());
+    print(row.columnDescriptions);
+    print(row.toTableColumnMap());
     print(row[3]);
-    print(row[4]);
-    print(row[5]);
+    print(row.getRange(0, 5));
+    print(row[5].toString());
 
     Game g = new Game.short(
         appid: int.parse(row[0]),
-        name: row[1].toString(),
-        positiveRatings: int.parse(row[3]),
-        averagePlaytime:  int.parse(row[2]),
-        sellprice: row[4].toDouble(),
-        price: row[5].toDouble());
+        name: row[1].toString(),);
     print(g.toString());
     games.add(g);
         }

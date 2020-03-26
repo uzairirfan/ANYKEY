@@ -22,14 +22,14 @@ class UserSearchPage extends StatefulWidget {
 class _UserSearchPageState extends State<UserSearchPage> {
    bool isReplay = false;
 
-   List<Game> games;
+   List<Game> games = new List<Game>();
 
    Future<List<Post>> search(String search) async {
      games = await searchGames(search);
      if (games.length == 0) return [];
      return List.generate(games.length, (int index) {
        return Post(
-         "Title : ${games[index].name} $index",
+         "Title : ${games[index].name}",
          "Description :$search $index",
        );
      });
