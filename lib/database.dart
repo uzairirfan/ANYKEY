@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
 import 'game.dart';
-import 'Dart:io';
 
 Future<String> loadAsset() async {
   return await rootBundle.loadString('assets/GameData.json');
@@ -34,7 +33,7 @@ testing() async {
 
 
     //insert into pub
-    var pubs = (gamelist.games[i].publisher.split(','));
+    var pubs = (gamelist.games[i].publisher.split(';'));
     List<List<dynamic>> results;
     var exists;
     for (String p in pubs){
@@ -42,19 +41,21 @@ testing() async {
       for (final row in results) {
         exists = row[0].toString();
       }
-      sleep(Duration(seconds: 1));
+
       String id = (new DateTime.now().millisecondsSinceEpoch).toString();
       id = id.substring(id.length - 10);
       if (exists == "false") {
         String email = "$p" + "@email.com";
-        email = email.replaceAll(" ", "").replaceAll("'", "").replaceAll(":", "");
-        String query = "insert into publisher values ('$id', '${p}', '$email', '${gamelist.games[i].appid}')";
+        email = email.replaceAll(" ", "").replaceAll("'", "").replaceAll(":", "").replaceAll("-", "").replaceAll(",", "").replaceAll(".", "").replaceAll("(", "").replaceAll(")", "").replaceAll("/", "");
+        String query = "insert into publisher values ('$id', '$p', '$email', '${gamelist.games[i].appid}')";
         await connection.query(query);
       }
     }
 
 
     //insert into dev
+    var devs = (gamelist.games[i].developer.split(';'));
+      for(String d in devs){
     String id = (new DateTime.now().millisecondsSinceEpoch).toString();
     id = id.substring(id.length - 10);
     results = await connection.query("select exists (select *"
@@ -63,8 +64,6 @@ testing() async {
       exists = row[0].toString();
     }
     if (exists == "false") {
-      var devs = (gamelist.games[i].developer.split(','));
-      for(String d in devs){
         String query = "insert into developer values ('$id', '$d', '${gamelist.games[i].appid}')";
         await connection.query(query);
       }
@@ -86,7 +85,7 @@ testing() async {
     // for (final row in results) {
     //   devid = row[0];
     // }
-    var genres = (gamelist.games[i].genres.split(','));
+    var genres = (gamelist.games[i].genres.split(';'));
     for(String g in genres){
     String query = "insert into genre values ('$g', '${gamelist.games[i].appid}') on conflict do nothing";
     await connection.query(query);
