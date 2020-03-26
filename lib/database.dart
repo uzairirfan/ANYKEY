@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
 import 'game.dart';
+import 'Dart:io';
 
 Future<String> loadAsset() async {
   return await rootBundle.loadString('assets/GameData.json');
@@ -23,7 +24,15 @@ testing() async {
 
   GameList gamelist = await getGames();
 
-  for(int i=823;i<gamelist.games.length;i++){
+  for(int i=0;i<gamelist.games.length;i++){
+
+    //insert into game
+    String query = "insert into game values ('${gamelist.games[i].appid}','${gamelist.games[i].name}',${gamelist.games[i].averagePlaytime}"
+        ",${gamelist.games[i].positiveRatings},${gamelist.games[i].price}, 4) on conflict do nothing";
+    // print(query);
+    await connection.query(query);
+
+
     //insert into pub
     var pubs = (gamelist.games[i].publisher.split(','));
     List<List<dynamic>> results;
@@ -33,10 +42,13 @@ testing() async {
       for (final row in results) {
         exists = row[0].toString();
       }
+      sleep(Duration(seconds: 1));
       String id = (new DateTime.now().millisecondsSinceEpoch).toString();
       id = id.substring(id.length - 10);
       if (exists == "false") {
-        String query = "insert into publisher values ('$id', '${p}')";
+        String email = "$p" + "@email.com";
+        email = email.replaceAll(" ", "").replaceAll("'", "").replaceAll(":", "");
+        String query = "insert into publisher values ('$id', '${p}', '$email', '${gamelist.games[i].appid}')";
         await connection.query(query);
       }
     }
@@ -51,33 +63,34 @@ testing() async {
       exists = row[0].toString();
     }
     if (exists == "false") {
-      String query = "insert into developer values ('$id', '${gamelist.games[i].developer}')";
-      await connection.query(query);
+      var devs = (gamelist.games[i].developer.split(','));
+      for(String d in devs){
+        String query = "insert into developer values ('$id', '$d', '${gamelist.games[i].appid}')";
+        await connection.query(query);
+      }
     }
     //insert into genre
-    results = await connection.query("select * from publisher where publisher = '${gamelist.games[i].publisher}'");
+    // results = await connection.query("select * from publisher where publisher = '${gamelist.games[i].publisher}'");
 
-    var pubid;
+    // var pubid;
 
-    for (final row in results) {
-      pubid = row[0];
-    }
-    results = await connection.query("select * from developer where name = '${gamelist.games[i].developer}'");
+    // for (final row in results) {
+    //   pubid = row[0];
+    // }
+    // var devs = (gamelist.games[i].developer.split(','));
+    // for(String d in devs){
+    // results = await connection.query("select * from developer where name = '${gamelist.games[i].developer}'");
+    // }
+    // var devid;
 
-    var devid;
-
-    for (final row in results) {
-      devid = row[0];
-    }
-    String query = "insert into genre values ('${gamelist.games[i].genres}') on conflict do nothing";
+    // for (final row in results) {
+    //   devid = row[0];
+    // }
+    var genres = (gamelist.games[i].genres.split(','));
+    for(String g in genres){
+    String query = "insert into genre values ('$g', '${gamelist.games[i].appid}') on conflict do nothing";
     await connection.query(query);
-
-    //insert into game
-    query = "insert into game values ('${gamelist.games[i].appid}', '$devid', '$pubid',"
-    "'${gamelist.games[i].genres}','${gamelist.games[i].name}',${gamelist.games[i].averagePlaytime}"
-        ",${gamelist.games[i].positiveRatings},${gamelist.games[i].price}, 4) on conflict do nothing";
-    // print(query);
-    await connection.query(query);
+    }
 
     
     query = "insert into warehouse values ('123456789', 10, '${gamelist.games[i].appid}') on conflict do nothing";
