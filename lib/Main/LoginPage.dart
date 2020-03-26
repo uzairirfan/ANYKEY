@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'signupPage.dart';
 import 'package:bookeep/Owner/OwnerPage.dart';
 import 'package:bookeep/User/UserPage.dart';
 
@@ -74,6 +74,15 @@ class _LoginPageState extends State<LoginPage> {
 //                    print("$_email $_password");
 //                  }
                 }),
+                RaisedButton(
+                  child: Text("SIGN UP"),
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RegisterPage(title: "Sign Up",)),
+                      );
+                  }
+                )
           ],
         )),
       ),
