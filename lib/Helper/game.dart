@@ -17,6 +17,17 @@ class Game {
   int medianPlaytime;
   String owners;
   double price;
+  double sellprice;
+  Game.short(
+      {this.appid,
+        this.name,
+        this.developer,
+        this.publisher,
+        this.genres,
+        this.positiveRatings,
+        this.averagePlaytime,
+        this.owners,
+        this.price, this.sellprice});
 
   Game(
       {this.appid,
