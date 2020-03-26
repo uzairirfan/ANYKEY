@@ -58,12 +58,12 @@ class _LoginPageState extends State<LoginPage> {
                  // form.save();
                   print (owner);
                   if (owner) {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => MyOwnerPage(title: "Owner Page",)),
                     );
                   } else {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => MyUserPage(title: "User Page",)),
                       );
