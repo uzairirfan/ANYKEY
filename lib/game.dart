@@ -57,12 +57,10 @@ class Game {
     averagePlaytime: json['average_playtime'],
     medianPlaytime: json['median_playtime'],
     owners: json['owners'],
-    price: json['price'],
+    price: json['price'].toDouble(),
     );
   }
 }
-
-
 
 class GameList {
   final List<Game> games;

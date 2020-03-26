@@ -741,7 +741,7 @@
   },
   {
     "appid": 1640,
-    "name": "Disciples II: Gallean's Return",
+    "name": "Disciples II: Gallean''s Return",
     "release_date": "2006-07-06",
     "english": 1,
     "developer": "Strategy First",
@@ -1721,7 +1721,7 @@
   },
   {
     "appid": 3170,
-    "name": "King's Bounty: Armored Princess",
+    "name": "King''s Bounty: Armored Princess",
     "release_date": "2009-11-19",
     "english": 1,
     "developer": "Katauri Interactive",
@@ -2041,7 +2041,7 @@
   },
   {
     "appid": 3580,
-    "name": "The Wizard's Pen™",
+    "name": "The Wizard''s Pen™",
     "release_date": "2009-02-18",
     "english": 1,
     "developer": "PopCap Games, Inc.",
@@ -2121,7 +2121,7 @@
   },
   {
     "appid": 3620,
-    "name": "Zuma's Revenge!",
+    "name": "Zuma''s Revenge!",
     "release_date": "2009-09-15",
     "english": 1,
     "developer": "PopCap Games, Inc.",
@@ -2301,7 +2301,7 @@
   },
   {
     "appid": 3900,
-    "name": "Sid Meier's Civilization® IV",
+    "name": "Sid Meier''s Civilization® IV",
     "release_date": "2006-10-25",
     "english": 1,
     "developer": "Firaxis Games",
@@ -2321,7 +2321,7 @@
   },
   {
     "appid": 3910,
-    "name": "Sid Meier's Civilization® III Complete",
+    "name": "Sid Meier''s Civilization® III Complete",
     "release_date": "2006-10-25",
     "english": 1,
     "developer": "Firaxis Games",
@@ -2341,7 +2341,7 @@
   },
   {
     "appid": 3920,
-    "name": "Sid Meier's Pirates!",
+    "name": "Sid Meier''s Pirates!",
     "release_date": "2005-07-11",
     "english": 1,
     "developer": "Firaxis Games",
@@ -2421,7 +2421,7 @@
   },
   {
     "appid": 4000,
-    "name": "Garry's Mod",
+    "name": "Garry''s Mod",
     "release_date": "2006-11-29",
     "english": 1,
     "developer": "Facepunch Studios",
@@ -3110,7 +3110,7 @@
     "required_age": 0,
     "categories": "Single-player;Shared/Split Screen;Steam Achievements;Full controller support;Steam Cloud",
     "genres": "Action;Indie",
-    "steamspy_tags": "Action;Indie;Beat 'em up",
+    "steamspy_tags": "Action;Indie;Beat ''em up",
     "achievements": 12,
     "positive_ratings": 1749,
     "negative_ratings": 227,
@@ -3841,7 +3841,7 @@
   },
   {
     "appid": 7600,
-    "name": "Sid Meier's Railroads!",
+    "name": "Sid Meier''s Railroads!",
     "release_date": "2007-05-04",
     "english": 1,
     "developer": "Firaxis Games;Feral Interactive (Mac)",
@@ -4261,7 +4261,7 @@
   },
   {
     "appid": 8340,
-    "name": "Strong Bad's Cool Game for Attractive People: Season 1",
+    "name": "Strong Bad''s Cool Game for Attractive People: Season 1",
     "release_date": "2008-12-18",
     "english": 1,
     "developer": "Telltale Games",
@@ -4441,7 +4441,7 @@
   },
   {
     "appid": 8930,
-    "name": "Sid Meier's Civilization® V",
+    "name": "Sid Meier''s Civilization® V",
     "release_date": "2010-09-23",
     "english": 1,
     "developer": "Firaxis Games;Aspyr (Mac);Aspyr (Linux)",
@@ -4821,7 +4821,7 @@
   },
   {
     "appid": 9710,
-    "name": "Desperados 2: Cooper's Revenge",
+    "name": "Desperados 2: Cooper''s Revenge",
     "release_date": "2008-03-12",
     "english": 1,
     "developer": "Spellbound",
@@ -5041,7 +5041,7 @@
   },
   {
     "appid": 10100,
-    "name": "King's Quest™ Collection",
+    "name": "King''s Quest™ Collection",
     "release_date": "2009-07-23",
     "english": 1,
     "developer": "Sierra",
@@ -5201,7 +5201,7 @@
   },
   {
     "appid": 10230,
-    "name": "Dead Mountaineer's Hotel",
+    "name": "Dead Mountaineer''s Hotel",
     "release_date": "2011-10-28",
     "english": 1,
     "developer": "Electronic Paradise",
@@ -5601,7 +5601,7 @@
   },
   {
     "appid": 11280,
-    "name": "Penguins Arena: Sedna's World",
+    "name": "Penguins Arena: Sedna''s World",
     "release_date": "2008-12-18",
     "english": 1,
     "developer": "Frogames",
@@ -6561,7 +6561,7 @@
   },
   {
     "appid": 13140,
-    "name": "America's Army 3",
+    "name": "America''s Army 3",
     "release_date": "2009-06-17",
     "english": 1,
     "developer": "U.S. Army",
@@ -6621,7 +6621,7 @@
   },
   {
     "appid": 13230,
-    "name": "Unreal Tournament 2004: Editor's Choice Edition",
+    "name": "Unreal Tournament 2004: Editor''s Choice Edition",
     "release_date": "2004-03-17",
     "english": 1,
     "developer": "Epic Games, Inc.",
@@ -6741,7 +6741,7 @@
   },
   {
     "appid": 13540,
-    "name": "Tom Clancy's Rainbow Six® Vegas",
+    "name": "Tom Clancy''s Rainbow Six® Vegas",
     "release_date": "2008-04-09",
     "english": 1,
     "developer": "Ubisoft Montreal",
@@ -6761,7 +6761,7 @@
   },
   {
     "appid": 13560,
-    "name": "Tom Clancy's Splinter Cell®",
+    "name": "Tom Clancy''s Splinter Cell®",
     "release_date": "2008-04-01",
     "english": 1,
     "developer": "Ubisoft",
@@ -6781,7 +6781,7 @@
   },
   {
     "appid": 13570,
-    "name": "Tom Clancy's Splinter Cell Chaos Theory®",
+    "name": "Tom Clancy''s Splinter Cell Chaos Theory®",
     "release_date": "2009-08-27",
     "english": 1,
     "developer": "Ubisoft Montreal",
@@ -6801,7 +6801,7 @@
   },
   {
     "appid": 13580,
-    "name": "Tom Clancy's Splinter Cell Double Agent®",
+    "name": "Tom Clancy''s Splinter Cell Double Agent®",
     "release_date": "2009-02-13",
     "english": 1,
     "developer": "Ubisoft Montreal",
@@ -6841,7 +6841,7 @@
   },
   {
     "appid": 13620,
-    "name": "Tom Clancy's Ghost Recon® Desert Siege™",
+    "name": "Tom Clancy''s Ghost Recon® Desert Siege™",
     "release_date": "2008-07-15",
     "english": 1,
     "developer": "Red Storm Entertainment",
@@ -6861,7 +6861,7 @@
   },
   {
     "appid": 15000,
-    "name": "Tom Clancy's Rainbow Six Lockdown™",
+    "name": "Tom Clancy''s Rainbow Six Lockdown™",
     "release_date": "2009-08-27",
     "english": 1,
     "developer": "Red Storm Entertainment",
@@ -6901,7 +6901,7 @@
   },
   {
     "appid": 15100,
-    "name": "Assassin's Creed™: Director's Cut Edition",
+    "name": "Assassin''s Creed™: Director''s Cut Edition",
     "release_date": "2008-04-09",
     "english": 1,
     "developer": "Ubisoft Montreal",
@@ -6921,7 +6921,7 @@
   },
   {
     "appid": 15120,
-    "name": "Tom Clancy's Rainbow Six® Vegas 2",
+    "name": "Tom Clancy''s Rainbow Six® Vegas 2",
     "release_date": "2008-04-16",
     "english": 1,
     "developer": "Ubisoft Montreal",
@@ -7101,7 +7101,7 @@
   },
   {
     "appid": 15300,
-    "name": "Tom Clancy's Ghost Recon®",
+    "name": "Tom Clancy''s Ghost Recon®",
     "release_date": "2008-07-15",
     "english": 1,
     "developer": "Red Storm Entertainment",
@@ -7181,7 +7181,7 @@
   },
   {
     "appid": 15390,
-    "name": "Brothers in Arms: Hell's Highway™",
+    "name": "Brothers in Arms: Hell''s Highway™",
     "release_date": "2008-10-08",
     "english": 1,
     "developer": "Gearbox Software",
@@ -7301,7 +7301,7 @@
   },
   {
     "appid": 15700,
-    "name": "Oddworld: Abe's Oddysee®",
+    "name": "Oddworld: Abe''s Oddysee®",
     "release_date": "2008-08-28",
     "english": 1,
     "developer": "Oddworld Inhabitants",
@@ -7321,7 +7321,7 @@
   },
   {
     "appid": 15710,
-    "name": "Oddworld: Abe's Exoddus®",
+    "name": "Oddworld: Abe''s Exoddus®",
     "release_date": "2008-08-28",
     "english": 1,
     "developer": "Oddworld Inhabitants",
@@ -7341,7 +7341,7 @@
   },
   {
     "appid": 15740,
-    "name": "Oddworld: Munch's Oddysee",
+    "name": "Oddworld: Munch''s Oddysee",
     "release_date": "2010-12-20",
     "english": 1,
     "developer": "Oddworld Inhabitants",
@@ -7361,7 +7361,7 @@
   },
   {
     "appid": 15750,
-    "name": "Oddworld: Stranger's Wrath HD",
+    "name": "Oddworld: Stranger''s Wrath HD",
     "release_date": "2010-12-20",
     "english": 1,
     "developer": "Oddworld Inhabitants",
@@ -7881,7 +7881,7 @@
   },
   {
     "appid": 16810,
-    "name": "Sid Meier's Civilization IV: Colonization",
+    "name": "Sid Meier''s Civilization IV: Colonization",
     "release_date": "2008-09-23",
     "english": 1,
     "developer": "Firaxis Games",
@@ -8001,7 +8001,7 @@
   },
   {
     "appid": 17180,
-    "name": "Mosby's Confederacy",
+    "name": "Mosby''s Confederacy",
     "release_date": "2008-11-19",
     "english": 1,
     "developer": "Tilted Mill Entertainment, Inc.",
@@ -8081,7 +8081,7 @@
   },
   {
     "appid": 17410,
-    "name": "Mirror's Edge™",
+    "name": "Mirror''s Edge™",
     "release_date": "2009-01-14",
     "english": 1,
     "developer": "DICE",
@@ -8721,7 +8721,7 @@
   },
   {
     "appid": 19500,
-    "name": "Eternity's Child",
+    "name": "Eternity''s Child",
     "release_date": "2008-07-31",
     "english": 1,
     "developer": "Luc Bernard;SilverSphereStudios",
@@ -8761,7 +8761,7 @@
   },
   {
     "appid": 19830,
-    "name": "Tom Clancy's Rainbow Six® 3 Gold",
+    "name": "Tom Clancy''s Rainbow Six® 3 Gold",
     "release_date": "2008-09-25",
     "english": 1,
     "developer": "Red Storm Entertainment;Ubisoft Montreal",
@@ -8781,7 +8781,7 @@
   },
   {
     "appid": 19900,
-    "name": "Far Cry® 2: Fortune's Edition",
+    "name": "Far Cry® 2: Fortune''s Edition",
     "release_date": "2008-10-22",
     "english": 1,
     "developer": "Ubisoft Montreal",
@@ -9001,7 +9001,7 @@
   },
   {
     "appid": 20900,
-    "name": "The Witcher: Enhanced Edition Director's Cut",
+    "name": "The Witcher: Enhanced Edition Director''s Cut",
     "release_date": "2008-09-16",
     "english": 1,
     "developer": "CD PROJEKT RED",
@@ -9044,7 +9044,7 @@
     "name": "LEGO® Batman™: The Videogame",
     "release_date": "2008-09-29",
     "english": 1,
-    "developer": "Traveller's Tales",
+    "developer": "Traveller''s Tales",
     "publisher": "Warner Bros. Interactive Entertainment",
     "platforms": "windows",
     "required_age": 0,
@@ -9070,7 +9070,7 @@
     "required_age": 0,
     "categories": "Single-player;Multi-player;Shared/Split Screen",
     "genres": "Action",
-    "steamspy_tags": "Action;Superhero;Beat 'em up",
+    "steamspy_tags": "Action;Superhero;Beat ''em up",
     "achievements": 0,
     "positive_ratings": 227,
     "negative_ratings": 120,
@@ -9090,7 +9090,7 @@
     "required_age": 16,
     "categories": "Single-player;Co-op;Partial Controller Support",
     "genres": "Action",
-    "steamspy_tags": "Action;Superhero;Beat 'em up",
+    "steamspy_tags": "Action;Superhero;Beat ''em up",
     "achievements": 0,
     "positive_ratings": 97,
     "negative_ratings": 51,
@@ -9341,7 +9341,7 @@
   },
   {
     "appid": 21800,
-    "name": "Tom Clancy's EndWar™",
+    "name": "Tom Clancy''s EndWar™",
     "release_date": "2009-02-25",
     "english": 1,
     "developer": "Ubisoft  Shanghaï",
@@ -10341,7 +10341,7 @@
   },
   {
     "appid": 24810,
-    "name": "Command & Conquer 3: Kane's Wrath",
+    "name": "Command & Conquer 3: Kane''s Wrath",
     "release_date": "2009-11-13",
     "english": 1,
     "developer": "EA Los Angeles",
@@ -10641,7 +10641,7 @@
   },
   {
     "appid": 25900,
-    "name": "King's Bounty: The Legend",
+    "name": "King''s Bounty: The Legend",
     "release_date": "2009-05-01",
     "english": 1,
     "developer": "1C Entertainment",
@@ -11704,7 +11704,7 @@
     "name": "LEGO® Indiana Jones™: The Original Adventures",
     "release_date": "2009-07-08",
     "english": 1,
-    "developer": "Traveller's Tales",
+    "developer": "Traveller''s Tales",
     "publisher": "LucasArts;Lucasfilm;Disney Interactive",
     "platforms": "windows",
     "required_age": 0,
@@ -11924,7 +11924,7 @@
     "name": "LEGO® Star Wars™ - The Complete Saga",
     "release_date": "2009-11-12",
     "english": 1,
-    "developer": "Traveller's Tales;Feral Interactive (Mac)",
+    "developer": "Traveller''s Tales;Feral Interactive (Mac)",
     "publisher": "LucasArts;Lucasfilm;Disney Interactive;Feral Interactive (Mac)",
     "platforms": "windows;mac",
     "required_age": 0,
@@ -11944,7 +11944,7 @@
     "name": "LEGO® Indiana Jones™ 2: The Adventure Continues",
     "release_date": "2010-02-18",
     "english": 1,
-    "developer": "Traveller's Tales",
+    "developer": "Traveller''s Tales",
     "publisher": "LucasArts;Lucasfilm;Disney Interactive",
     "platforms": "windows",
     "required_age": 0,
@@ -12024,7 +12024,7 @@
     "name": "LEGO® Star Wars™ III - The Clone Wars™",
     "release_date": "2011-03-22",
     "english": 1,
-    "developer": "Traveller's Tales",
+    "developer": "Traveller''s Tales",
     "publisher": "LucasArts;Lucasfilm;Disney Interactive",
     "platforms": "windows",
     "required_age": 0,
@@ -12461,7 +12461,7 @@
   },
   {
     "appid": 33230,
-    "name": "Assassin's Creed 2 Deluxe Edition",
+    "name": "Assassin''s Creed 2 Deluxe Edition",
     "release_date": "2010-03-04",
     "english": 1,
     "developer": "Ubisoft Montreal",
@@ -12510,7 +12510,7 @@
     "required_age": 0,
     "categories": "Single-player;Steam Achievements;Partial Controller Support;Steam Cloud;Stats;Steam Leaderboards",
     "genres": "Action;Indie",
-    "steamspy_tags": "Action;Indie;Shoot 'Em Up",
+    "steamspy_tags": "Action;Indie;Shoot ''Em Up",
     "achievements": 70,
     "positive_ratings": 26,
     "negative_ratings": 7,
@@ -13161,7 +13161,7 @@
   },
   {
     "appid": 34900,
-    "name": "Bad Rats: the Rats' Revenge",
+    "name": "Bad Rats: the Rats'' Revenge",
     "release_date": "2009-07-20",
     "english": 1,
     "developer": "Invent4 Entertainment",
@@ -13221,7 +13221,7 @@
   },
   {
     "appid": 35070,
-    "name": "Flora's Fruit Farm",
+    "name": "Flora''s Fruit Farm",
     "release_date": "2009-10-01",
     "english": 1,
     "developer": "Honeyslug",
@@ -13981,7 +13981,7 @@
   },
   {
     "appid": 37330,
-    "name": "Nightshift Legacy: The Jaguar's Eye™",
+    "name": "Nightshift Legacy: The Jaguar''s Eye™",
     "release_date": "2010-05-06",
     "english": 1,
     "developer": "PlayFirst",
@@ -15341,7 +15341,7 @@
   },
   {
     "appid": 40380,
-    "name": "nail'd",
+    "name": "nail''d",
     "release_date": "2010-11-30",
     "english": 1,
     "developer": "Techland",
@@ -15821,7 +15821,7 @@
   },
   {
     "appid": 41900,
-    "name": "The Bard's Tale",
+    "name": "The Bard''s Tale",
     "release_date": "2009-12-11",
     "english": 1,
     "developer": "inXile Entertainment",
@@ -15881,7 +15881,7 @@
   },
   {
     "appid": 42140,
-    "name": "Hamilton's Great Adventure",
+    "name": "Hamilton''s Great Adventure",
     "release_date": "2011-05-31",
     "english": 1,
     "developer": "Fatshark",
@@ -16121,7 +16121,7 @@
   },
   {
     "appid": 42920,
-    "name": "The Kings' Crusade",
+    "name": "The Kings'' Crusade",
     "release_date": "2010-10-08",
     "english": 1,
     "developer": "NeoCoreGames",
@@ -18090,7 +18090,7 @@
     "required_age": 0,
     "categories": "Single-player;Multi-player;Co-op;Shared/Split Screen;Cross-Platform Multiplayer;Steam Achievements;Full controller support;Steam Trading Cards;Steam Cloud;Steam Leaderboards",
     "genres": "Action;Casual;Indie",
-    "steamspy_tags": "Music;Indie;Shoot 'Em Up",
+    "steamspy_tags": "Music;Indie;Shoot ''Em Up",
     "achievements": 63,
     "positive_ratings": 6296,
     "negative_ratings": 328,
@@ -18721,7 +18721,7 @@
   },
   {
     "appid": 57640,
-    "name": "Broken Sword: Director's Cut",
+    "name": "Broken Sword: Director''s Cut",
     "release_date": "2010-09-02",
     "english": 1,
     "developer": "Revolution Software Ltd",
@@ -18801,7 +18801,7 @@
   },
   {
     "appid": 57700,
-    "name": "Who's That Flying?!",
+    "name": "Who''s That Flying?!",
     "release_date": "2011-01-31",
     "english": 1,
     "developer": "Mediatonic",
@@ -18901,7 +18901,7 @@
   },
   {
     "appid": 58230,
-    "name": "MacGuffin's Curse",
+    "name": "MacGuffin''s Curse",
     "release_date": "2012-04-19",
     "english": 1,
     "developer": "Brawsome",
@@ -19201,7 +19201,7 @@
   },
   {
     "appid": 61510,
-    "name": "Age of Wonders II: The Wizard's Throne",
+    "name": "Age of Wonders II: The Wizard''s Throne",
     "release_date": "2010-10-01",
     "english": 1,
     "developer": "Triumph Studios",
@@ -19561,7 +19561,7 @@
   },
   {
     "appid": 63910,
-    "name": "King's Bounty: Crossworlds",
+    "name": "King''s Bounty: Crossworlds",
     "release_date": "2010-09-17",
     "english": 1,
     "developer": "Katauri Interactive",
@@ -19641,7 +19641,7 @@
   },
   {
     "appid": 65070,
-    "name": "Ride 'em Low",
+    "name": "Ride ''em Low",
     "release_date": "2013-11-04",
     "english": 1,
     "developer": "Red Dot Games;PLAY",
@@ -19981,7 +19981,7 @@
   },
   {
     "appid": 65980,
-    "name": "Sid Meier's Civilization®: Beyond Earth™",
+    "name": "Sid Meier''s Civilization®: Beyond Earth™",
     "release_date": "2014-10-23",
     "english": 1,
     "developer": "Firaxis Games;Aspyr (Mac);Aspyr (Linux)",
