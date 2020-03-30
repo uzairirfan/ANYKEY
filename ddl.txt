@@ -23,13 +23,13 @@ CREATE TABLE public.bank_info (
 );
 
 CREATE TABLE public.developer (
-    dev_id numeric(10,0) NOT NULL,
+    dev_id int NOT NULL,
     dev_name character varying(100) NOT NULL
 );
 
 CREATE TABLE public.game (
     appid numeric(10,0) NOT NULL,
-    dev_id numeric(10,0) NOT NULL,
+    dev_id int NOT NULL,
     pub_email character varying(60) NOT NULL,
     title character varying(100) NOT NULL,
     playtime numeric(10,2) NOT NULL,
