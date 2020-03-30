@@ -58,7 +58,7 @@ class _MyUserPageState extends State<MyUserPage> {
   }
   void onTabTapped(int index) {
     setState(() {
-    //  _incrementCounter();
+      _incrementCounter();
 
       _currentIndex = index;
     });

@@ -115,7 +115,6 @@ class Database {
       var devs = (gamelist.games[i].developer.split(';'));
       exists = await connection.query(
           "select exists (select * from developer where dev_name = '${devs[0]}')");
-      print("THIS IS EXIst " + exists.toString());
       for (var e in exists) {
         if (!e[0]) {
           String id = (new DateTime.now().millisecondsSinceEpoch).toString();
@@ -153,7 +152,7 @@ class Database {
       query =
           "insert into game values ('${gamelist.games[i].appid}', ${devid}, '${pub}','${gamelist.games[i].name}',${gamelist.games[i].averagePlaytime}"
           ",${gamelist.games[i].positiveRatings},${gamelist.games[i].price}, 4) on conflict do nothing";
-      print(query);
+//      print(query);
       await connection.query(query);
 
       var genres = (gamelist.games[i].genres.split(';'));
