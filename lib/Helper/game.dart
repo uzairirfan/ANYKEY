@@ -71,6 +71,12 @@ class Game {
     price: json['price'].toDouble(),
     );
   }
+  @override
+  String toString() {
+    // TODO: implement toString
+    return "Title: " + name + ", Developed by: " + developer + ", Published by: "
+    + publisher + " Price: " + price.toString();
+  }
 }
 
 class GameList {
