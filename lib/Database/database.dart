@@ -86,26 +86,48 @@ class Database {
 
       email = "${pubs[0]}" + "@email.com";
 
-      String query = "insert into publisher values ('$email', '${pubs[0]}') on conflict do nothing";
+      String query =
+          "insert into publisher values ('$email', '${pubs[0]}') on conflict do nothing";
       await connection.query(query);
       pub = email;
 
       //insert into dev
       var devs = (gamelist.games[i].developer.split(';'));
-      for (String d in devs) {
-        String id = (new DateTime.now().millisecondsSinceEpoch).toString();
-        id = id.substring(id.length - 10);
-        devid = int.parse(id);
-        results = await connection.query("select * from developer where dev_name = '${gamelist.games[i].developer}')");
-        for (final row in results) {
-          devid = row[0];
+      exists = await connection.query(
+          "select exists (select * from developer where dev_name = '${devs[0]}')");
+      print("THIS IS EXIst " + exists.toString());
+      for (var e in exists) {
+        if (!e[0]) {
+          String id = (new DateTime.now().millisecondsSinceEpoch).toString();
+          id = id.substring(id.length - 10);
+          devid = int.parse(id);
+          results = await connection
+              .query("insert into developer values ($devid, '${devs[0]}')");
+        } else {
+          results = await connection.query(
+              "select dev_id from developer where dev_name = '${devs[0]}'");
+              for(var id in results){
+                devid = id[0];
+              }
         }
-        if (devid == -1) {
-          String query = "insert into developer values ($devid, '$d')";
-          await connection.query(query);
-        }
-        break;
       }
+      // for (String d in devs) {
+      //   results = await connection.query("select dev_id from developer where dev_name = '${gamelist.games[i].developer}'");
+      //   print("zTHIS RESULTD"+results.toString());
+      //   for (final row in results) {
+      //     print("THIS IS ROW"+row[0].toString());
+      //     devid = int.parse(row[0]);
+      //   }
+      //   print("THIS IS DEVID "+devid.toString());
+      //   if (devid == -1) {
+      //     String id = (new DateTime.now().millisecondsSinceEpoch).toString();
+      //   id = id.substring(id.length - 10);
+      //   devid = int.parse(id);
+      //     String query = "insert into developer values ($devid, '$d')";
+      //     await connection.query(query);
+      //   }
+      //   break;
+      // }
 
       //insert into game
       query =
