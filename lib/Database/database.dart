@@ -56,6 +56,8 @@ testing() async {
     var pubs = (gamelist.games[i].publisher.split(';'));
     List<List<dynamic>> results;
     var exists;
+    String pub = "-1";
+    int devid = -1;
     for (String p in pubs){
       results = await connection.query("select exists (select * from publisher where publisher = '${p}')");
       for (final row in results) {
@@ -66,6 +68,7 @@ testing() async {
         email = email.replaceAll(" ", "").replaceAll("'", "").replaceAll(":", "").replaceAll("-", "").replaceAll(",", "").replaceAll(".", "").replaceAll("(", "").replaceAll(")", "").replaceAll("/", "");
         String query = "insert into publisher values ('$email', '$p')";
         await connection.query(query);
+        pub = email;
       }
       break;
     }
@@ -75,6 +78,7 @@ testing() async {
     for(String d in devs){
       String id = (new DateTime.now().millisecondsSinceEpoch).toString();
       id = id.substring(id.length - 10);
+      devid = int.parse(id);
       results = await connection.query("select exists (select *"
           " from developer where name = '${gamelist.games[i].developer}')");
       for (final row in results) {
@@ -88,37 +92,25 @@ testing() async {
     }
 
     //insert into game
-    String query = "insert into game values ('${gamelist.games[i].appid}','${gamelist.games[i].name}',${gamelist.games[i].averagePlaytime}"
-        ",${gamelist.games[i].positiveRatings},${gamelist.games[i].price}, 4) on conflict do nothing";
+    String query = "insert into game values ('${gamelist.games[i].appid}', ${devid}, ${pub},'${gamelist.games[i].name}',${gamelist.games[i].averagePlaytime}"
+        ",${gamelist.games[i].positiveRatings},${gamelist.games[i].price}, 4)";
     // print(query);
     await connection.query(query);
 
 
-    //insert into genre
-    // results = await connection.query("select * from publisher where publisher = '${gamelist.games[i].publisher}'");
-
-    // var pubid;
-
-    // for (final row in results) {
-    //   pubid = row[0];
-    // }
-    // var devs = (gamelist.games[i].developer.split(','));
-    // for(String d in devs){
-    // results = await connection.query("select * from developer where name = '${gamelist.games[i].developer}'");
-    // }
-    // var devid;
-
-    // for (final row in results) {
-    //   devid = row[0];
-    // }
     var genres = (gamelist.games[i].genres.split(';'));
     for(String g in genres){
-    String query = "insert into genre values ('$g', '${gamelist.games[i].appid}') on conflict do nothing";
-    await connection.query(query);
+      String query = "insert into genre values ('$g')";
+      await connection.query(query);
     }
 
-    
-    query = "insert into warehouse values ('123456789', 10, '${gamelist.games[i].appid}') on conflict do nothing";
+    genres = (gamelist.games[i].genres.split(';'));
+    for(String g in genres){
+      String query = "insert into game_gen values ('$g', '${gamelist.games[i].appid}')";
+      await connection.query(query);
+    }
+
+    query = "insert into warehouse values ('123456789', 10, '${gamelist.games[i].appid}')";
     await connection.query(query);
 
     print("added number "+i.toString());
@@ -128,7 +120,7 @@ testing() async {
 saveUser(String email, String username, String password, String type) async {
   await connection.open();
 
-  String query = "insert into $type values ('$username', '$password', '$email') on conflict do nothing";
+  String query = "insert into $type values ('$username', '$password', '$email')";
   await connection.query(query);
 }
 }
