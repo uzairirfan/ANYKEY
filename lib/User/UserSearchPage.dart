@@ -25,7 +25,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
    List<Game> games = new List<Game>();
 
    Future<List<Post>> search(String search) async {
-     games = await searchGames(search);
+     games = await Database().searchGames(search);
      if (games.length == 0) return [];
      return List.generate(games.length, (int index) {
        return Post(
