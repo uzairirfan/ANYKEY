@@ -96,12 +96,11 @@ class Database {
         String id = (new DateTime.now().millisecondsSinceEpoch).toString();
         id = id.substring(id.length - 10);
         devid = int.parse(id);
-        results = await connection.query("select exists (select *"
-            " from developer where dev_name = '${gamelist.games[i].developer}')");
+        results = await connection.query("select * from developer where dev_name = '${gamelist.games[i].developer}')");
         for (final row in results) {
-          exists = row[0].toString();
+          devid = row[0];
         }
-        if (exists == "false") {
+        if (devid == -1) {
           String query = "insert into developer values ($devid, '$d')";
           await connection.query(query);
         }
