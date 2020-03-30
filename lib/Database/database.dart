@@ -52,13 +52,6 @@ testing() async {
 
   for(int i=0;i<gamelist.games.length;i++){
 
-    //insert into game
-    String query = "insert into game values ('${gamelist.games[i].appid}','${gamelist.games[i].name}',${gamelist.games[i].averagePlaytime}"
-        ",${gamelist.games[i].positiveRatings},${gamelist.games[i].price}, 4) on conflict do nothing";
-    // print(query);
-    await connection.query(query);
-
-
     //insert into pub
     var pubs = (gamelist.games[i].publisher.split(';'));
     List<List<dynamic>> results;
@@ -68,33 +61,39 @@ testing() async {
       for (final row in results) {
         exists = row[0].toString();
       }
-
-      String id = (new DateTime.now().millisecondsSinceEpoch).toString();
-      id = id.substring(id.length - 10);
       if (exists == "false") {
         String email = "$p" + "@email.com";
         email = email.replaceAll(" ", "").replaceAll("'", "").replaceAll(":", "").replaceAll("-", "").replaceAll(",", "").replaceAll(".", "").replaceAll("(", "").replaceAll(")", "").replaceAll("/", "");
-        String query = "insert into publisher values ('$id', '$p', '$email', '${gamelist.games[i].appid}')";
+        String query = "insert into publisher values ('$email', '$p')";
         await connection.query(query);
       }
+      break;
     }
-
 
     //insert into dev
     var devs = (gamelist.games[i].developer.split(';'));
-      for(String d in devs){
-    String id = (new DateTime.now().millisecondsSinceEpoch).toString();
-    id = id.substring(id.length - 10);
-    results = await connection.query("select exists (select *"
-        " from developer where name = '${gamelist.games[i].developer}')");
-    for (final row in results) {
-      exists = row[0].toString();
-    }
-    if (exists == "false") {
-        String query = "insert into developer values ('$id', '$d', '${gamelist.games[i].appid}')";
+    for(String d in devs){
+      String id = (new DateTime.now().millisecondsSinceEpoch).toString();
+      id = id.substring(id.length - 10);
+      results = await connection.query("select exists (select *"
+          " from developer where name = '${gamelist.games[i].developer}')");
+      for (final row in results) {
+        exists = row[0].toString();
+      }
+      if (exists == "false") {
+        String query = "insert into developer values ('$id', '$d')";
         await connection.query(query);
       }
+      break;
     }
+
+    //insert into game
+    String query = "insert into game values ('${gamelist.games[i].appid}','${gamelist.games[i].name}',${gamelist.games[i].averagePlaytime}"
+        ",${gamelist.games[i].positiveRatings},${gamelist.games[i].price}, 4) on conflict do nothing";
+    // print(query);
+    await connection.query(query);
+
+
     //insert into genre
     // results = await connection.query("select * from publisher where publisher = '${gamelist.games[i].publisher}'");
 
