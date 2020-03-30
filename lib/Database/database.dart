@@ -84,7 +84,7 @@ class Database {
           .replaceAll(")", "")
           .replaceAll("/", "");
 
-      email = "${pubs[0]}" + "@email.com";
+      email = "$email" + "@email.com";
 
       String query =
           "insert into publisher values ('$email', '${pubs[0]}') on conflict do nothing";
@@ -132,7 +132,7 @@ class Database {
       //insert into game
       query =
           "insert into game values ('${gamelist.games[i].appid}', ${devid}, '${pub}','${gamelist.games[i].name}',${gamelist.games[i].averagePlaytime}"
-          ",${gamelist.games[i].positiveRatings},${gamelist.games[i].price}, 4)";
+          ",${gamelist.games[i].positiveRatings},${gamelist.games[i].price}, 4) on conflict do nothing";
       print(query);
       await connection.query(query);
 
@@ -150,7 +150,7 @@ class Database {
       }
 
       query =
-          "insert into warehouse values ('123456789', 10, '${gamelist.games[i].appid}') on conflict do nothing";
+          "insert into warehouse values ('123456789', '${gamelist.games[i].appid}', 10) on conflict do nothing";
       await connection.query(query);
 
       print("added number " + i.toString());
