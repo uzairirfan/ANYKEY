@@ -4,6 +4,9 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
 import '../Helper/game.dart';
+import 'dart:convert' show utf8;
+import 'dart:typed_data';
+
 
 class Database {
   var connection = new PostgreSQLConnection(
@@ -37,17 +40,34 @@ class Database {
         "SELECT  * FROM  game WHERE LOWER(title) LIKE  ANY(SELECT '%' || '${s}'|| '%' FROM game WHERE title IS NOT NULL)";
     var results = await connection.query(query);
     for (final row in results) {
-      print(row.toString());
-      print(row.columnDescriptions);
-      print(row.toTableColumnMap());
-      print(row[3]);
-      print(row.getRange(0, 5));
-      print(row[5].toString());
 
+      //find publisher name from email
+      query =
+          "SELECT pub_name FROM  publisher where pub_email = '${row[2]}'";
+      var found = await connection.query(query);
+      String pub = row[2];
+      for (final row in found) {
+        pub = row[0];
+      }
+
+      // find developer name from dev id
+      query =
+      "SELECT dev_name FROM  developer where dev_id = ${row[1]}";
+      found = await connection.query(query);
+      String dev = "none";
+      for (final row in found) {
+        dev = row[0];
+      }
       Game g = new Game.short(
-        appid: int.parse(row[0]),
-        name: row[1].toString(),
+        appid: row[0],
+        name: row[3],
+        developer: dev,
+        publisher: pub,
+       averagePlaytime: row[4],
+        sellprice: 4.0,
+          price: 4.0
       );
+      print ("adding");
       print(g.toString());
       games.add(g);
     }

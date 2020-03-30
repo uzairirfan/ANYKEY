@@ -29,8 +29,8 @@ class _UserSearchPageState extends State<UserSearchPage> {
      if (games.length == 0) return [];
      return List.generate(games.length, (int index) {
        return Post(
-         "Title : ${games[index].name}",
-         "Description :$search $index",
+         "${games[index].name.toString()}",
+         "${games[index].toString()}",
        );
      });
    }
