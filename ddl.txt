@@ -1,0 +1,201 @@
+
+CREATE TABLE public.address (
+    street_no numeric(3,0) NOT NULL,
+    street character varying(30) NOT NULL,
+    city character varying(30) NOT NULL,
+    province character varying(30) NOT NULL,
+    country character varying(30) NOT NULL
+);
+
+CREATE TABLE public.admin (
+    password character varying(15) NOT NULL,
+    email character varying(30) NOT NULL
+);
+
+CREATE TABLE public.bank_info (
+    card numeric(9,0) NOT NULL,
+    email character varying(15) NOT NULL,
+    street_no numeric(3,0) NOT NULL,
+    street character varying(30) NOT NULL,
+    city character varying(30) NOT NULL,
+    first_name character varying(15) NOT NULL,
+    last_name character varying(20) NOT NULL
+);
+
+CREATE TABLE public.developer (
+    dev_id numeric(10,0) NOT NULL,
+    dev_name character varying(100) NOT NULL
+);
+
+CREATE TABLE public.game (
+    appid numeric(10,0) NOT NULL,
+    dev_id numeric(10,0) NOT NULL,
+    pub_email character varying(60) NOT NULL,
+    title character varying(100) NOT NULL,
+    playtime numeric(10,2) NOT NULL,
+    ratings numeric(10,2) NOT NULL,
+    sell_price money NOT NULL,
+    buy_price numeric(3,2) NOT NULL
+);
+
+CREATE TABLE public.genre (
+    genre character varying(30) NOT NULL
+);
+
+
+CREATE TABLE public.orders (
+    order_id numeric(10,0) NOT NULL,
+    appid numeric(10,0) NOT NULL,
+    card numeric(9,0) NOT NULL,
+    email character varying(15) NOT NULL,
+    street_no numeric(3,0) NOT NULL,
+    street character varying(30) NOT NULL,
+    city character varying(30) NOT NULL,
+    orderdate timestamp without time zone NOT NULL,
+    tracking_no numeric(9,0) NOT NULL
+);
+
+CREATE TABLE public.publisher (
+    pub_email character varying(60) NOT NULL,
+    pub_name character varying(100) NOT NULL
+);
+
+CREATE TABLE public.restock_order (
+    order_id numeric(10,0)  NOT NULL,
+    pub_email character varying(10) NOT NULL,
+    ware_id numeric(10,0) NOT NULL,
+    email character varying(15) NOT NULL,
+    appid numeric(10,0) NOT NULL,
+    quantity numeric(2,0) NOT NULL,
+    orderdate timestamp without time zone NOT NULL
+);
+
+CREATE TABLE public.users (
+    email character varying(30) NOT NULL,
+    password character varying(15) NOT NULL
+);
+
+CREATE TABLE public.warehouse (
+    ware_id numeric(10,0) NOT NULL,
+    appid numeric(10,0) NOT NULL,
+    quantity numeric(2,0) NOT NULL
+);
+
+CREATE TABLE public.game_order (
+    appid numeric(10,0) NOT NULL,
+    order_id numeric(10,0) NOT NULL,
+    quantity numeric(10,0) NOT NULL
+);
+
+CREATE TABLE public.admin_bank (
+    email character varying(30) NOT NULL,
+    card numeric(9,0) NOT NULL
+);
+
+CREATE TABLE public.user_bank (
+    email character varying(30) NOT NULL,
+    card numeric(9,0) NOT NULL
+);
+
+CREATE TABLE public.game_gen (
+    genre character varying(30) NOT NULL,
+    appid numeric(10,0) NOT NULL
+);
+
+ALTER TABLE ONLY public.address
+    ADD CONSTRAINT address_pkey PRIMARY KEY (city, street_no, street);
+
+ALTER TABLE ONLY public.admin
+    ADD CONSTRAINT admin_pkey PRIMARY KEY (email);
+
+
+ALTER TABLE ONLY public.bank_info
+    ADD CONSTRAINT bank_info_pkey PRIMARY KEY (card);
+
+
+ALTER TABLE ONLY public.developer
+    ADD CONSTRAINT developer_pkey PRIMARY KEY (dev_id);
+
+ALTER TABLE ONLY public.game
+    ADD CONSTRAINT game_pkey PRIMARY KEY (appid);
+
+ALTER TABLE ONLY public.genre
+    ADD CONSTRAINT genre_pkey PRIMARY KEY (genre);
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_pkey PRIMARY KEY (order_id);
+
+ALTER TABLE ONLY public.publisher
+    ADD CONSTRAINT publisher_pkey PRIMARY KEY (pub_email);
+
+ALTER TABLE ONLY public.restock_order
+    ADD CONSTRAINT restock_order_pkey PRIMARY KEY (order_id);
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (email);
+
+ALTER TABLE ONLY public.warehouse
+    ADD CONSTRAINT warehouse_pkey PRIMARY KEY (ware_id);
+
+ALTER TABLE ONLY public.bank_info
+    ADD CONSTRAINT bank_info_street_no_street_city_fkey FOREIGN KEY (street_no, street, city) REFERENCES public.address(street_no, street, city);
+
+ALTER TABLE ONLY public.bank_info
+    ADD CONSTRAINT bank_info_email_fkey FOREIGN KEY (email) REFERENCES public.users(email);
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_appid_fkey FOREIGN KEY (appid) REFERENCES public.game(appid);
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_street_no_street_city_fkey FOREIGN KEY (street_no, street, city) REFERENCES public.address(street_no, street, city);
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_card_fkey FOREIGN KEY (card) REFERENCES public.bank_info(card);
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_email_fkey FOREIGN KEY (email) REFERENCES public.users(email);
+
+ALTER TABLE ONLY public.restock_order
+    ADD CONSTRAINT restock_order_appid_fkey FOREIGN KEY (appid) REFERENCES public.game(appid);
+
+ALTER TABLE ONLY public.restock_order
+    ADD CONSTRAINT restock_order_pub_email_fkey FOREIGN KEY (pub_email) REFERENCES public.publisher(pub_email);
+
+ALTER TABLE ONLY public.restock_order
+    ADD CONSTRAINT restock_order_ware_id_fkey FOREIGN KEY (ware_id) REFERENCES public.warehouse(ware_id);
+
+ALTER TABLE ONLY public.restock_order
+    ADD CONSTRAINT restock_order_email_fkey FOREIGN KEY (email) REFERENCES public.admin(email);
+
+ALTER TABLE ONLY public.warehouse
+    ADD CONSTRAINT warehouse_appid_fkey FOREIGN KEY (appid) REFERENCES public.game(appid);
+
+ALTER TABLE ONLY public.game
+    ADD CONSTRAINT game_dev_id_fkey FOREIGN KEY (dev_id) REFERENCES public.developer(dev_id);
+
+ALTER TABLE ONLY public.game
+    ADD CONSTRAINT game_pub_email_fkey FOREIGN KEY (pub_email) REFERENCES public.publisher(pub_email);
+
+ALTER TABLE ONLY public.game_gen
+    ADD CONSTRAINT game_gen_genre_fkey FOREIGN KEY (genre) REFERENCES public.genre(genre);
+
+ALTER TABLE ONLY public.game_gen
+    ADD CONSTRAINT game_gen_appid_fkey FOREIGN KEY (appid) REFERENCES public.game(appid);
+
+ALTER TABLE ONLY public.game_order
+    ADD CONSTRAINT game_order_appid_fkey FOREIGN KEY (appid) REFERENCES public.game(appid);
+
+ALTER TABLE ONLY public.game_order
+    ADD CONSTRAINT game_order_order_id_fkey FOREIGN KEY (order_id) REFERENCES public.orders(order_id);
+
+ALTER TABLE ONLY public.admin_bank
+    ADD CONSTRAINT admin_bank_email_fkey FOREIGN KEY (email) REFERENCES public.admin(email);
+
+ALTER TABLE ONLY public.admin_bank
+    ADD CONSTRAINT admin_bank_card_fkey FOREIGN KEY (card) REFERENCES public.bank_info(card);
+
+ALTER TABLE ONLY public.user_bank
+    ADD CONSTRAINT user_bank_email_fkey FOREIGN KEY (email) REFERENCES public.admin(email);
+
+ALTER TABLE ONLY public.user_bank
+    ADD CONSTRAINT user_bank_card_fkey FOREIGN KEY (card) REFERENCES public.bank_info(card);
