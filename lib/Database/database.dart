@@ -5,6 +5,8 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
 import '../Helper/game.dart';
 
+class Database{
+  var connection = new PostgreSQLConnection("ec2-184-72-236-3.compute-1.amazonaws.com", 5432, "d3bujikbsk6o86", username: "ajomrhjjziksqi", password: "b5ee3764068c5cbfa5a9534565e4a367d8d235ea42fdb326e67b98b8f72ca274", useSSL: true);
 
 Future<String> loadAsset() async {
   return await rootBundle.loadString('assets/GameData.json');
@@ -43,7 +45,6 @@ Future<List> searchGames(String s) async{
 
 
 testing() async {
-  var connection = new PostgreSQLConnection("ec2-184-72-236-3.compute-1.amazonaws.com", 5432, "d3bujikbsk6o86", username: "ajomrhjjziksqi", password: "b5ee3764068c5cbfa5a9534565e4a367d8d235ea42fdb326e67b98b8f72ca274", useSSL: true);
   print("after connect");
   await connection.open();
 
@@ -126,9 +127,9 @@ testing() async {
 }
 
 saveUser(String email, String username, String password, String type) async {
-  var connection = new PostgreSQLConnection("ec2-184-72-236-3.compute-1.amazonaws.com", 5432, "d3bujikbsk6o86", username: "ajomrhjjziksqi", password: "b5ee3764068c5cbfa5a9534565e4a367d8d235ea42fdb326e67b98b8f72ca274", useSSL: true);
   await connection.open();
 
   String query = "insert into $type values ('$username', '$password', '$email') on conflict do nothing";
   await connection.query(query);
+}
 }

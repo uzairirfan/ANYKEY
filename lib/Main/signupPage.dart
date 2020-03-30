@@ -83,7 +83,7 @@ class _RegisterPage extends State<RegisterPage> {
                     // Validate returns true if the form is valid, otherwise false.
                     if (_formKey.currentState.validate()) {
                       if (owner) _type = "admin";
-                      saveUser(_email, _username, _password, _type);
+                      Database().saveUser(_email, _username, _password, _type);
                       Navigator.pop(context);
                     }
                   },

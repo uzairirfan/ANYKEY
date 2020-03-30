@@ -22,7 +22,7 @@ class _MyOwnerPageState extends State<MyOwnerPage> {
 
   void _incrementCounter() {
     setState(() {
-      testing();
+      Database().testing();
     });
   }
 
