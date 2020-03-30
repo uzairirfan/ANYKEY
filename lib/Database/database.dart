@@ -138,19 +138,19 @@ class Database {
 
       var genres = (gamelist.games[i].genres.split(';'));
       for (String g in genres) {
-        String query = "insert into genre values ('$g')";
+        String query = "insert into genre values ('$g') on conflict do nothing";
         await connection.query(query);
       }
 
       genres = (gamelist.games[i].genres.split(';'));
       for (String g in genres) {
         String query =
-            "insert into game_gen values ('$g', '${gamelist.games[i].appid}')";
+            "insert into game_gen values ('$g', '${gamelist.games[i].appid}') on conflict do nothing";
         await connection.query(query);
       }
 
       query =
-          "insert into warehouse values ('123456789', 10, '${gamelist.games[i].appid}')";
+          "insert into warehouse values ('123456789', 10, '${gamelist.games[i].appid}') on conflict do nothing";
       await connection.query(query);
 
       print("added number " + i.toString());
