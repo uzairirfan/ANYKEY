@@ -22,7 +22,7 @@ class _MyUserPageState extends State<MyUserPage> {
   ];
   void _incrementCounter() {
     setState(() {
-      testing();
+      Database().testing();
     });
   }
 
