@@ -26,29 +26,17 @@ class Database {
   }
 
   void addToCart(int appid, int quantity) async {
-    var connection = new PostgreSQLConnection(
-        "ec2-184-72-236-3.compute-1.amazonaws.com", 5432, "d3bujikbsk6o86",
-        username: "ajomrhjjziksqi",
-        password:
-            "b5ee3764068c5cbfa5a9534565e4a367d8d235ea42fdb326e67b98b8f72ca274",
-        useSSL: true);
     await connection.open();
 
     email = "bushrawsyed@gmail.com";
     String query =
         "insert into user_cart values ($appid, '$email', $quantity)";
-    
-    await connection.close();
+
     await connection.query(query);
+    await connection.close();
   }
 
   Future<List<Game>> getCart() async{
-    var connection = new PostgreSQLConnection(
-        "ec2-184-72-236-3.compute-1.amazonaws.com", 5432, "d3bujikbsk6o86",
-        username: "ajomrhjjziksqi",
-        password:
-        "b5ee3764068c5cbfa5a9534565e4a367d8d235ea42fdb326e67b98b8f72ca274",
-        useSSL: true);
     await connection.open();
     String query =
         "select * from user_cart natural join game where email = '$email'";
