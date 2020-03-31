@@ -19,6 +19,7 @@ class UserCheckoutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    getGames();
    return new Container(
         margin: EdgeInsets.symmetric(horizontal: 16.0),
         height: 600,
