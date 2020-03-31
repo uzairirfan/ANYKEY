@@ -28,7 +28,6 @@ class Database {
   void addToCart(int appid, int quantity) async {
     await connection.open();
 
-    email = "bushrawsyed@gmail.com";
     String query =
         "insert into user_cart values ($appid, '$email', $quantity)";
 
