@@ -7,6 +7,7 @@ import 'dart:async' show Future;
 import '../Helper/game.dart';
 import 'dart:convert' show utf8;
 import 'dart:typed_data';
+import '../Helper/game.dart';
 
 class Database {
   var connection = new PostgreSQLConnection(
@@ -35,9 +36,56 @@ class Database {
             "b5ee3764068c5cbfa5a9534565e4a367d8d235ea42fdb326e67b98b8f72ca274",
         useSSL: true);
     await connection.open();
-    String query = "insert into user_cart values ($appid, '$email', $quantity)";
-    var results = await connection.query(query);
+
+    email = "bushrawsyed@gmail.com";
+    String query =
+        "insert into user_cart values ($appid, '$email', $quantity)";
+    
     await connection.close();
+    await connection.query(query);
+  }
+
+  Future<List<Game>> getCart(String email) async{
+    var connection = new PostgreSQLConnection(
+        "ec2-184-72-236-3.compute-1.amazonaws.com", 5432, "d3bujikbsk6o86",
+        username: "ajomrhjjziksqi",
+        password:
+        "b5ee3764068c5cbfa5a9534565e4a367d8d235ea42fdb326e67b98b8f72ca274",
+        useSSL: true);
+    await connection.open();
+    String query =
+        "select * from user_cart natural join game where email = '$email'";
+    var results = await connection.query(query);
+
+    List<Game> games = new List<Game>();
+    for (final row in results) {
+      //find publisher name from email
+      query =
+      "SELECT pub_name FROM  publisher where pub_email = '${row[4]}'";
+      var found = await connection.query(query);
+      String pub = row[4];
+      for (final row in found) {
+        pub = row[0];
+      }
+      // find developer name from dev id
+      query =
+      "SELECT dev_name FROM  developer where dev_id = ${row[3]}";
+      found = await connection.query(query);
+      String dev = "none";
+      for (final row in found) {
+        dev = row[0];
+      }
+      games.add(new Game.short(
+          appid: row[0],
+          name: row[5],
+          developer: dev,
+          publisher: pub,
+          averagePlaytime: row[6],
+          sellprice: (row[9] * 1.0),
+          price: (row[8] * 1.0)));
+    }
+    await connection.close();
+    return games;
   }
 
   Future<List> searchGames(String s) async {
@@ -139,25 +187,6 @@ class Database {
           }
         }
       }
-      // for (String d in devs) {
-      //   results = await connection.query("select dev_id from developer where dev_name = '${gamelist.games[i].developer}'");
-      //   print("zTHIS RESULTD"+results.toString());
-      //   for (final row in results) {
-      //     print("THIS IS ROW"+row[0].toString());
-      //     devid = int.parse(row[0]);
-      //   }
-      //   print("THIS IS DEVID "+devid.toString());
-      //   if (devid == -1) {
-      //     String id = (new DateTime.now().millisecondsSinceEpoch).toString();
-      //   id = id.substring(id.length - 10);
-      //   devid = int.parse(id);
-      //     String query = "insert into developer values ($devid, '$d')";
-      //     await connection.query(query);
-      //   }
-      //   break;
-      // }
-
-      //insert into game
       query =
           "insert into game values ('${gamelist.games[i].appid}', ${devid}, '${pub}','${gamelist.games[i].name}',${gamelist.games[i].averagePlaytime}"
           ",${gamelist.games[i].positiveRatings},${gamelist.games[i].price}, 4) on conflict do nothing";

@@ -1,6 +1,6 @@
-import 'package:bookeep/Owner/OwnerCheckoutPage.dart';
-import 'package:bookeep/Owner/OwnerHomePage.dart';
-import 'package:bookeep/Owner/OwnerSearchPage.dart';
+import 'package:bookeep/Owner/OwnerAddPage.dart';
+import 'package:bookeep/Owner/OwnerRemovePage.dart';
+import 'package:bookeep/Owner/OwnerReportPage.dart';
 import 'package:flutter/material.dart';
 import '../Database/database.dart';
 
