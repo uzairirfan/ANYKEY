@@ -18,6 +18,7 @@ class Game {
   String owners;
   double price;
   double sellprice;
+  int quantity;
   Game.short(
       {this.appid,
         this.name,
@@ -28,6 +29,17 @@ class Game {
         this.averagePlaytime,
         this.owners,
         this.price, this.sellprice});
+
+  Game.mid(
+      {this.appid,
+        this.name,
+        this.developer,
+        this.publisher,
+        this.genres,
+        this.positiveRatings,
+        this.averagePlaytime,
+        this.owners,
+        this.price, this.sellprice, this.quantity});
 
   Game(
       {this.appid,
@@ -76,6 +88,11 @@ class Game {
     // TODO: implement toString
     return "Title: " + name + ", Developed by: " + developer + ", Published by: "
     + publisher + ", Price: \$" + price.toString();
+  }
+
+  String toCart() {
+    return "Title: " + name + ", Developed by: " + developer + ", Published by: "
+        + publisher + ", Price: \$" + price.toString() + " Quantity: " + quantity.toString();
   }
 }
 

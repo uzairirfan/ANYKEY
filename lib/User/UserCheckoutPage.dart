@@ -6,7 +6,7 @@ class UserCheckoutPage extends StatelessWidget {
   Future<bool> gotCart;
   List<Game> games = new List<Game>();
   Future<bool> getGames() async{
-    games = await Database().getCart("bushrawsyed@gmail.com");
+    games = await Database().getCart();
     print ("after games");
     for (Game g in games) print(g.toString());
     return true;
@@ -30,7 +30,7 @@ class UserCheckoutPage extends StatelessWidget {
                   itemBuilder: (context, position) {
                     return ListTile(
                       title: Text(games[position].name),
-                      subtitle: Text(games[position].toString()),
+                      subtitle: Text(games[position].toCart()),
                     );
 
                   },
