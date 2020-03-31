@@ -1,13 +1,13 @@
 import 'package:postgres/postgres.dart';
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
 import '../Helper/game.dart';
 import 'dart:convert' show utf8;
 import 'dart:typed_data';
 import '../Helper/game.dart';
-
 
 class Database {
   var connection = new PostgreSQLConnection(
@@ -16,7 +16,6 @@ class Database {
       password:
           "b5ee3764068c5cbfa5a9534565e4a367d8d235ea42fdb326e67b98b8f72ca274",
       useSSL: true);
-
 
   Future<String> loadAsset() async {
     return await rootBundle.loadString('assets/GameData.json');
@@ -29,17 +28,20 @@ class Database {
     return gameData;
   }
 
-  void addToCart(int appid, String email, int quantity) async{
+  void addToCart(int appid, String email, int quantity) async {
     var connection = new PostgreSQLConnection(
         "ec2-184-72-236-3.compute-1.amazonaws.com", 5432, "d3bujikbsk6o86",
         username: "ajomrhjjziksqi",
         password:
-        "b5ee3764068c5cbfa5a9534565e4a367d8d235ea42fdb326e67b98b8f72ca274",
+            "b5ee3764068c5cbfa5a9534565e4a367d8d235ea42fdb326e67b98b8f72ca274",
         useSSL: true);
     await connection.open();
+
     email = "bushrawsyed@gmail.com";
     String query =
         "insert into user_cart values ($appid, '$email', $quantity)";
+    
+    await connection.close();
     await connection.query(query);
   }
 
@@ -82,6 +84,7 @@ class Database {
           sellprice: (row[9] * 1.0),
           price: (row[8] * 1.0)));
     }
+    await connection.close();
     return games;
   }
 
@@ -98,10 +101,8 @@ class Database {
         "SELECT  * FROM  game WHERE LOWER(title) LIKE  ANY(SELECT '%' || '${s}'|| '%' FROM game WHERE title IS NOT NULL)";
     var results = await connection.query(query);
     for (final row in results) {
-
       //find publisher name from email
-      query =
-          "SELECT pub_name FROM  publisher where pub_email = '${row[2]}'";
+      query = "SELECT pub_name FROM  publisher where pub_email = '${row[2]}'";
       var found = await connection.query(query);
       String pub = row[2];
       for (final row in found) {
@@ -109,31 +110,29 @@ class Database {
       }
 
       // find developer name from dev id
-      query =
-      "SELECT dev_name FROM  developer where dev_id = ${row[1]}";
+      query = "SELECT dev_name FROM  developer where dev_id = ${row[1]}";
       found = await connection.query(query);
       String dev = "none";
       for (final row in found) {
         dev = row[0];
       }
       Game g = new Game.short(
-        appid: row[0],
-        name: row[3],
-        developer: dev,
-        publisher: pub,
-       averagePlaytime: row[4],
-        sellprice: (row[7]*1.0),
-          price:(row[6]*1.0)
-      );
-      print ("adding");
+          appid: row[0],
+          name: row[3],
+          developer: dev,
+          publisher: pub,
+          averagePlaytime: row[4],
+          sellprice: (row[7] * 1.0),
+          price: (row[6] * 1.0));
+      print("adding");
       print(g.toString());
       games.add(g);
     }
+    await connection.close();
     return games;
   }
 
   testing() async {
-    print("after connect");
     await connection.open();
 
     GameList gamelist = await getGames();
@@ -162,7 +161,7 @@ class Database {
           .replaceAll(")", "")
           .replaceAll("/", "");
 
-      email = "${pubs[0]}" + "@email.com";
+      email = "$email" + "@email.com";
 
       String query =
           "insert into publisher values ('$email', '${pubs[0]}') on conflict do nothing";
@@ -173,7 +172,6 @@ class Database {
       var devs = (gamelist.games[i].developer.split(';'));
       exists = await connection.query(
           "select exists (select * from developer where dev_name = '${devs[0]}')");
-      print("THIS IS EXIst " + exists.toString());
       for (var e in exists) {
         if (!e[0]) {
           String id = (new DateTime.now().millisecondsSinceEpoch).toString();
@@ -184,15 +182,15 @@ class Database {
         } else {
           results = await connection.query(
               "select dev_id from developer where dev_name = '${devs[0]}'");
-              for(var id in results){
-                devid = id[0];
-              }
+          for (var id in results) {
+            devid = id[0];
+          }
         }
       }
       query =
           "insert into game values ('${gamelist.games[i].appid}', ${devid}, '${pub}','${gamelist.games[i].name}',${gamelist.games[i].averagePlaytime}"
-          ",${gamelist.games[i].positiveRatings},${gamelist.games[i].price}, 4)";
-      print(query);
+          ",${gamelist.games[i].positiveRatings},${gamelist.games[i].price}, 4) on conflict do nothing";
+//      print(query);
       await connection.query(query);
 
       var genres = (gamelist.games[i].genres.split(';'));
@@ -209,20 +207,34 @@ class Database {
       }
 
       query =
-          "insert into warehouse values ('123456789', 10, '${gamelist.games[i].appid}') on conflict do nothing";
+          "insert into warehouse values ('123456789', '${gamelist.games[i].appid}', 10) on conflict do nothing";
       await connection.query(query);
 
       print("added number " + i.toString());
     }
+    await connection.close();
   }
 
   saveUser(String email, String username, String password, String type) async {
     await connection.open();
     String query;
-    if (type.toLowerCase() == "users")
-      query = "insert into $type values ('$email', '$password')";
-    else
-      query = "insert into $type values ('$password', '$email')";
+    query = "insert into $type values ('$email', '$password')";
     await connection.query(query);
+    await connection.close();
+  }
+
+  Future<bool> checkLogin(String email, String password, String type) async {
+    await connection.open();
+    print("IN CHECK");
+    var results =
+        await connection.query("select * from $type where email = '$email'");
+    await connection.close();
+    for (var r in results) {
+      print("IN FOr");
+      print(r[0] + r[1]);
+      if (email == r[0] && password == r[1]) return Future<bool>.value(true);
+    }
+    print("object");
+    return Future<bool>.value(false);
   }
 }
