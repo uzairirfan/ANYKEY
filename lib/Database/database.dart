@@ -16,6 +16,7 @@ class Database {
           "b5ee3764068c5cbfa5a9534565e4a367d8d235ea42fdb326e67b98b8f72ca274",
       useSSL: true);
 
+
   Future<String> loadAsset() async {
     return await rootBundle.loadString('assets/GameData.json');
   }
@@ -25,6 +26,19 @@ class Database {
     final jsonResponse = json.decode(jsonString);
     GameList gameData = new GameList.fromJson(jsonResponse);
     return gameData;
+  }
+
+  void addToCart(int appid, String email, int quantity) async{
+    var connection = new PostgreSQLConnection(
+        "ec2-184-72-236-3.compute-1.amazonaws.com", 5432, "d3bujikbsk6o86",
+        username: "ajomrhjjziksqi",
+        password:
+        "b5ee3764068c5cbfa5a9534565e4a367d8d235ea42fdb326e67b98b8f72ca274",
+        useSSL: true);
+    await connection.open();
+    String query =
+        "insert into user_cart values ($appid, '$email', $quantity)";
+    var results = await connection.query(query);
   }
 
   Future<List> searchGames(String s) async {
@@ -64,8 +78,8 @@ class Database {
         developer: dev,
         publisher: pub,
        averagePlaytime: row[4],
-        sellprice: 4.0,
-          price: 4.0
+        sellprice: (row[7]*1.0),
+          price:(row[6]*1.0)
       );
       print ("adding");
       print(g.toString());

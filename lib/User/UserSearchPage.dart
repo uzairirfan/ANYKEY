@@ -8,8 +8,9 @@ import '../Helper/game.dart';
 class Post {
   final String title;
   final String body;
+  final int appid;
 
-  Post(this.title, this.body);
+  Post(this.title, this.body, this.appid);
 }
 
 
@@ -31,11 +32,13 @@ class _UserSearchPageState extends State<UserSearchPage> {
        return Post(
          "${games[index].name.toString()}",
          "${games[index].toString()}",
+           games[index].appid
        );
      });
    }
   @override
   Widget build(BuildContext context) {
+     int quantity;
     return Scaffold(
       body: SafeArea(
         child: SearchBar<Post>(
@@ -62,6 +65,39 @@ class _UserSearchPageState extends State<UserSearchPage> {
       return ListTile(
         title: Text(post.title),
         subtitle: Text(post.body),
+          onTap: () {
+            return showDialog(
+              context: context,
+              barrierDismissible: false, // user must tap button for close dialog!
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Would you like to add "${post.title}" to your cart?'),
+                  content:
+                  new TextField(
+                    autofocus: true,
+                    decoration: new InputDecoration(
+                        labelText: 'Quantity', hintText: 'eg. 1, 2, etc.'),
+                    onChanged: (value) {
+                      quantity = int.parse(value);
+                    },
+                  ),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: const Text('CANCEL'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    FlatButton(
+                      child: const Text('ACCEPT'),
+                      onPressed: () {
+                      },
+                    )
+                  ],
+                );
+              },
+            );
+          }
       );},
         ),
       ),

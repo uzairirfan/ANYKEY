@@ -101,6 +101,12 @@ CREATE TABLE public.game_gen (
     appid bigint NOT NULL
 );
 
+create table user_cart(
+appid BIGINT NOT NULL,
+email character varying (30) NOT NULL
+);
+
+
 ALTER TABLE ONLY public.address
     ADD CONSTRAINT address_pkey PRIMARY KEY (city, street_no, street);
 
@@ -111,6 +117,12 @@ ALTER TABLE ONLY public.admin
 ALTER TABLE ONLY public.bank_info
     ADD CONSTRAINT bank_info_pkey PRIMARY KEY (card);
 
+
+ALTER TABLE ONLY public.user_cart
+    ADD CONSTRAINT user_cart_email_fkey FOREIGN KEY (email) REFERENCES public.users(email);
+
+ALTER TABLE ONLY public.user_cart
+    ADD CONSTRAINT user_cart_appid_fkey FOREIGN KEY (appid) REFERENCES public.game(appid);
 
 ALTER TABLE ONLY public.developer
     ADD CONSTRAINT developer_pkey PRIMARY KEY (dev_id);
