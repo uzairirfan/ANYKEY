@@ -18,7 +18,7 @@ class _MyUserPageState extends State<MyUserPage> {
   final List<Widget> _children = [
     UserHomePage(Colors.white),
     UserSearchPage(),
-    UserCheckoutPage(Colors.green)
+    UserCheckoutPage()
   ];
   void _incrementCounter() {
     setState(() {
