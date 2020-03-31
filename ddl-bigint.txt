@@ -7,8 +7,8 @@ CREATE TABLE public.address (
 );
 
 CREATE TABLE public.admin (
-    password character varying(15) NOT NULL,
-    email character varying(30) NOT NULL
+    email character varying(30) NOT NULL,
+    password character varying(15) NOT NULL
 );
 
 CREATE TABLE public.bank_info (
