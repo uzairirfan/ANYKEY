@@ -50,15 +50,6 @@ class _RegisterPage extends State<RegisterPage> {
                 TextFormField(
                     validator: (value) {
                       if (value.isNotEmpty) {
-                        _username = value;
-                        return null;
-                      }
-                      return "Please Enter a Username.";
-                    },
-                    decoration: InputDecoration(labelText: "Username")),
-                TextFormField(
-                    validator: (value) {
-                      if (value.isNotEmpty) {
                         _password = value;
                         return null;
                       }
