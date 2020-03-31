@@ -91,7 +91,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
                     FlatButton(
                       child: const Text('ACCEPT'),
                       onPressed: () {
-                        Database().addToCart(post.appid, "", quantity);
+                        Database().addToCart(post.appid, quantity);
                         Navigator.of(context).pop();
                       },
                     )

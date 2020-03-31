@@ -1,12 +1,9 @@
 import 'package:postgres/postgres.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/material.dart';
+import '../Main/LoginPage.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
-import '../Helper/game.dart';
-import 'dart:convert' show utf8;
-import 'dart:typed_data';
 import '../Helper/game.dart';
 
 class Database {
@@ -28,7 +25,7 @@ class Database {
     return gameData;
   }
 
-  void addToCart(int appid, String email, int quantity) async {
+  void addToCart(int appid, int quantity) async {
     var connection = new PostgreSQLConnection(
         "ec2-184-72-236-3.compute-1.amazonaws.com", 5432, "d3bujikbsk6o86",
         username: "ajomrhjjziksqi",
@@ -45,7 +42,7 @@ class Database {
     await connection.query(query);
   }
 
-  Future<List<Game>> getCart(String email) async{
+  Future<List<Game>> getCart() async{
     var connection = new PostgreSQLConnection(
         "ec2-184-72-236-3.compute-1.amazonaws.com", 5432, "d3bujikbsk6o86",
         username: "ajomrhjjziksqi",
@@ -75,14 +72,15 @@ class Database {
       for (final row in found) {
         dev = row[0];
       }
-      games.add(new Game.short(
+      games.add(new Game.mid(
           appid: row[0],
           name: row[5],
           developer: dev,
           publisher: pub,
           averagePlaytime: row[6],
           sellprice: (row[9] * 1.0),
-          price: (row[8] * 1.0)));
+          price: (row[8] * 1.0),
+      quantity: row[2]));
     }
     await connection.close();
     return games;
