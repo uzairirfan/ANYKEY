@@ -20,7 +20,12 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login Page Flutter Firebase"),
+        title: Text('LOGIN',
+            style: TextStyle(
+              color: Colors.purple,
+              fontSize: 16.0 ,
+            )),
+        backgroundColor: Colors.black,
       ),
       body: Container(
         padding: EdgeInsets.all(20.0),
@@ -29,10 +34,6 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               children: <Widget>[
                 SizedBox(height: 20.0),
-                Text(
-                  'Login Information',
-                  style: TextStyle(fontSize: 20),
-                ),
                 SizedBox(height: 20.0),
                 TextFormField(
                     validator: (value) {
