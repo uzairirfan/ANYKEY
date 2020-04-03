@@ -5,6 +5,7 @@ import '../Main/LoginPage.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
 import '../Helper/game.dart';
+import 'dart:math';
 
 class Database {
   var connection = new PostgreSQLConnection(
@@ -183,7 +184,7 @@ class Database {
       }
       query =
           "insert into game values ('${gamelist.games[i].appid}', ${devid}, '${pub}','${gamelist.games[i].name}',${gamelist.games[i].averagePlaytime}"
-          ",${gamelist.games[i].positiveRatings},${gamelist.games[i].price}, 4) on conflict do nothing";
+          ",${gamelist.games[i].positiveRatings},${gamelist.games[i].price}, ${Random().nextInt(50)}, true) on conflict do nothing";
 //      print(query);
       await connection.query(query);
 
@@ -286,7 +287,7 @@ class Database {
       }
       query =
           "insert into game values ('$appid', $devid, '$pub','$name',$playtime"
-          ",$ratings,$sellPrice, $buyPrice) on conflict do nothing";
+          ",$ratings,$sellPrice, $buyPrice, true) on conflict do nothing";
 //      print(query);
       await connection.query(query);
 

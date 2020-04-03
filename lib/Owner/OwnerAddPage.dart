@@ -3,9 +3,7 @@ import '../Database/database.dart';
 import '../Owner/OwnerPage.dart';
 
 class OwnerAddPage extends StatelessWidget {
-  final Color color;
 
-  OwnerAddPage(this.color);
 
   @override
   final _formKey = GlobalKey<FormState>();

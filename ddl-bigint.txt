@@ -34,7 +34,8 @@ CREATE TABLE public.game (
     playtime BIGINT NOT NULL,
     ratings BIGINT NOT NULL,
     sell_price int NOT NULL,
-    buy_price int NOT NULL
+    buy_price int NOT NULL,
+    available boolean NOT NULL
 );
 
 CREATE TABLE public.genre (
@@ -103,7 +104,8 @@ CREATE TABLE public.game_gen (
 
 create table user_cart(
 appid BIGINT NOT NULL,
-email character varying (30) NOT NULL
+email character varying (30) NOT NULL,
+quantity int NOT NULL
 );
 
 
@@ -116,13 +118,6 @@ ALTER TABLE ONLY public.admin
 
 ALTER TABLE ONLY public.bank_info
     ADD CONSTRAINT bank_info_pkey PRIMARY KEY (card);
-
-
-ALTER TABLE ONLY public.user_cart
-    ADD CONSTRAINT user_cart_email_fkey FOREIGN KEY (email) REFERENCES public.users(email);
-
-ALTER TABLE ONLY public.user_cart
-    ADD CONSTRAINT user_cart_appid_fkey FOREIGN KEY (appid) REFERENCES public.game(appid);
 
 ALTER TABLE ONLY public.developer
     ADD CONSTRAINT developer_pkey PRIMARY KEY (dev_id);
@@ -210,3 +205,9 @@ ALTER TABLE ONLY public.user_bank
 
 ALTER TABLE ONLY public.user_bank
     ADD CONSTRAINT user_bank_card_fkey FOREIGN KEY (card) REFERENCES public.bank_info(card);
+
+ALTER TABLE ONLY public.user_cart
+    ADD CONSTRAINT user_cart_email_fkey FOREIGN KEY (email) REFERENCES public.users(email);
+
+ALTER TABLE ONLY public.user_cart
+    ADD CONSTRAINT user_cart_appid_fkey FOREIGN KEY (appid) REFERENCES public.game(appid);

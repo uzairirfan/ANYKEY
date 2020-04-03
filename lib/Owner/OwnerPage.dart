@@ -15,8 +15,8 @@ class MyOwnerPage extends StatefulWidget {
 class _MyOwnerPageState extends State<MyOwnerPage> {
   int _currentIndex = 0;
   final List<Widget> _children = [
-    OwnerAddPage(Colors.white),
-    OwnerRemovePage(Colors.deepOrange),
+    OwnerAddPage(),
+    OwnerRemovePage(),
     OwnerReportPage(Colors.green)
   ];
 
