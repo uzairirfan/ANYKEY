@@ -35,6 +35,15 @@ class Database {
     await connection.close();
   }
 
+  Future<double> getCartTotal() async{
+    List<Game> cart = await getCart();
+    double total = 0;
+    for (Game g in cart){
+      total = total + (g.price*g.quantity);
+    }
+    return total;
+  }
+
   Future<List<Game>> getCart() async{
     await connection.open();
     String query =
