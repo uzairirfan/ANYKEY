@@ -1,4 +1,4 @@
-import 'package:bookeep/User/checkoutForm.dart';
+import 'package:bookeep/User/AddressForm.dart';
 import 'package:flutter/material.dart';
 import '../Helper/game.dart';
 import '../Database/database.dart';
@@ -85,7 +85,7 @@ class UserCheckoutPage extends StatelessWidget {
                       Navigator.of(context).push(
                       MaterialPageRoute(
                       builder: (context){
-                      return ViewWidget();
+                      return AddressForm();
                       }
                       ));
                       },

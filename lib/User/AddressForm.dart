@@ -1,15 +1,14 @@
+import 'package:bookeep/User/BankInfoForm.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
 
-class ViewWidget extends StatefulWidget {
+class AddressForm extends StatefulWidget {
   @override
-  ViewWidgetState createState() => ViewWidgetState();
+  AddressFormState createState() => AddressFormState();
 }
 
-class ViewWidgetState extends State {
-
-  bool address = true;
+class AddressFormState extends State {
   final _formKey = GlobalKey<FormState>();
   final Map<String, dynamic> _formData = {'Street Number': null,
     'Street': null,  'City': null,  'Province': null,  'Country': null};
@@ -29,7 +28,7 @@ class ViewWidgetState extends State {
   }
 
   Widget _buildForm() {
-    if (address) {
+
       return Form(
           key: _formKey,
           child: Column(
@@ -42,12 +41,8 @@ class ViewWidgetState extends State {
               _buildSubmitButton(),
             ],
           ));
-    } else{
-      return Form(
-
-      );
     }
-  }
+
 
   Widget _buildStreetField() {
     return Row(
@@ -107,16 +102,22 @@ class ViewWidgetState extends State {
     return RaisedButton(
       onPressed: () {
         _submitForm();
-        address = false;
       },
       child: Text('SEND'),
     );
   }
 
   void _submitForm() {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
-      print(_formData);
+      if (_formKey.currentState.validate()) {
+        _formKey.currentState.save();
+        print(_formData);
+        Navigator.of(context).push(
+            MaterialPageRoute(
+                builder: (context){
+                  return BankInfo();
+                }
+            ));
+      }
     }
-  }
+
 }
