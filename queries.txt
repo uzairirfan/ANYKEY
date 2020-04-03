@@ -1,0 +1,39 @@
+// adding to cart
+insert into user_cart values ($appid, '$email', $quantity)
+
+// getting all games
+select * from game natural join publisher natural join developer where available = true
+
+//removing from available games
+update game set available = false where appid = ${appid}
+ 
+//get items in user's cart
+select * from user_cart natural join game natural join publisher natural join developer where email = '$email'
+  
+//search for games
+SELECT  * FROM  game natural join publisher natural join developer WHERE LOWER(title) LIKE  ANY(SELECT '%' || '${s}'|| '%' FROM game) and available
+
+//checking if publisher exists before creating tuple
+select exists (select * from publisher where pub_name = '${pubs[0]}')
+insert into publisher values ('$email', '${pubs[0]}') on conflict do nothing
+
+//checking if developer exists before creating tuple
+select exists (select * from developer where dev_name = '${devs[0]}')
+insert into developer values ($devid, '${devs[0]}')
+
+//inserting into game 
+insert into game values ('${gamelist.games[i].appid}', ${devid}, '${pub}','${gamelist.games[i].name}',${gamelist.games[i].averagePlaytime},${gamelist.games[i].positiveRatings},${gamelist.games[i].price}, ${Random().nextInt(50)}, true) on conflict do nothing
+
+//inserting into genre and game_gen
+insert into genre values ('$g') on conflict do nothing
+insert into game_gen values ('$g', '${gamelist.games[i].appid}') on conflict do nothing
+
+//inserting game into warehouse (there's only one warehouse)
+insert into warehouse values ('123456789', '${gamelist.games[i].appid}', 10) on conflict do nothing
+      
+
+//adding user or admin to table
+insert into $type values ('$email', '$password')
+
+//checking user credentials
+select * from $type where email = '$email'

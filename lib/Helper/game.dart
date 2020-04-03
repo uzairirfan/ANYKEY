@@ -90,6 +90,12 @@ class Game {
     + publisher + ", Price: \$" + price.toString();
   }
 
+  String toOwnerString() {
+    // TODO: implement toString
+    return "Title: " + name + ", Developed by: " + developer + ", Published by: "
+        + publisher + ", Sell Price: \$" + price.toStringAsFixed(2) + ", Buy Price: \$" + sellprice.toStringAsFixed(2);
+  }
+
   String toCart() {
     return "Title: " + name + ", Developed by: " + developer + ", Published by: "
         + publisher + ", Price: \$" + price.toStringAsFixed(2) + " Quantity: " + quantity.toString();
