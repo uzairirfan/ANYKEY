@@ -42,7 +42,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
 
     return Scaffold(
       appBar: new AppBar(
-          title: Text('CHECKOUT',
+          title: Text('SEARCH',
               style: TextStyle(
                 color: Colors.purple,
                 fontSize: 16.0 ,

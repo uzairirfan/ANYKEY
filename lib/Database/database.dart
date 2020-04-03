@@ -45,35 +45,47 @@ class Database {
     return total;
   }
 
+  Future<List<Game>> getAllGames() async{
+    await connection.open();
+    String query =
+        "select * from game natural join publisher natural join developer where available = true";
+    var results = await connection.query(query);
+    List<Game> games = new List<Game>();
+    for (final row in results) {
+      //find publisher name from email
+      games.add(new Game.short(
+          appid: row[2],
+          name: row[3],
+          developer: row[10],
+          publisher: row[9],
+          averagePlaytime: row[4],
+          sellprice: (row[7] * 1.0),
+          price: (row[6] * 1.0)));
+    }
+    await connection.close();
+    return games;
+  }
+
+  void removeGame(int appid) async{
+    await connection.open();
+    String query =
+        "update game set available = false where appid = ${appid}";
+    await connection.query(query);
+  }
+
   Future<List<Game>> getCart() async{
     await connection.open();
     String query =
-        "select * from user_cart natural join game where email = '$email'";
+        "select * from user_cart natural join game natural join publisher natural join developer where email = '$email'";
     var results = await connection.query(query);
 
     List<Game> games = new List<Game>();
     for (final row in results) {
-      //find publisher name from email
-      query =
-      "SELECT pub_name FROM  publisher where pub_email = '${row[4]}'";
-      var found = await connection.query(query);
-      String pub = row[4];
-      for (final row in found) {
-        pub = row[0];
-      }
-      // find developer name from dev id
-      query =
-      "SELECT dev_name FROM  developer where dev_id = ${row[3]}";
-      found = await connection.query(query);
-      String dev = "none";
-      for (final row in found) {
-        dev = row[0];
-      }
       games.add(new Game.mid(
-          appid: row[0],
+          appid: row[2],
           name: row[5],
-          developer: dev,
-          publisher: pub,
+          developer: row[12],
+          publisher: row[11],
           averagePlaytime: row[6],
           sellprice: (row[9] * 1.0),
           price: (row[8] * 1.0),
@@ -93,29 +105,15 @@ class Database {
     await connection.open();
     List<Game> games = new List<Game>();
     String query =
-        "SELECT  * FROM  game WHERE LOWER(title) LIKE  ANY(SELECT '%' || '${s}'|| '%' FROM game WHERE title IS NOT NULL)";
+        "SELECT  * FROM  game natural join publisher natural join developer WHERE LOWER(title) LIKE  ANY(SELECT '%' || '${s}'|| '%' FROM game) and available";
     var results = await connection.query(query);
     for (final row in results) {
-      //find publisher name from email
-      query = "SELECT pub_name FROM  publisher where pub_email = '${row[2]}'";
-      var found = await connection.query(query);
-      String pub = row[2];
-      for (final row in found) {
-        pub = row[0];
-      }
 
-      // find developer name from dev id
-      query = "SELECT dev_name FROM  developer where dev_id = ${row[1]}";
-      found = await connection.query(query);
-      String dev = "none";
-      for (final row in found) {
-        dev = row[0];
-      }
       Game g = new Game.short(
-          appid: row[0],
+          appid: row[2],
           name: row[3],
-          developer: dev,
-          publisher: pub,
+          developer: row[10],
+          publisher: row[9],
           averagePlaytime: row[4],
           sellprice: (row[7] * 1.0),
           price: (row[6] * 1.0));
