@@ -39,7 +39,15 @@ class _UserSearchPageState extends State<UserSearchPage> {
   @override
   Widget build(BuildContext context) {
      int quantity;
+
     return Scaffold(
+      appBar: new AppBar(
+          title: Text('CHECKOUT',
+              style: TextStyle(
+                color: Colors.purple,
+                fontSize: 16.0 ,
+              )),
+        backgroundColor: Colors.black,),
       body: SafeArea(
         child: SearchBar<Post>(
           searchBarPadding: EdgeInsets.symmetric(horizontal: 20),

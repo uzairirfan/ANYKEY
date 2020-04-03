@@ -30,7 +30,12 @@ class _MyOwnerPageState extends State<MyOwnerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('ANYKEEP',
+            style: TextStyle(
+              color: Colors.purple,
+              fontSize: 16.0 ,
+            )),
+        backgroundColor: Colors.black,
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

@@ -92,7 +92,7 @@ class Game {
 
   String toCart() {
     return "Title: " + name + ", Developed by: " + developer + ", Published by: "
-        + publisher + ", Price: \$" + price.toString() + " Quantity: " + quantity.toString();
+        + publisher + ", Price: \$" + price.toStringAsFixed(2) + " Quantity: " + quantity.toString();
   }
 }
 

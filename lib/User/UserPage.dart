@@ -29,9 +29,14 @@ class _MyUserPageState extends State<MyUserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+        appBar: AppBar(
+          title: Text('ANYKEEP',
+              style: TextStyle(
+                color: Colors.purple,
+                fontSize: 16.0 ,
+              )),
+          backgroundColor: Colors.black,
+        ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
