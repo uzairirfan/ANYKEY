@@ -222,4 +222,83 @@ class Database {
     print("object");
     return Future<bool>.value(false);
   }
+
+  ownerAdd(int appid, String developer, String publisher, String name, String genre, int buyPrice, int sellPrice, int quantity, int ratings, int playtime) async {
+    await connection.open();
+
+      //insert into pub
+      var pubs = (publisher.split(';'));
+      List<List<dynamic>> results;
+      var exists;
+      String pub = "-1";
+      int devid = -1;
+      results = await connection.query(
+          "select exists (select * from publisher where pub_name = '${pubs[0]}')");
+      for (final row in results) {
+        exists = row[0].toString();
+      }
+
+      String email = pubs[0]
+          .replaceAll(" ", "")
+          .replaceAll("'", "")
+          .replaceAll(":", "")
+          .replaceAll("-", "")
+          .replaceAll(",", "")
+          .replaceAll(".", "")
+          .replaceAll("(", "")
+          .replaceAll(")", "")
+          .replaceAll("/", "");
+
+      email = "$email" + "@email.com";
+
+      String query =
+          "insert into publisher values ('$email', '${pubs[0]}') on conflict do nothing";
+      await connection.query(query);
+      pub = email;
+
+      //insert into dev
+      var devs = (developer.split(';'));
+      exists = await connection.query(
+          "select exists (select * from developer where dev_name = '${devs[0]}')");
+      for (var e in exists) {
+        if (!e[0]) {
+          String id = (new DateTime.now().millisecondsSinceEpoch).toString();
+          id = id.substring(id.length - 10);
+          devid = int.parse(id);
+          results = await connection
+              .query("insert into developer values ($devid, '${devs[0]}')");
+        } else {
+          results = await connection.query(
+              "select dev_id from developer where dev_name = '${devs[0]}'");
+          for (var id in results) {
+            devid = id[0];
+          }
+        }
+      }
+      query =
+          "insert into game values ('$appid', $devid, '$pub','$name',$playtime"
+          ",$ratings,$sellPrice, $buyPrice) on conflict do nothing";
+//      print(query);
+      await connection.query(query);
+
+      var genres = (genre.split(';'));
+      for (String g in genres) {
+        String query = "insert into genre values ('$g') on conflict do nothing";
+        await connection.query(query);
+      }
+
+      genres = (genre.split(';'));
+      for (String g in genres) {
+        String query =
+            "insert into game_gen values ('$g', '$appid') on conflict do nothing";
+        await connection.query(query);
+      }
+
+      query =
+          "insert into warehouse values ('123456789', '$appid', $quantity) on conflict do nothing";
+      await connection.query(query);
+    
+    await connection.close();
+  }
+
 }
