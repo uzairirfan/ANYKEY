@@ -26,6 +26,7 @@ class Database {
     return gameData;
   }
 
+
   void updateCart(int appid, int quantity) async{
     await connection.open();
     String query;
@@ -59,6 +60,36 @@ class Database {
       total = total + (g.price*g.quantity);
     }
     return total;
+  }
+
+  Future<List<Game>> getRecommended() async{
+    await connection.open();
+    String query = "with x as ( WITH agg AS ( select genre, count(*) from game_gen natural join game natural join game_order natural join orders where email = '$email'"
+        "group by genre ) SELECT genre, count FROM agg WHERE agg.count = (SELECT MAX(count) FROM agg)) select * from game natural join game_gen natural join x "
+        "natural join publisher natural join developer where genre = x.genre;";
+    print (query);
+    var results = await connection.query(query);
+    List<Game> games = new List<Game>();
+    print ("got results");
+    int i = 0;
+    for (final row in results) {
+      print(i);
+      if (i == 20) {
+        print ("returning");
+        return games;
+      }
+      i++;
+      //find publisher name from email
+      games.add(new Game.short(
+          appid: row[3],
+          name: row[4],
+          developer: row[12],
+          publisher: row[11],
+          averagePlaytime: row[5],
+          sellprice: (row[8] * 1.0),
+          price: (row[7] * 1.0)));
+    }
+    await connection.close();
   }
 
   Future<List<Game>> getAllGames() async{
