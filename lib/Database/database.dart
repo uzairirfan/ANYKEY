@@ -28,9 +28,15 @@ class Database {
 
   void updateCart(int appid, int quantity) async{
     await connection.open();
-
-    String query =
+    String query;
+    if (quantity <= 0){
+      query =
+          "delete from user_cart where appid = $appid";
+    }
+    else{
+    query =
         "update user_cart set quantity = $quantity where appid = $appid";
+    }
 
     await connection.query(query);
     await connection.close();
