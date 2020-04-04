@@ -51,7 +51,7 @@ CREATE TABLE public.orders (
     street_no smallint NOT NULL,
     street character varying(30) NOT NULL,
     city character varying(30) NOT NULL,
-    orderdate timestamp without time zone NOT NULL,
+    orderdate bigint NOT NULL,
     tracking_no bigint NOT NULL
 );
 
