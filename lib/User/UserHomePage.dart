@@ -8,7 +8,7 @@ class UserHomePage extends StatelessWidget {
   List<Game> featured = new List<Game>();
 
   Future<bool> getGames() async {
-    print ("in get");
+    print("in get");
     games = await Database().getRecommended();
     featured = await Database().getRandom();
     print ("after get");
@@ -19,16 +19,15 @@ class UserHomePage extends StatelessWidget {
     gotRecommended = getGames();
   }
 
-  void submit(){
-
-  }
+  void submit() {}
 
   @override
   Widget build(BuildContext context) {
     int quantity;
     return new Scaffold(
         appBar: AppBar(
-          title: Text('HOME',
+          title: Text(
+            'HOME',
             style: TextStyle(
               color: Colors.purple,
               fontSize: 16.0,
