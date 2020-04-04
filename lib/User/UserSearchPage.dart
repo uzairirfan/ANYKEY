@@ -71,6 +71,15 @@ class _UserSearchPageState extends State<UserSearchPage> {
           onSearch: search,
         onItemFound: (Post post, int index) {
       return ListTile(
+        leading: ConstrainedBox(
+  constraints: BoxConstraints(
+    minWidth: 44,
+    minHeight: 44,
+    maxWidth: 64,
+    maxHeight: 64,
+  ),
+  child: Image.network('https://steamcdn-a.akamaihd.net/steam/apps/${post.appid}/header.jpg'),
+),
         title: Text(post.title),
         subtitle: Text(post.body),
           onTap: () {
