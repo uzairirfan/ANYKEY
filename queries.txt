@@ -37,3 +37,9 @@ insert into $type values ('$email', '$password')
 
 //checking user credentials
 select * from $type where email = '$email'
+
+// not used yet
+select genre, count(*) from
+game_gen natural join game natural join user_cart
+where email = 'fake@hotmail.com'
+group by genre

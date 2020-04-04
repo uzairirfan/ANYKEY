@@ -45,7 +45,6 @@ CREATE TABLE public.genre (
 
 CREATE TABLE public.orders (
     order_id bigint NOT NULL,
-    appid bigint NOT NULL,
     card bigint NOT NULL,
     email character varying(15) NOT NULL,
     street_no smallint NOT NULL,
@@ -148,9 +147,6 @@ ALTER TABLE ONLY public.bank_info
 
 ALTER TABLE ONLY public.bank_info
     ADD CONSTRAINT bank_info_email_fkey FOREIGN KEY (email) REFERENCES public.users(email);
-
-ALTER TABLE ONLY public.orders
-    ADD CONSTRAINT orders_appid_fkey FOREIGN KEY (appid) REFERENCES public.game(appid);
 
 ALTER TABLE ONLY public.orders
     ADD CONSTRAINT orders_street_no_street_city_fkey FOREIGN KEY (street_no, street, city) REFERENCES public.address(street_no, street, city);

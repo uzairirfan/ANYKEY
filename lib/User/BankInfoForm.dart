@@ -1,10 +1,11 @@
+import 'package:bookeep/Database/database.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
 
 class BankInfo extends StatefulWidget {
    Map<String, String> addressForm = {};
-  CurrTaskFormPage(Map<String, String> map) {
+  BankInfo(Map<String, String> map) {
    addressForm = map;
   }
   BankInfoState createState() => BankInfoState(addressForm);
@@ -12,7 +13,7 @@ class BankInfo extends StatefulWidget {
 
 class BankInfoState extends State {
   final _formKey = GlobalKey<FormState>();
-  final Map<String, dynamic> _formData = {'Card': null,
+  final Map<String, String> _formData = {'Card': null,
     'Back': null,  'Expiry': null,  'First': null,  'Last': null};
   Map<String, String> addressForm = {};
   BankInfoState(Map<String, String> map) {
@@ -76,7 +77,7 @@ class BankInfoState extends State {
       decoration: InputDecoration(labelText: 'Card'),
       keyboardType: TextInputType.number,
       onSaved: (String value) {
-        _formData['Card'] = value;
+        _formData['Card'] = value.toString();
       },
     );
   }
@@ -89,14 +90,14 @@ class BankInfoState extends State {
                 decoration: InputDecoration(labelText: 'Expiry Date'),
                 keyboardType: TextInputType.datetime,
                 onSaved: (String value) {
-                  _formData['Expiry'] = value;
+                  _formData['Expiry'] = value.toString();
                 },
               )),
           Flexible(child:TextFormField(
             decoration: InputDecoration(labelText: ' CVV'),
             keyboardType: TextInputType.number,
             onSaved: (String value) {
-              _formData['Back'] = value;
+              _formData['Back'] = value.toString();
             },
           )),
 
@@ -118,6 +119,7 @@ class BankInfoState extends State {
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
         print(_formData);
+        Database().checkOut(addressForm, _formData);
         Navigator.pop(context);
         Navigator.pop(context);
       }

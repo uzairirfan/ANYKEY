@@ -8,7 +8,7 @@ class UserCheckoutPage extends StatelessWidget {
   double price;
   List<Game> games = new List<Game>();
   Future<bool> getGames() async {
-    games = await Database().getCart();
+    games = await Database().getCart(false);
     price = await Database().getCartTotal();
     print("after games");
     for (Game g in games) print(g.toString());
@@ -26,6 +26,7 @@ class UserCheckoutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     getGames();
+    int quantity;
     return new Scaffold(
         appBar: AppBar(
         title: Text('CART',
@@ -37,11 +38,11 @@ class UserCheckoutPage extends StatelessWidget {
         backgroundColor: Colors.black,),
     body: Container(
         margin: EdgeInsets.symmetric(horizontal: 16.0),
-        height: 700,
         child: FutureBuilder(
             future: gotCart,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
+                getGames();
                 return Column(
                     children: <Widget>[
                       new Container(
@@ -54,7 +55,43 @@ class UserCheckoutPage extends StatelessWidget {
                       return ListTile(
                         title: Text(games[position].name),
                         subtitle: Text(games[position].toCart()),
+                          onTap: () {
+                            return showDialog(
+                              context: context,
+                              barrierDismissible: false, // user must tap button for close dialog!
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Would you like to change the quantity for ${games[position].name}?'),
+                                  content:
+                                  new TextField(
+                                    autofocus: true,
+                                    decoration: new InputDecoration(
+                                        labelText: 'Quantity', hintText: 'eg. 1, 2, etc.'),
+                                    onChanged: (value) {
+                                      quantity = int.parse(value);
+                                    },
+                                  ),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      child: const Text('CANCEL'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    FlatButton(
+                                      child: const Text('ACCEPT'),
+                                      onPressed: () {
+                                        Database().updateCart(games[position].appid, quantity);
+                                        Navigator.of(context).pop();
+                                      },
+                                    )
+                                  ],
+                                );
+                              },
+                            );
+                          }
                       );
+
                     },
                     itemCount: games.length,
                     separatorBuilder: (context, index) {

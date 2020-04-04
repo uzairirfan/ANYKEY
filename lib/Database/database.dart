@@ -26,6 +26,16 @@ class Database {
     return gameData;
   }
 
+  void updateCart(int appid, int quantity) async{
+    await connection.open();
+
+    String query =
+        "update user_cart set quantity = $quantity where appid = $appid";
+
+    await connection.query(query);
+    await connection.close();
+  }
+
   void addToCart(int appid, int quantity) async {
     await connection.open();
 
@@ -37,7 +47,7 @@ class Database {
   }
 
   Future<double> getCartTotal() async{
-    List<Game> cart = await getCart();
+    List<Game> cart = await getCart(false);
     double total = 0;
     for (Game g in cart){
       total = total + (g.price*g.quantity);
@@ -73,8 +83,8 @@ class Database {
     await connection.query(query);
   }
 
-  Future<List<Game>> getCart() async{
-    await connection.open();
+  Future<List<Game>> getCart(bool open) async{
+    if (!open) await connection.open();
     String query =
         "select * from user_cart natural join game natural join publisher natural join developer where email = '$email'";
     var results = await connection.query(query);
@@ -89,19 +99,48 @@ class Database {
           averagePlaytime: row[6],
           sellprice: (row[9] * 1.0),
           price: (row[8] * 1.0),
-      quantity: row[2]));
+          quantity: row[4]));
     }
-    await connection.close();
+    if (!open) await connection.close();
     return games;
   }
 
+  void checkOut(Map<String, String> address, Map<String, String> bank) async{
+    await connection.open();
+    //address(street_no, street, city, province, country)
+    print (address);
+    var query = "insert into address values ('${address['Street Number']}', '${address['Street']}', '${address['City']}', '${address['Province']}', '${address['Country']}')";
+    print(query);
+    await connection.query(query);
+    //bank_info(card, email, street_no, street, city, first_name, last_name)
+    query = "insert into bank_info values ('${bank['Card']}', '$email', '${address['Street Number']}', '${address['Street']}', '${address['City']}', '${bank['First']}', '${bank['Last']}')";
+    print (query);
+    await connection.query(query);
+    //user_bank(email, card)
+    query = "insert into user_bank values ('$email', '${bank['Card']}')";
+    print (query);
+    await connection.query(query);
+    //orders(order_id, card, email, street_no, street, city, date, tracking_no)
+    String id = (new DateTime.now().millisecondsSinceEpoch).toString();
+    id = id.substring(id.length - 10);
+    int orderId = (int.parse(id));
+    query = "insert into orders values ($orderId, '${bank['Card']}', '$email', '${address['Street Number']}', '${address['Street']}', '${address['City']}', $orderId,  ${DateTime.now().millisecondsSinceEpoch})";
+    print (query);
+    await connection.query(query);
+    //game_order(appid, order_id, quantity)
+    List<Game> cart = await getCart(true);
+    for (Game g in cart){
+      query = "insert into game_order values (${g.appid}, $orderId, ${g.quantity})";
+      print (query);
+      await connection.query(query);
+    }
+    query ="delete from user_cart where email = $email}";
+    print (query);
+    await connection.query(query);
+    await connection.close();
+  }
+
   Future<List> searchGames(String s) async {
-    var connection = new PostgreSQLConnection(
-        "ec2-184-72-236-3.compute-1.amazonaws.com", 5432, "d3bujikbsk6o86",
-        username: "ajomrhjjziksqi",
-        password:
-            "b5ee3764068c5cbfa5a9534565e4a367d8d235ea42fdb326e67b98b8f72ca274",
-        useSSL: true);
     await connection.open();
     List<Game> games = new List<Game>();
     String query =
