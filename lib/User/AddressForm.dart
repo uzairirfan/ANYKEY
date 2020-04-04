@@ -10,7 +10,7 @@ class AddressForm extends StatefulWidget {
 
 class AddressFormState extends State {
   final _formKey = GlobalKey<FormState>();
-  final Map<String, dynamic> _formData = {'Street Number': null,
+  final Map<String, String> _formData = {'Street Number': null,
     'Street': null,  'City': null,  'Province': null,  'Country': null};
 
   Widget build(BuildContext context) {
@@ -114,7 +114,7 @@ class AddressFormState extends State {
         Navigator.of(context).push(
             MaterialPageRoute(
                 builder: (context){
-                  return BankInfo();
+                  return BankInfo(_formData);
                 }
             ));
       }
