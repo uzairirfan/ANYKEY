@@ -62,6 +62,27 @@ class Database {
     return total;
   }
 
+  Future<List<Game>> getRandom() async {
+    await connection.open();
+    List<Game> games = new List<Game>();
+    for (int i = 0; i < 5; i++) {
+      String query = "SELECT * FROM game natural join publisher natural join developer OFFSET floor(random()*1000) LIMIT 1;";
+      var results = await connection.query(query);
+      for (final row in results) {
+        games.add(new Game.short(
+            appid: row[2],
+            name: row[3],
+            developer: row[10],
+            publisher: row[9],
+            averagePlaytime: row[4],
+            sellprice: (row[7] * 1.0),
+            price: (row[6] * 1.0)));
+      }
+    }
+    await connection.close();
+    return games;
+  }
+
   Future<List<Game>> getRecommended() async{
     await connection.open();
     String query = "with x as ( WITH agg AS ( select genre, count(*) from game_gen natural join game natural join game_order natural join orders where email = '$email'"
