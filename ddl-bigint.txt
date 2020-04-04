@@ -7,13 +7,13 @@ CREATE TABLE public.address (
 );
 
 CREATE TABLE public.admin (
-    email character varying(30) NOT NULL,
+    email character varying(40) NOT NULL,
     password character varying(15) NOT NULL
 );
 
 CREATE TABLE public.bank_info (
     card BIGINT NOT NULL,
-    email character varying(15) NOT NULL,
+    email character varying(40) NOT NULL,
     street_no SMALLINT NOT NULL,
     street character varying(30) NOT NULL,
     city character varying(30) NOT NULL,
@@ -45,14 +45,13 @@ CREATE TABLE public.genre (
 
 CREATE TABLE public.orders (
     order_id bigint NOT NULL,
-    appid bigint NOT NULL,
     card bigint NOT NULL,
-    email character varying(15) NOT NULL,
+    email character varying(40) NOT NULL,
     street_no smallint NOT NULL,
     street character varying(30) NOT NULL,
     city character varying(30) NOT NULL,
-    orderdate bigint NOT NULL,
-    tracking_no bigint NOT NULL
+    tracking_no bigint NOT NULL,
+    orderdate bigint NOT NULL
 );
 
 CREATE TABLE public.publisher (
@@ -62,9 +61,9 @@ CREATE TABLE public.publisher (
 
 CREATE TABLE public.restock_order (
     order_id bigint NOT NULL,
-    pub_email character varying(10) NOT NULL,
+    pub_email character varying(60) NOT NULL,
     ware_id bigint NOT NULL,
-    email character varying(15) NOT NULL,
+    email character varying(40) NOT NULL,
     appid bigint NOT NULL,
     quantity smallint NOT NULL,
     orderdate timestamp without time zone NOT NULL
@@ -148,9 +147,6 @@ ALTER TABLE ONLY public.bank_info
 
 ALTER TABLE ONLY public.bank_info
     ADD CONSTRAINT bank_info_email_fkey FOREIGN KEY (email) REFERENCES public.users(email);
-
-ALTER TABLE ONLY public.orders
-    ADD CONSTRAINT orders_appid_fkey FOREIGN KEY (appid) REFERENCES public.game(appid);
 
 ALTER TABLE ONLY public.orders
     ADD CONSTRAINT orders_street_no_street_city_fkey FOREIGN KEY (street_no, street, city) REFERENCES public.address(street_no, street, city);
