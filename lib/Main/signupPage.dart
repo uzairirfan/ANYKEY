@@ -1,6 +1,7 @@
 import 'package:bookeep/Database/database.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import '../User/AddressForm.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key key, this.title}) : super(key: key);
@@ -75,7 +76,12 @@ class _RegisterPage extends State<RegisterPage> {
                     if (_formKey.currentState.validate()) {
                       if (owner) _type = "admin";
                       Database().saveUser(_email, _username, _password, _type);
-                      Navigator.pop(context);
+                      Navigator.of(context).push(
+                      MaterialPageRoute(
+                      builder: (context){
+                      return AddressForm();
+                      }
+                      ));
                     }
                   },
                   child: Text('Sign Up!'),
