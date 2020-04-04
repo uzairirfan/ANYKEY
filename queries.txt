@@ -38,8 +38,19 @@ insert into $type values ('$email', '$password')
 //checking user credentials
 select * from $type where email = '$email'
 
-// not used yet
-select genre, count(*) from
-game_gen natural join game natural join user_cart
-where email = 'fake@hotmail.com'
-group by genre
+
+// to find recommended based off of the most popular genre in the user's orders
+with x as (
+	WITH agg AS (
+		select genre, count(*) from
+		game_gen natural join game natural join game_order natural join orders
+		where email = 'fake@hotmail.com'
+		group by genre
+    )
+	SELECT genre, count
+	FROM agg
+	WHERE agg.count = (SELECT MAX(count) FROM agg)
+)
+select *
+from game natural join game_gen natural join x natural join publisher natural join developer
+where genre = x.genre;
