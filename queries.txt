@@ -31,13 +31,17 @@ insert into game_gen values ('$g', '${gamelist.games[i].appid}') on conflict do 
 //inserting game into warehouse (there's only one warehouse)
 insert into warehouse values ('123456789', '${gamelist.games[i].appid}', 10) on conflict do nothing
       
+//for updating an item in the cart's quantity
+//if quantity = 0
+delete from user_cart where appid = $appid
+//else
+update user_cart set quantity = $quantity where appid = $appid
 
 //adding user or admin to table
 insert into $type values ('$email', '$password')
 
 //checking user credentials
 select * from $type where email = '$email'
-
 
 // to find recommended based off of the most popular genre in the user's orders
 with x as (
@@ -54,3 +58,14 @@ with x as (
 select *
 from game natural join game_gen natural join x natural join publisher natural join developer
 where genre = x.genre;
+
+//get the orders details of a specific user
+select * from orders natural join address where email = '$email'
+
+//get the ordered game details of a specific order
+select * from orders natural join game_order natural join
+game natural join publisher natural join developer  where order_id =${row[3]}
+
+//selecting random game for the featured list
+SELECT * FROM game natural join publisher natural join developer OFFSET floor(random()*1000) LIMIT 1;
+
