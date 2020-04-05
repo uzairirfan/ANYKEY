@@ -11,7 +11,7 @@ class UserCheckoutPage extends StatelessWidget {
   Future<bool> getGames() async {
     games = await Database().getCart(false);
     price = await Database().getCartTotal();
-    genredata = await Database().getGenreData();
+    genredata = await Database().getDeveloperData();
     print (genredata);
     print("after games");
     for (Game g in games) print(g.toString());

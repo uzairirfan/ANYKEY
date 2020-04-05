@@ -236,7 +236,9 @@ class Database {
   Future<Map<String, List<int>>> getGenreData() async{
     await connection.open();
     Map<String, List<int>> genreData = new Map<String, List<int>>();
-    String query ="select sum(quantity)::smallint, genre, sum(sell_price), sum(buy_price) from game_order natural join game natural join game_gen group by genre";
+    String query ="select sum(quantity)::smallint, genre, sum(sell_price), "
+        "sum(buy_price) from game_order natural join game natural join game_gen "
+        "group by genre";
     var results = await connection.query(query);
     for (final row in results) {
       List<int> i = new List<int>();
@@ -249,6 +251,39 @@ class Database {
     await connection.close();
     return genreData;
   }
+
+  Future<Map<String, List<int>>> getPublisherData() async{
+    await connection.open();
+    Map<String, List<int>> genreData = new Map<String, List<int>>();
+    String query ="select sum(quantity)::smallint, pub_name, sum(sell_price), sum(buy_price) from game_order natural join game natural join publisher group by pub_name";
+    var results = await connection.query(query);
+    for (final row in results) {
+      List<int> i = new List<int>();
+      i.add(row[0]);
+      i.add(row[2]);
+      i.add(row[3]);
+      genreData['${row[1]}'] = i;
+    }
+    await connection.close();
+    return genreData;
+  }
+
+  Future<Map<String, List<int>>> getDeveloperData() async{
+    await connection.open();
+    Map<String, List<int>> genreData = new Map<String, List<int>>();
+    String query ="select sum(quantity)::smallint, dev_name, sum(sell_price), sum(buy_price) from game_order natural join game natural join developer group by dev_name";
+    var results = await connection.query(query);
+    for (final row in results) {
+      List<int> i = new List<int>();
+      i.add(row[0]);
+      i.add(row[2]);
+      i.add(row[3]);
+      genreData['${row[1]}'] = i;
+    }
+    await connection.close();
+    return genreData;
+  }
+
 
   Future<List> searchGames(String s, String t) async {
     await connection.open();

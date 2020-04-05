@@ -79,4 +79,13 @@ game natural join publisher natural join developer  where order_id =${row[3]}
 SELECT * FROM game natural join publisher natural join developer OFFSET floor(random()*1000) LIMIT 1;
 
 //finding stats for diff genres
-select sum(quantity)::smallint, genre, sum(sell_price), sum(buy_price) from game_order natural join game natural join game_gen group by genre
+select sum(quantity)::smallint, genre, sum(sell_price), sum(buy_price) from game_order
+natural join game natural join game_gen group by genre
+
+//finding stats for diff publishers
+select sum(quantity)::smallint, pub_name, sum(sell_price), sum(buy_price) from game_order
+natural join game natural join publisher group by pub_name
+
+//finding stats for diff developers
+select sum(quantity)::smallint, dev_name, sum(sell_price), sum(buy_price) from game_order
+natural join game natural join developer group by dev_name
