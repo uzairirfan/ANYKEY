@@ -11,7 +11,7 @@ update game set available = false where appid = ${appid}
 select * from user_cart natural join game natural join publisher natural join developer where email = '$email'
   
 //search for games
-SELECT  * FROM  game natural join publisher natural join developer WHERE LOWER(title) LIKE  ANY(SELECT '%' || '${s}'|| '%' FROM game) and available
+SELECT  * FROM  game natural join publisher natural join developer WHERE LOWER(title ) LIKE  ANY(SELECT '%' || '${s}'|| '%' FROM game) and available
 
 //checking if publisher exists before creating tuple
 select exists (select * from publisher where pub_name = '${pubs[0]}')

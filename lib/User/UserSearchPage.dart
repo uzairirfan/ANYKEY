@@ -81,7 +81,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
   child: Image.network('https://steamcdn-a.akamaihd.net/steam/apps/${post.appid}/header.jpg'),
 ),
         title: Text(post.title),
-        subtitle: Text(post.body),
+        //subtitle: Text(post.body),
           onTap: () {
             return showDialog(
               context: context,
@@ -89,6 +89,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: Text('Would you like to add "${post.title}" to your cart?'),
+                  tex: "",
                   content:
                   new TextField(
                     autofocus: true,
