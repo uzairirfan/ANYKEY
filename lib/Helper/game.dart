@@ -87,7 +87,7 @@ class Game {
   String toString() {
     // TODO: implement toString
     return "Title: " + name + ", Developed by: " + developer + ", Published by: "
-    + publisher + ", Price: \$" + price.toString();
+    + publisher + ", Price: \$" + price.toStringAsFixed(2);
   }
 
   String toOwnerString() {
