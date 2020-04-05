@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  charts_flutter: ^0.9.0
   flappy_search_bar: 1.4.1
   email_validator: ^1.0.4
   postgres: ^2.1.0
