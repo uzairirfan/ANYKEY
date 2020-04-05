@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Database/database.dart';
 import '../Helper/game.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class UserHomePage extends StatelessWidget {
   Future<bool> gotRecommended;
@@ -8,10 +9,8 @@ class UserHomePage extends StatelessWidget {
   List<Game> featured = new List<Game>();
 
   Future<bool> getGames() async {
-    print("in get");
     games = await Database().getRecommended();
     featured = await Database().getRandom();
-    print("after get");
     return true;
   }
 
@@ -25,18 +24,7 @@ class UserHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     int quantity;
     return new Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'HOME',
-            style: TextStyle(
-              color: Colors.purple,
-              fontSize: 16.0,
-            ),
-          ),
-          backgroundColor: Colors.black,
-        ),
         body: Container(
-            margin: EdgeInsets.symmetric(horizontal: 16.0),
             child: FutureBuilder(
                 future: gotRecommended,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -55,71 +43,136 @@ class UserHomePage extends StatelessWidget {
                                     fontSize: 14.0,
                                   ))),
                           new Container(
-                              height: 250,
-                              child: ListView.separated(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                itemBuilder: (context, position) {
-                                  return ListTile(
-                                      leading: ConstrainedBox(
-                                        constraints: BoxConstraints(
-                                          minWidth: 44,
-                                          minHeight: 44,
-                                          maxWidth: 64,
-                                          maxHeight: 64,
-                                        ),
-                                        child: Image.network(
-                                            'https://steamcdn-a.akamaihd.net/steam/apps/${featured[position].appid}/header.jpg'),
-                                      ),
-                                      title: Text(featured[position].name),
-                                      subtitle:
-                                          Text(featured[position].toString()),
-                                      onTap: () {
-                                        return showDialog(
-                                          context: context,
-                                          barrierDismissible:
-                                              false, // user must tap button for close dialog!
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title: Text(
-                                                  'Would you like to add "${featured[position].name}" to your cart?'),
-                                              content: new TextField(
-                                                autofocus: true,
-                                                decoration: new InputDecoration(
-                                                    labelText: 'Quantity',
-                                                    hintText: 'eg. 1, 2, etc.'),
-                                                onChanged: (value) {
-                                                  quantity = int.parse(value);
-                                                },
-                                              ),
-                                              actions: <Widget>[
-                                                FlatButton(
-                                                  child: const Text('CANCEL'),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                ),
-                                                FlatButton(
-                                                  child: const Text('ACCEPT'),
-                                                  onPressed: () {
-                                                    Database().addToCart(
-                                                        featured[position]
-                                                            .appid,
-                                                        quantity);
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                )
-                                              ],
-                                            );
-                                          },
+                              child: CarouselSlider(
+                            items: featured.map((i) {
+                              return Builder(
+                                builder: (BuildContext context) {
+                                  return Container(
+                                      child: GestureDetector(onTap: () {return showDialog(
+                                      context: context,
+                                      barrierDismissible:
+                                          false, // user must tap button for close dialog!
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text(
+                                              'Would you like to add "${i.name}" to your cart?'),
+                                          content: new TextField(
+                                            autofocus: true,
+                                            decoration: new InputDecoration(
+                                                labelText: 'Quantity',
+                                                hintText: 'eg. 1, 2, etc.'),
+                                            onChanged: (value) {
+                                              quantity = int.parse(value);
+                                            },
+                                          ),
+                                          actions: <Widget>[
+                                            FlatButton(
+                                              child: const Text('CANCEL'),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                            FlatButton(
+                                              child: const Text('ACCEPT'),
+                                              onPressed: () {
+                                                Database().addToCart(
+                                                    i.appid,
+                                                    quantity);
+                                                Navigator.of(context).pop();
+                                              },
+                                            )
+                                          ],
                                         );
-                                      });
+                                      },
+                                    );}),
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: NetworkImage('https://steamcdn-a.akamaihd.net/steam/apps/${i.appid}/header.jpg')),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(8.0)),
+                                        color: Colors.redAccent,
+                                      ));
                                 },
-                                itemCount: featured.length,
-                                separatorBuilder: (context, index) {
-                                  return Divider();
-                                },
-                              )),
+                              );
+                            }).toList(),
+                            height: 200,
+                            enableInfiniteScroll: true,
+                            reverse: false,
+                            autoPlay: true,
+                            autoPlayInterval: Duration(seconds: 3),
+                            autoPlayAnimationDuration:
+                                Duration(milliseconds: 800),
+                            autoPlayCurve: Curves.fastOutSlowIn,
+                            pauseAutoPlayOnTouch: Duration(seconds: 1),
+                            enlargeCenterPage: true,
+                            scrollDirection: Axis.horizontal,
+                          )
+                              // child: ListView.separated(
+                              //   scrollDirection: Axis.vertical,
+                              //   shrinkWrap: true,
+                              //   itemBuilder: (context, position) {
+                              //     return ListTile(
+                              //         leading: ConstrainedBox(
+                              //           constraints: BoxConstraints(
+                              //             minWidth: 44,
+                              //             minHeight: 44,
+                              //             maxWidth: 64,
+                              //             maxHeight: 64,
+                              //           ),
+                              //           child: Image.network(
+                              //               'https://steamcdn-a.akamaihd.net/steam/apps/${featured[position].appid}/header.jpg'),
+                              //         ),
+                              //         title: Text(featured[position].name),
+                              //         subtitle:
+                              //             Text(featured[position].toString()),
+                              //         onTap: () {
+                              //           return showDialog(
+                              //             context: context,
+                              //             barrierDismissible:
+                              //                 false, // user must tap button for close dialog!
+                              //             builder: (BuildContext context) {
+                              //               return AlertDialog(
+                              //                 title: Text(
+                              //                     'Would you like to add "${featured[position].name}" to your cart?'),
+                              //                 content: new TextField(
+                              //                   autofocus: true,
+                              //                   decoration: new InputDecoration(
+                              //                       labelText: 'Quantity',
+                              //                       hintText: 'eg. 1, 2, etc.'),
+                              //                   onChanged: (value) {
+                              //                     quantity = int.parse(value);
+                              //                   },
+                              //                 ),
+                              //                 actions: <Widget>[
+                              //                   FlatButton(
+                              //                     child: const Text('CANCEL'),
+                              //                     onPressed: () {
+                              //                       Navigator.of(context).pop();
+                              //                     },
+                              //                   ),
+                              //                   FlatButton(
+                              //                     child: const Text('ACCEPT'),
+                              //                     onPressed: () {
+                              //                       Database().addToCart(
+                              //                           featured[position]
+                              //                               .appid,
+                              //                           quantity);
+                              //                       Navigator.of(context).pop();
+                              //                     },
+                              //                   )
+                              //                 ],
+                              //               );
+                              //             },
+                              //           );
+                              //         });
+                              //   },
+                              //   itemCount: featured.length,
+                              //   separatorBuilder: (context, index) {
+                              //     return Divider();
+                              //   },
+                              // )
+                              ),
                           Padding(
                               padding: EdgeInsets.all(20.0),
                               child: Text('RECOMMENDED',
@@ -128,71 +181,69 @@ class UserHomePage extends StatelessWidget {
                                     color: Colors.purple,
                                     fontSize: 14.0,
                                   ))),
-                          new Container(
-                              height: 250,
+                          new Expanded(
                               child: ListView.separated(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                itemBuilder: (context, position) {
-                                  return ListTile(
-                                      leading: ConstrainedBox(
-                                        constraints: BoxConstraints(
-                                          minWidth: 44,
-                                          minHeight: 44,
-                                          maxWidth: 64,
-                                          maxHeight: 64,
-                                        ),
-                                        child: Image.network(
-                                            'https://steamcdn-a.akamaihd.net/steam/apps/${games[position].appid}/header.jpg'),
-                                      ),
-                                      title: Text(games[position].name),
-                                      subtitle:
-                                          Text(games[position].toString()),
-                                      onTap: () {
-                                        return showDialog(
-                                          context: context,
-                                          barrierDismissible:
-                                              false, // user must tap button for close dialog!
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title: Text(
-                                                  'Would you like to add "${games[position].name}" to your cart?'),
-                                              content: new TextField(
-                                                autofocus: true,
-                                                decoration: new InputDecoration(
-                                                    labelText: 'Quantity',
-                                                    hintText: 'eg. 1, 2, etc.'),
-                                                onChanged: (value) {
-                                                  quantity = int.parse(value);
-                                                },
-                                              ),
-                                              actions: <Widget>[
-                                                FlatButton(
-                                                  child: const Text('CANCEL'),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                ),
-                                                FlatButton(
-                                                  child: const Text('ACCEPT'),
-                                                  onPressed: () {
-                                                    Database().addToCart(
-                                                        games[position].appid,
-                                                        quantity);
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                )
-                                              ],
-                                            );
-                                          },
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemBuilder: (context, position) {
+                              return ListTile(
+                                  leading: ConstrainedBox(
+                                    constraints: BoxConstraints(
+                                      minWidth: 44,
+                                      minHeight: 44,
+                                      maxWidth: 64,
+                                      maxHeight: 64,
+                                    ),
+                                    child: Image.network(
+                                        'https://steamcdn-a.akamaihd.net/steam/apps/${games[position].appid}/header.jpg'),
+                                  ),
+                                  title: Text(games[position].name),
+                                  subtitle: Text(games[position].toString()),
+                                  onTap: () {
+                                    return showDialog(
+                                      context: context,
+                                      barrierDismissible:
+                                          false, // user must tap button for close dialog!
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text(
+                                              'Would you like to add "${games[position].name}" to your cart?'),
+                                          content: new TextField(
+                                            autofocus: true,
+                                            decoration: new InputDecoration(
+                                                labelText: 'Quantity',
+                                                hintText: 'eg. 1, 2, etc.'),
+                                            onChanged: (value) {
+                                              quantity = int.parse(value);
+                                            },
+                                          ),
+                                          actions: <Widget>[
+                                            FlatButton(
+                                              child: const Text('CANCEL'),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                            FlatButton(
+                                              child: const Text('ACCEPT'),
+                                              onPressed: () {
+                                                Database().addToCart(
+                                                    games[position].appid,
+                                                    quantity);
+                                                Navigator.of(context).pop();
+                                              },
+                                            )
+                                          ],
                                         );
-                                      });
-                                },
-                                itemCount: games.length,
-                                separatorBuilder: (context, index) {
-                                  return Divider();
-                                },
-                              )),
+                                      },
+                                    );
+                                  });
+                            },
+                            itemCount: games.length,
+                            separatorBuilder: (context, index) {
+                              return Divider();
+                            },
+                          )),
                         ]);
                   } else {
                     return CircularProgressIndicator();
