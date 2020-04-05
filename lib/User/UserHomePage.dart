@@ -11,7 +11,7 @@ class UserHomePage extends StatelessWidget {
     print("in get");
     games = await Database().getRecommended();
     featured = await Database().getRandom();
-    print ("after get");
+    print("after get");
     return true;
   }
 
@@ -33,45 +33,61 @@ class UserHomePage extends StatelessWidget {
               fontSize: 16.0,
             ),
           ),
-          backgroundColor: Colors.black,),
-        body:
-        Container(
+          backgroundColor: Colors.black,
+        ),
+        body: Container(
             margin: EdgeInsets.symmetric(horizontal: 16.0),
             child: FutureBuilder(
                 future: gotRecommended,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  print (gotRecommended);
+                  print(gotRecommended);
                   if (snapshot.hasData) {
                     print("has data");
                     return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Padding(padding: EdgeInsets.all(20.0), child:Text('FEATURED',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(color: Colors.purple,
-                                fontSize: 14.0,))),
+                          Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child: Text('FEATURED',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    color: Colors.purple,
+                                    fontSize: 14.0,
+                                  ))),
                           new Container(
                               height: 250,
-                              child:
-                              ListView.separated(
+                              child: ListView.separated(
                                 scrollDirection: Axis.vertical,
                                 shrinkWrap: true,
                                 itemBuilder: (context, position) {
                                   return ListTile(
+                                      leading: ConstrainedBox(
+                                        constraints: BoxConstraints(
+                                          minWidth: 44,
+                                          minHeight: 44,
+                                          maxWidth: 64,
+                                          maxHeight: 64,
+                                        ),
+                                        child: Image.network(
+                                            'https://steamcdn-a.akamaihd.net/steam/apps/${featured[position].appid}/header.jpg'),
+                                      ),
                                       title: Text(featured[position].name),
-                                      subtitle: Text(featured[position].toString()),
+                                      subtitle:
+                                          Text(featured[position].toString()),
                                       onTap: () {
                                         return showDialog(
                                           context: context,
-                                          barrierDismissible: false, // user must tap button for close dialog!
+                                          barrierDismissible:
+                                              false, // user must tap button for close dialog!
                                           builder: (BuildContext context) {
                                             return AlertDialog(
-                                              title: Text('Would you like to add "${featured[position].name}" to your cart?'),
-                                              content:
-                                              new TextField(
+                                              title: Text(
+                                                  'Would you like to add "${featured[position].name}" to your cart?'),
+                                              content: new TextField(
                                                 autofocus: true,
                                                 decoration: new InputDecoration(
-                                                    labelText: 'Quantity', hintText: 'eg. 1, 2, etc.'),
+                                                    labelText: 'Quantity',
+                                                    hintText: 'eg. 1, 2, etc.'),
                                                 onChanged: (value) {
                                                   quantity = int.parse(value);
                                                 },
@@ -86,7 +102,10 @@ class UserHomePage extends StatelessWidget {
                                                 FlatButton(
                                                   child: const Text('ACCEPT'),
                                                   onPressed: () {
-                                                    Database().addToCart(featured[position].appid, quantity);
+                                                    Database().addToCart(
+                                                        featured[position]
+                                                            .appid,
+                                                        quantity);
                                                     Navigator.of(context).pop();
                                                   },
                                                 )
@@ -94,40 +113,55 @@ class UserHomePage extends StatelessWidget {
                                             );
                                           },
                                         );
-                                      }
-                                  );
+                                      });
                                 },
                                 itemCount: featured.length,
                                 separatorBuilder: (context, index) {
                                   return Divider();
                                 },
                               )),
-                          Padding(padding: EdgeInsets.all(20.0), child:Text('RECOMMENDED',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(color: Colors.purple,
-                                fontSize: 14.0,))),
+                          Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child: Text('RECOMMENDED',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    color: Colors.purple,
+                                    fontSize: 14.0,
+                                  ))),
                           new Container(
                               height: 250,
-                              child:
-                              ListView.separated(
+                              child: ListView.separated(
                                 scrollDirection: Axis.vertical,
                                 shrinkWrap: true,
                                 itemBuilder: (context, position) {
                                   return ListTile(
+                                      leading: ConstrainedBox(
+                                        constraints: BoxConstraints(
+                                          minWidth: 44,
+                                          minHeight: 44,
+                                          maxWidth: 64,
+                                          maxHeight: 64,
+                                        ),
+                                        child: Image.network(
+                                            'https://steamcdn-a.akamaihd.net/steam/apps/${games[position].appid}/header.jpg'),
+                                      ),
                                       title: Text(games[position].name),
-                                      subtitle: Text(games[position].toString()),
+                                      subtitle:
+                                          Text(games[position].toString()),
                                       onTap: () {
                                         return showDialog(
                                           context: context,
-                                          barrierDismissible: false, // user must tap button for close dialog!
+                                          barrierDismissible:
+                                              false, // user must tap button for close dialog!
                                           builder: (BuildContext context) {
                                             return AlertDialog(
-                                              title: Text('Would you like to add "${games[position].name}" to your cart?'),
-                                              content:
-                                              new TextField(
+                                              title: Text(
+                                                  'Would you like to add "${games[position].name}" to your cart?'),
+                                              content: new TextField(
                                                 autofocus: true,
                                                 decoration: new InputDecoration(
-                                                    labelText: 'Quantity', hintText: 'eg. 1, 2, etc.'),
+                                                    labelText: 'Quantity',
+                                                    hintText: 'eg. 1, 2, etc.'),
                                                 onChanged: (value) {
                                                   quantity = int.parse(value);
                                                 },
@@ -142,7 +176,9 @@ class UserHomePage extends StatelessWidget {
                                                 FlatButton(
                                                   child: const Text('ACCEPT'),
                                                   onPressed: () {
-                                                    Database().addToCart(games[position].appid, quantity);
+                                                    Database().addToCart(
+                                                        games[position].appid,
+                                                        quantity);
                                                     Navigator.of(context).pop();
                                                   },
                                                 )
@@ -150,8 +186,7 @@ class UserHomePage extends StatelessWidget {
                                             );
                                           },
                                         );
-                                      }
-                                  );
+                                      });
                                 },
                                 itemCount: games.length,
                                 separatorBuilder: (context, index) {
@@ -162,7 +197,6 @@ class UserHomePage extends StatelessWidget {
                   } else {
                     return CircularProgressIndicator();
                   }
-                }))
-    );
+                })));
   }
 }
