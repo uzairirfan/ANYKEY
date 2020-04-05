@@ -1,3 +1,4 @@
+import 'package:bookeep/Helper/order.dart';
 import 'package:postgres/postgres.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -61,6 +62,41 @@ class Database {
     }
     return total;
   }
+
+  Future<List<Order>> getOrders() async{
+    await connection.open();
+    String query =
+        "select * from orders natural join address where email = '$email'";
+    var results = await connection.query(query);
+    List<Order> orders = new List<Order>();
+    for (final row in results){
+      query = "select * from orders natural join game_order natural join game natural join publisher natural join developer  where order_id =${row[3]}";
+      List<Game> games = new List<Game>();
+      var res = await connection.query(query);
+      for (final rw in res) {
+        //find publisher name from email
+        games.add(new Game.short(
+            appid: rw[2],
+            name: rw[12],
+            developer: rw[19],
+            publisher: rw[18],
+            averagePlaytime: rw[13],
+            sellprice: (rw[16] * 1.0),
+            price: (rw[15] * 1.0)));
+      }
+      var date = new DateTime.fromMillisecondsSinceEpoch(row[7] * 1000);
+//Order(this.orders, this.date, this.card, this.streetNo, this.street, this.city, this.country, this.orderId);
+      orders.add(Order(games, date, row[4], row[0], row[1], row[2], row[8], row[9], row[3]));
+    }
+    await connection.close();
+    return orders;
+  }
+      // select * from orders natural join game_order
+      //where email = 'fake@hotmail.com' and order_id = 6028853484
+
+
+
+
 
   Future<List<Game>> getRandom() async {
     await connection.open();

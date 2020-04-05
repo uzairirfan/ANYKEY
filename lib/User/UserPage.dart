@@ -1,4 +1,5 @@
 import 'package:bookeep/User/UserCheckoutPage.dart';
+import 'package:bookeep/User/UserOrderPage.dart';
 import 'package:bookeep/User/UserSearchPage.dart';
 import 'package:flutter/material.dart';
 import '../Database/database.dart';
@@ -18,7 +19,8 @@ class _MyUserPageState extends State<MyUserPage> {
   final List<Widget> _children = [
     UserHomePage(),
     UserSearchPage(),
-    UserCheckoutPage()
+    UserCheckoutPage(),
+    UserOrderPage(),
   ];
   void _incrementCounter() {
     setState(() {
@@ -56,6 +58,10 @@ class _MyUserPageState extends State<MyUserPage> {
             icon: Icon(Icons.shopping_cart),
             title: Text('Cart'),
           ),
+          new BottomNavigationBarItem(
+            icon: Icon(Icons.receipt),
+            title: Text('Orders'),
+          ),
         ],
       ),
     );
@@ -64,9 +70,8 @@ class _MyUserPageState extends State<MyUserPage> {
   void onTabTapped(int index) {
     setState(() {
     //  _incrementCounter();
-
-
       _currentIndex = index;
+      print(_currentIndex);
     });
   }
 }
