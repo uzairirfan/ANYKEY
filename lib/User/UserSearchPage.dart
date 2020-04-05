@@ -22,11 +22,11 @@ class UserSearchPage extends StatefulWidget {
 
 class _UserSearchPageState extends State<UserSearchPage> {
    bool isReplay = false;
-
+   String dropdownValue = 'Title';
    List<Game> games = new List<Game>();
 
    Future<List<Post>> search(String search) async {
-     games = await Database().searchGames(search);
+     games = await Database().searchGames(search, dropdownValue);
      if (games.length == 0) return [];
      return List.generate(games.length, (int index) {
        return Post(
@@ -48,7 +48,44 @@ class _UserSearchPageState extends State<UserSearchPage> {
                 fontSize: 16.0 ,
               )),
         backgroundColor: Colors.black,),
-      body: SafeArea(
+      body:
+          Container(
+           // height:500,
+              child:
+          Column(
+              children: <Widget>[
+
+            Container(
+              //height: 40,
+                child:
+           DropdownButton<String>(
+            value: dropdownValue,
+            isExpanded: true,
+            icon: Icon(Icons.arrow_downward),
+            iconSize: 24,
+            elevation: 16,
+            style: TextStyle(
+                color: Colors.deepPurple
+            ),
+            underline: Container(
+              height: 2,
+              color: Colors.deepPurpleAccent,
+            ),
+            onChanged: (String newValue) {
+              setState(() {
+                dropdownValue = newValue;
+              });
+            },
+            items: <String>['Title', 'Genre', 'Developer', 'Publisher']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            })
+                .toList(),
+          )),
+      Expanded(child: SafeArea(
         child: SearchBar<Post>(
           searchBarPadding: EdgeInsets.symmetric(horizontal: 20),
           headerPadding: EdgeInsets.symmetric(horizontal: 20),
@@ -119,7 +156,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
           }
       );},
         ),
-      ),
-    );
+      )),
+    ])));
   }
 }

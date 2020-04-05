@@ -10,8 +10,17 @@ update game set available = false where appid = ${appid}
 //get items in user's cart
 select * from user_cart natural join game natural join publisher natural join developer where email = '$email'
   
-//search for games
+//search for games by title
 SELECT  * FROM  game natural join publisher natural join developer WHERE LOWER(title) LIKE  ANY(SELECT '%' || '${s}'|| '%' FROM game) and available
+
+//search games by genre
+SELECT  * FROM  game natural join publisher natural join developer natural join game_gen WHERE LOWER(genre) LIKE  ANY(SELECT '%' || '${s}'|| '%' FROM game) and available
+
+//search games by developer
+SELECT  * FROM  game natural join publisher natural join developer WHERE LOWER(dev_name) LIKE  ANY(SELECT '%' || '${s}'|| '%' FROM game) and available
+
+//search games by publisher
+SELECT  * FROM  game natural join publisher natural join developer WHERE LOWER(pub_name) LIKE  ANY(SELECT '%' || '${s}'|| '%' FROM game) and available
 
 //checking if publisher exists before creating tuple
 select exists (select * from publisher where pub_name = '${pubs[0]}')
@@ -69,3 +78,5 @@ game natural join publisher natural join developer  where order_id =${row[3]}
 //selecting random game for the featured list
 SELECT * FROM game natural join publisher natural join developer OFFSET floor(random()*1000) LIMIT 1;
 
+//finding stats for diff genres
+select sum(quantity)::smallint, genre, sum(sell_price), sum(buy_price) from game_order natural join game natural join game_gen group by genre

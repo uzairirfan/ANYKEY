@@ -233,16 +233,37 @@ class Database {
     await connection.close();
   }
 
-  Future<List> searchGames(String s) async {
+  Future<Map<String, List<int>>> getGenreData() async{
     await connection.open();
-    List<Game> games = new List<Game>();
-    String query =
-        "SELECT  * FROM  game natural join publisher natural join developer WHERE LOWER(title) LIKE  ANY(SELECT '%' || '${s}'|| '%' FROM game) and available";
+    Map<String, List<int>> genreData = new Map<String, List<int>>();
+    String query ="select sum(quantity)::smallint, genre, sum(sell_price), sum(buy_price) from game_order natural join game natural join game_gen group by genre";
     var results = await connection.query(query);
     for (final row in results) {
+      List<int> i = new List<int>();
+      i.add(row[0]);
+      i.add(row[2]);
+      i.add(row[3]);
 
+      genreData['${row[1]}'] = i;
+    }
+    await connection.close();
+    return genreData;
+  }
+
+  Future<List> searchGames(String s, String t) async {
+    await connection.open();
+    List<Game> games = new List<Game>();
+    String query = "SELECT  * FROM  game natural join publisher natural join developer WHERE LOWER(title) LIKE  ANY(SELECT '%' || '${s}'|| '%' FROM game) and available";
+    if (t == "Genre") query = "SELECT  * FROM  game natural join publisher natural join developer natural join game_gen WHERE LOWER(genre) LIKE  ANY(SELECT '%' || '${s}'|| '%' FROM game) and available";
+    if (t == "Developer") query = "SELECT  * FROM  game natural join publisher natural join developer WHERE LOWER(dev_name) LIKE  ANY(SELECT '%' || '${s}'|| '%' FROM game) and available";
+    if (t == "Publisher") query = "SELECT  * FROM  game natural join publisher natural join developer WHERE LOWER(pub_name) LIKE  ANY(SELECT '%' || '${s}'|| '%' FROM game) and available";
+    var results = await connection.query(query);
+    for (final row in results) {
+      int appid;
+      if (t == "Genre")appid = row[0];
+      else appid = row[2];
       Game g = new Game.short(
-          appid: row[2],
+          appid: appid,
           name: row[3],
           developer: row[10],
           publisher: row[9],
