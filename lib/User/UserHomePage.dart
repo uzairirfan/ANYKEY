@@ -91,12 +91,12 @@ class UserHomePage extends StatelessWidget {
                                             image: NetworkImage('https://steamcdn-a.akamaihd.net/steam/apps/${i.appid}/header.jpg')),
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(8.0)),
-                                        color: Colors.redAccent,
+                                        color: Colors.black,
                                       ));
                                 },
                               );
                             }).toList(),
-                            height: 200,
+                            aspectRatio: 92/43,
                             enableInfiniteScroll: true,
                             reverse: false,
                             autoPlay: true,

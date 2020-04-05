@@ -41,8 +41,8 @@ class _MyOwnerPageState extends State<MyOwnerPage> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
         currentIndex: _currentIndex,
-        selectedItemColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Theme.of(context).primaryColor,
+        selectedItemColor: Colors.purple,
+        unselectedItemColor: Colors.purple,
         items: [
           new BottomNavigationBarItem(
             icon: Icon(Icons.add_circle),

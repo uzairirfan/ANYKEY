@@ -43,8 +43,8 @@ class _MyUserPageState extends State<MyUserPage> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
         currentIndex: _currentIndex,
-        selectedItemColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Theme.of(context).primaryColor,
+        selectedItemColor: Colors.purple,
+        unselectedItemColor: Colors.purple,
         items: [
           new BottomNavigationBarItem(
             icon: Icon(Icons.home),
