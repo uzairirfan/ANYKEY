@@ -92,8 +92,6 @@ class Database {
     await connection.close();
     return orders;
   }
-      // select * from orders natural join game_order
-      //where email = 'fake@hotmail.com' and order_id = 6028853484
 
 
 
