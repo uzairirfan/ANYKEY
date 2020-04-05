@@ -1,3 +1,4 @@
+import 'package:bookeep/User/SpecificOrderPage.dart';
 import 'package:flutter/material.dart';
 import '../Helper/order.dart';
 import '../Database/database.dart';
@@ -7,21 +8,19 @@ class UserOrderPage extends StatelessWidget {
   List<Order> orders = new List<Order>();
   Future<bool> getGames() async {
     orders = await Database().getOrders();
+    return true;
   }
 
   UserOrderPage() {
     gotOrders = getGames();
   }
-
-  void submit() {}
-
   @override
   Widget build(BuildContext context) {
     getGames();
     return new Scaffold(
         appBar: AppBar(
           title: Text(
-            'CART',
+            'ORDER TRACKING',
             style: TextStyle(
               color: Colors.purple,
               fontSize: 16.0,
@@ -45,20 +44,22 @@ class UserOrderPage extends StatelessWidget {
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             itemBuilder: (context, position) {
-                              return ListTile(
-//                                  leading: ConstrainedBox(
-//                                    constraints: BoxConstraints(
-//                                      minWidth: 44,
-//                                      minHeight: 44,
-//                                      maxWidth: 64,
-//                                      maxHeight: 64,
-//                                    ),
-//                                    child: Image.network(
-//                                        'https://steamcdn-a.akamaihd.net/steam/apps/${orders[position].appid}/header.jpg'),
-//                                  ),
-                                  title: Text(orders[position].orderId.toString()),
-                                 // subtitle: Text(games[position].toCart()),;
-                              );},
+                              return Card(
+                                //                           <-- Card widget
+                                child: ListTile(
+                                    leading: Icon(Icons.mail),
+                                    title: Text(
+                                        "Order number #${orders[position].orderId.toString()}"),
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context){
+                                                return SpecificOrderPage(orders[position]);
+                                              }
+                                          ));
+                                    }),
+                              );
+                            },
                             itemCount: orders.length,
                             separatorBuilder: (context, index) {
                               return Divider();

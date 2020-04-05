@@ -10,6 +10,7 @@ class Order{
   String province;
   String country;
   int orderId;
+  int tracking;
 
-  Order(this.orders, this.date, this.card, this.streetNo, this.street, this.city, this.province, this.country, this.orderId);
+  Order(this.orders, this.date, this.card, this.streetNo, this.street, this.city, this.province, this.country, this.orderId, this.tracking);
 }

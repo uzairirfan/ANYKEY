@@ -75,18 +75,19 @@ class Database {
       var res = await connection.query(query);
       for (final rw in res) {
         //find publisher name from email
-        games.add(new Game.short(
+        games.add(new Game.mid(
             appid: rw[2],
             name: rw[12],
             developer: rw[19],
             publisher: rw[18],
             averagePlaytime: rw[13],
             sellprice: (rw[16] * 1.0),
+            quantity: rw[11],
             price: (rw[15] * 1.0)));
       }
       var date = new DateTime.fromMillisecondsSinceEpoch(row[7] * 1000);
 //Order(this.orders, this.date, this.card, this.streetNo, this.street, this.city, this.country, this.orderId);
-      orders.add(Order(games, date, row[4], row[0], row[1], row[2], row[8], row[9], row[3]));
+      orders.add(Order(games, date, row[4], row[0], row[1], row[2], row[8], row[9], row[3], row[6]));
     }
     await connection.close();
     return orders;
