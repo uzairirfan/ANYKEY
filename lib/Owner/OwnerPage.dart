@@ -17,7 +17,7 @@ class _MyOwnerPageState extends State<MyOwnerPage> {
   final List<Widget> _children = [
     OwnerAddPage(),
     OwnerRemovePage(),
-    OwnerReportPage(Colors.green)
+    OwnerReportPage()
   ];
 
   void _incrementCounter() {
