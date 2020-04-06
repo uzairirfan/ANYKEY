@@ -120,7 +120,7 @@ quantity int NOT NULL
 create table amount_owed(
 pub_email character varying(60) NOT NULL,
 email character varying (30) NOT NULL,
-pub_name character varying(100) NOT NULL
+amount bigint not null
 );
 
 create table expense(
