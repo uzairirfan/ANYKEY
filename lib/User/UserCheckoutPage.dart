@@ -48,7 +48,7 @@ class UserCheckoutPage extends StatelessWidget {
                     getGames();
                     return Column(children: <Widget>[
                       new Container(
-                          height: 550,
+                          height: 600,
                           child: ListView.separated(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
