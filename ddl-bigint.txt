@@ -34,7 +34,7 @@ CREATE TABLE public.game (
     playtime BIGINT NOT NULL,
     ratings BIGINT NOT NULL,
     sell_price int NOT NULL,
-    buy_price int NOT NULL,
+    percentage smallint NOT NULL,
     available boolean NOT NULL
 );
 
