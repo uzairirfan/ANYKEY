@@ -240,7 +240,7 @@ ALTER TABLE ONLY public.admin_bank
     ADD CONSTRAINT admin_bank_card_fkey FOREIGN KEY (card) REFERENCES public.bank_info(card);
 
 ALTER TABLE ONLY public.user_bank
-    ADD CONSTRAINT user_bank_email_fkey FOREIGN KEY (email) REFERENCES public.admin(email);
+    ADD CONSTRAINT user_bank_email_fkey FOREIGN KEY (email) REFERENCES public.users(email);
 
 ALTER TABLE ONLY public.user_bank
     ADD CONSTRAINT user_bank_card_fkey FOREIGN KEY (card) REFERENCES public.bank_info(card);
