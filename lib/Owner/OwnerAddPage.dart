@@ -95,10 +95,10 @@ TextEditingController _controller = TextEditingController();
                         sellPrice = int.parse(value);
                         return null;
                       }
-                      return "Please Enter the Game's Selling Price.";
+                      return "Please Enter the Percentage of Earnings for the Publisher.";
                     },
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(labelText: "Sell Price")),
+                    decoration: InputDecoration(labelText: "Percentage")),
                 TextFormField(
                     validator: (value) {
                       if (value.isNotEmpty) {
