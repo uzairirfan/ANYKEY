@@ -93,7 +93,7 @@ class Game {
   String toOwnerString() {
     // TODO: implement toString
     return "Title: " + name + ", Developed by: " + developer + ", Published by: "
-        + publisher + ", Sell Price: \$" + price.toStringAsFixed(2) + ", Buy Price: \$" + sellprice.toStringAsFixed(2);
+        + publisher + ", Sell Price: \$" + price.toStringAsFixed(2) + ", Percentage: \$" + sellprice.toInt().toString() + "%";
   }
 
   String toCart() {
