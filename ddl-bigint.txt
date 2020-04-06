@@ -18,8 +18,8 @@ CREATE TABLE public.bank_info (
     street character varying(30) NOT NULL,
     city character varying(30) NOT NULL,
     first_name character varying(15) NOT NULL,
-    last_name character varying(20) NOT NULL
-    unique (card)
+    last_name character varying(20) NOT NULL,
+    unique(card)
 );
 
 CREATE TABLE public.developer (
@@ -36,7 +36,8 @@ CREATE TABLE public.game (
     ratings BIGINT NOT NULL,
     sell_price int NOT NULL,
     percentage smallint NOT NULL,
-    available boolean NOT NULL
+    available boolean NOT NULL,
+	unique(appid)
 );
 
 CREATE TABLE public.genre (
@@ -52,7 +53,8 @@ CREATE TABLE public.orders (
     street character varying(30) NOT NULL,
     city character varying(30) NOT NULL,
     tracking_no bigint NOT NULL,
-    orderdate bigint NOT NULL
+    orderdate bigint NOT NULL,
+	unique(order_id)
 );
 
 CREATE TABLE public.publisher (
@@ -78,7 +80,8 @@ CREATE TABLE public.users (
 CREATE TABLE public.warehouse (
     ware_id bigint NOT NULL,
     appid bigint NOT NULL,
-    quantity smallint NOT NULL
+    quantity smallint NOT NULL,
+	unique(ware_id)
 );
 
 CREATE TABLE public.game_order (
@@ -108,7 +111,7 @@ email character varying (30) NOT NULL,
 quantity int NOT NULL
 );
 
-create table amount_owned(
+create table amount_owed(
 pub_email character varying(60) NOT NULL,
 email character varying (30) NOT NULL,
 pub_name character varying(100) NOT NULL
@@ -162,7 +165,7 @@ ALTER TABLE ONLY public.amount_owed
     ADD CONSTRAINT amount_owed_pkey PRIMARY KEY (pub_email, email);
     
 ALTER TABLE ONLY public.game_gen
-    ADD CONSTRAINT game_gen_pkey PRIMARY KEY (appid, dev_id, pub_email);
+    ADD CONSTRAINT game_gen_pkey PRIMARY KEY (genre, appid);
     
 ALTER TABLE ONLY public.game_order
     ADD CONSTRAINT game_order_pkey PRIMARY KEY (appid, order_id);
