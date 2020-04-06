@@ -4,8 +4,8 @@ create function auto_buy() returns trigger as $$
 		if new.quantity < 10 then
 			update game_ware set quantity = quantity + (
 			select sum(quantity)
-			from orders
-			where orders.appid = new.appid)
+			from game_order
+			where game_order.appid = new.appid)
 			where game_ware.appid = new.appid;
 		end if;
 		return new;
