@@ -19,6 +19,7 @@ CREATE TABLE public.bank_info (
     city character varying(30) NOT NULL,
     first_name character varying(15) NOT NULL,
     last_name character varying(20) NOT NULL
+    unique (card)
 );
 
 CREATE TABLE public.developer (
