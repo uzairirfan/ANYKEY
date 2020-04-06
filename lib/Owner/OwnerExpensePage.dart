@@ -105,8 +105,9 @@ class OwnerExpensePageState extends State<OwnerExpensePage> {
   }
   Widget body(Map data) {
     return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    child: new Expanded(
+    child: new ListView(
+    //    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
 
           Container(
@@ -117,7 +118,7 @@ class OwnerExpensePageState extends State<OwnerExpensePage> {
             ),
           ),
         ],
-      ),
+      )),
     );
   }
 

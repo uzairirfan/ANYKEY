@@ -98,4 +98,4 @@ insert into expense values ('$email', ${devid}, ${DateTime.now().millisecondsSin
 select reason, amount from expense
 
 //get amount owed to each publisher
-select pub_name, amount from amount_owed natural join publisher
+select pub_name, amount from amount_owed right outer join publisher on amount_owed.pub_email = publisher.pub_email
