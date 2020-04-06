@@ -118,41 +118,66 @@ class _UserSearchPageState extends State<UserSearchPage> {
   child: Image.network('https://steamcdn-a.akamaihd.net/steam/apps/${post.appid}/header.jpg'),
 ),
         title: Text(post.title),
-        subtitle: Text(post.body),
+        //subtitle: Text(post.body),
           onTap: () {
-            return showDialog(
-              context: context,
-              barrierDismissible: false, // user must tap button for close dialog!
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('Would you like to add "${post.title}" to your cart?'),
-                  content:
-                  new TextField(
-                    autofocus: true,
-                    decoration: new InputDecoration(
-                        labelText: 'Quantity', hintText: 'eg. 1, 2, etc.'),
-                    onChanged: (value) {
-                      quantity = int.parse(value);
-                    },
-                  ),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: const Text('CANCEL'),
-                      onPressed: () {
-                        Navigator.of(context).pop();
+          return showDialog(
+            //
+         context: context,
+         barrierDismissible: false, // user must tap button for close dialog!
+         builder: (BuildContext context) {
+    return AlertDialog(
+            title: Text('Would you like to add "${post.title}" to your cart?'),
+            content: Text(post.body),
+            actions: <Widget>[
+            FlatButton(
+            child: const Text('CANCEL'),
+            onPressed: () {
+            Navigator.of(context).pop();
+            },
+            ),
+            FlatButton(
+            child: const Text('ACCEPT'),
+            onPressed: () {
+              showDialog(
+                context: context,
+                barrierDismissible: false, // user must tap button for close dialog!
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Would you like to add "${post.title}" to your cart?'),
+                    content:
+                    new TextField(
+                      autofocus: true,
+                      decoration: new InputDecoration(
+                          labelText: 'Quantity', hintText: 'eg. 1, 2, etc.'),
+                      onChanged: (value) {
+                        quantity = int.parse(value);
                       },
                     ),
-                    FlatButton(
-                      child: const Text('ACCEPT'),
-                      onPressed: () {
-                        Database().addToCart(post.appid, quantity);
-                        Navigator.of(context).pop();
-                      },
-                    )
-                  ],
-                );
-              },
+                    actions: <Widget>[
+                      FlatButton(
+                        child: const Text('CANCEL'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      FlatButton(
+                        child: const Text('ACCEPT'),
+                        onPressed: () {
+                          Database().addToCart(post.appid, quantity);
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+                        },
+                      )
+                    ],
+                  );
+                },
+              );
+            },
+            )
+            ],
             );
+          },
+      );
           }
       );},
         ),
