@@ -107,6 +107,19 @@ email character varying (30) NOT NULL,
 quantity int NOT NULL
 );
 
+create table amount_owned(
+pub_email character varying(60) NOT NULL,
+email character varying (30) NOT NULL,
+pub_name character varying(100) NOT NULL,
+);
+
+create table expense(
+email character varying (30) NOT NULL,
+id bigint not null,
+date big int not null,
+reason character varying(280),
+amount bigint not null
+);
 
 ALTER TABLE ONLY public.address
     ADD CONSTRAINT address_pkey PRIMARY KEY (city, street_no, street);
@@ -141,6 +154,9 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.warehouse
     ADD CONSTRAINT warehouse_pkey PRIMARY KEY (ware_id);
+    
+ALTER TABLE ONLY public.expense
+    ADD CONSTRAINT expense_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY public.bank_info
     ADD CONSTRAINT bank_info_street_no_street_city_fkey FOREIGN KEY (street_no, street, city) REFERENCES public.address(street_no, street, city);
@@ -207,3 +223,9 @@ ALTER TABLE ONLY public.user_cart
 
 ALTER TABLE ONLY public.user_cart
     ADD CONSTRAINT user_cart_appid_fkey FOREIGN KEY (appid) REFERENCES public.game(appid);
+
+ALTER TABLE ONLY public.amount_owned
+    ADD CONSTRAINT amount_owned_pub_email_fkey FOREIGN KEY (pub_email) REFERENCES public.publisher(pub_email);
+
+ALTER TABLE ONLY public.expense
+    ADD CONSTRAINT expense_email_fkey FOREIGN KEY (email) REFERENCES public.admin(email);
