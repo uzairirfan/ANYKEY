@@ -175,10 +175,13 @@ ALTER TABLE ONLY public.game_gen
 ALTER TABLE ONLY public.game_order
     ADD CONSTRAINT game_order_pkey PRIMARY KEY (appid, order_id);
     
+ALTER TABLE ONLY public.game_ware
+    ADD CONSTRAINT game_ware_pkey PRIMARY KEY (ware_id, appid);
+    
 ALTER TABLE ONLY public.admin_bank
     ADD CONSTRAINT admin_bank_pkey PRIMARY KEY(email, card);
     
- ALTER TABLE ONLY public.user_bank
+ALTER TABLE ONLY public.user_bank
     ADD CONSTRAINT user_bank_pkey PRIMARY KEY (email, card);
 
 ALTER TABLE ONLY public.bank_info
