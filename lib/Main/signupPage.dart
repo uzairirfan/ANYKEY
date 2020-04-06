@@ -76,6 +76,7 @@ class _RegisterPage extends State<RegisterPage> {
                     if (_formKey.currentState.validate()) {
                       if (owner) _type = "admin";
                       Database().saveUser(_email, _username, _password, _type);
+                      Navigator.pop;
                     }
                   },
                   child: Text('Sign Up!'),
