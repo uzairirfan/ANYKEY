@@ -7,6 +7,8 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'dart:async' show Future;
 import '../Helper/game.dart';
 import 'dart:math';
+import 'package:flutter/material.dart';
+
 
 class Database {
   var connection = new PostgreSQLConnection(
@@ -198,19 +200,32 @@ class Database {
     return games;
   }
 
-  void checkOut(Map<String, String> address, Map<String, String> bank) async{
+  Future<bool> checkOut(Map<String, String> address, Map<String, String> bank, context) async{
     await connection.open();
     //address(street_no, street, city, province, country)
     print (address);
-    var query = "insert into address values ('${address['Street Number']}', '${address['Street']}', '${address['City']}', '${address['Province']}', '${address['Country']}')";
+    var query;
+    //game_order(appid, order_id, quantity)
+    List<Game> cart = await getCart(true);
+    for (Game g in cart){
+      query = "select * from game_ware where appid = ${g.appid}";
+      var results = await connection.query(query);
+      for (final row in results) {
+        if (g.quantity > row[2]) {
+          print(g.name);
+          return false;
+        }
+      }
+    }
+    query = "insert into address values ('${address['Street Number']}', '${address['Street']}', '${address['City']}', '${address['Province']}', '${address['Country']}') on conflict do nothing";
     print(query);
     await connection.query(query);
     //bank_info(card, email, street_no, street, city, first_name, last_name)
-    query = "insert into bank_info values ('${bank['Card']}', '$email', '${address['Street Number']}', '${address['Street']}', '${address['City']}', '${bank['First']}', '${bank['Last']}')";
+    query = "insert into bank_info values ('${bank['Card']}', '$email', '${address['Street Number']}', '${address['Street']}', '${address['City']}', '${bank['First']}', '${bank['Last']}') on conflict do nothing";
     print (query);
     await connection.query(query);
     //user_bank(email, card)
-    query = "insert into user_bank values ('$email', '${bank['Card']}')";
+    query = "insert into user_bank values ('$email', '${bank['Card']}') on conflict do nothing";
     print (query);
     await connection.query(query);
     //orders(order_id, card, email, street_no, street, city, date, tracking_no)
@@ -220,17 +235,67 @@ class Database {
     query = "insert into orders values ($orderId, '${bank['Card']}', '$email', '${address['Street Number']}', '${address['Street']}', '${address['City']}', $orderId,  ${DateTime.now().millisecondsSinceEpoch})";
     print (query);
     await connection.query(query);
-    //game_order(appid, order_id, quantity)
-    List<Game> cart = await getCart(true);
     for (Game g in cart){
       query = "insert into game_order values (${g.appid}, $orderId, ${g.quantity})";
       print (query);
       await connection.query(query);
+      int x = ((g.quantity*g.price)*(g.sellprice/100)).toInt();
+      query = "select pub_email from publisher where pub_name = '${g.publisher}' ";
+      String pub = "none";
+      var results = await connection.query(query);
+      for (final row in results) pub = row[0];
+      query = "INSERT INTO amount_owed VALUES ('$pub', '$email', $x) ON CONFLICT (pub_email) DO UPDATE SET amount = excluded.amount + $x";
+      print(query);
+      await connection.query(query);
+      query = "update game_ware set quantity = quantity-${g.quantity} where appid = ${g.appid}";
+      print(query);
+      await connection.query(query);
     }
-    query ="delete from user_cart where email = $email}";
+    query ="delete from user_cart where email = '$email'";
     print (query);
     await connection.query(query);
     await connection.close();
+    return true;
+  }
+
+  Future<Map<String, int>> getPubExpenses() async{
+    await connection.open();
+
+    Map<String, int> data = new Map<String, int>();
+    String query =  "select pub_name, amount from amount_owed natural join publisher";
+    var results = await connection.query(query);
+    for (final row in results) {
+      data['${row[0]}'] = row[1];
+    }
+    await connection.close();
+    return data;
+
+  }
+
+  void insertExpense(Map) async{
+    await connection.open();
+    //email, id, date, reason. amount
+    String id = (new DateTime.now().millisecondsSinceEpoch).toString();
+    id = id.substring(id.length - 10);
+    int devid = int.parse(id);
+    String query =  "insert into expense values ('$email', ${devid}, ${DateTime.now().millisecondsSinceEpoch}, '${Map['Reason']}', ${Map['Amount']})";
+    await connection.query(query);
+    await connection.close();
+    return;
+  }
+
+  Future<Map<String, int>> getExpenses() async{
+    await connection.open();
+
+    Map<String, int> data = new Map<String, int>();
+    String query =  "select reason, amount from expense";
+    var results = await connection.query(query);
+    for (final row in results) {
+      data['${row[0]}'] = row[1];
+    }
+    await connection.close();
+    return data;
+
   }
 
   Future<Map<String, List<int>>> getGenreData() async{

@@ -1,4 +1,5 @@
 import 'package:bookeep/Owner/OwnerAddPage.dart';
+import 'package:bookeep/Owner/OwnerExpensePage.dart';
 import 'package:bookeep/Owner/OwnerRemovePage.dart';
 import 'package:bookeep/Owner/OwnerReportPage.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,8 @@ class _MyOwnerPageState extends State<MyOwnerPage> {
   final List<Widget> _children = [
     OwnerAddPage(),
     OwnerRemovePage(),
-    OwnerReportPage()
+    OwnerReportPage(),
+    OwnerExpensePage(),
   ];
 
   void _incrementCounter() {
@@ -55,6 +57,10 @@ class _MyOwnerPageState extends State<MyOwnerPage> {
           new BottomNavigationBarItem(
             icon: Icon(Icons.timeline),
             title: Text('Report'),
+          ),
+          new BottomNavigationBarItem(
+            icon: Icon(Icons.attach_money),
+            title: Text('Expenses'),
           ),
         ],
       ),
