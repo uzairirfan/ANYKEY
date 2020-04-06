@@ -90,3 +90,12 @@ from game_order natural join game natural join publisher group by pub_name
 //finding stats for diff developers
 select sum(quantity)::smallint, dev_name, sum(sell_price), avbg(percentage)::smallint
 from game_order natural join game natural join developer group by dev_name
+
+//insert new expense
+insert into expense values ('$email', ${devid}, ${DateTime.now().millisecondsSinceEpoch}, '${Map['Reason']}', ${Map['Amount']})
+
+//get expenses
+select reason, amount from expense
+
+//get amount owed to each publisher
+select pub_name, amount from amount_owed natural join publisher
