@@ -262,10 +262,11 @@ class Database {
     await connection.open();
 
     Map<String, int> data = new Map<String, int>();
-    String query =  "select pub_name, amount from amount_owed natural join publisher";
+    String query =  "select pub_name, amount from amount_owed right outer join publisher on amount_owed.pub_email = publisher.pub_email";
     var results = await connection.query(query);
     for (final row in results) {
-      data['${row[0]}'] = row[1];
+      if (row[1] != null) data['${row[0]}'] = row[1];
+      else data['${row[0]}'] = 0;
     }
     await connection.close();
     return data;
