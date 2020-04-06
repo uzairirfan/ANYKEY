@@ -379,8 +379,8 @@ class Database {
         }
       }
       query =
-          "insert into game values ('${gamelist.games[i].appid}', ${devid}, '${pub}','${gamelist.games[i].name}',${gamelist.games[i].averagePlaytime}"
-          ",${gamelist.games[i].positiveRatings},${gamelist.games[i].price}, ${Random().nextInt(50)}, true) on conflict do nothing";
+          "insert into game values ('${gamelist.games[i].appid}', $devid, '${pub}','${gamelist.games[i].name}',${gamelist.games[i].averagePlaytime}"
+          ",${gamelist.games[i].positiveRatings},${gamelist.games[i].price}, ${Random().nextInt(35)}, true) on conflict do nothing";
 //      print(query);
       await connection.query(query);
 
@@ -397,8 +397,11 @@ class Database {
         await connection.query(query);
       }
 
+      query = "insert into warehouse values(123456789, 'Game and Ship') on conflict do nothing";
+      await connection.query(query);
+
       query =
-          "insert into warehouse values ('123456789', '${gamelist.games[i].appid}', 10) on conflict do nothing";
+          "insert into game_ware values ('123456789', '${gamelist.games[i].appid}', 10) on conflict do nothing";
       await connection.query(query);
 
       print("added number " + i.toString());

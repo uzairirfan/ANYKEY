@@ -76,12 +76,6 @@ class _RegisterPage extends State<RegisterPage> {
                     if (_formKey.currentState.validate()) {
                       if (owner) _type = "admin";
                       Database().saveUser(_email, _username, _password, _type);
-                      Navigator.of(context).push(
-                      MaterialPageRoute(
-                      builder: (context){
-                      return AddressForm();
-                      }
-                      ));
                     }
                   },
                   child: Text('Sign Up!'),

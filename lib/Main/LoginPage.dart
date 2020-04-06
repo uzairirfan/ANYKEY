@@ -118,7 +118,12 @@ class _LoginPageState extends State<LoginPage> {
                                   title: "Sign Up",
                                 )),
                       );
-                    })
+                    }),
+                    // RaisedButton(
+                    // child: Text("ADD DATA"),
+                    // onPressed: () {
+                    //   Database().testing();
+                    // })
               ],
             )),
       ),
