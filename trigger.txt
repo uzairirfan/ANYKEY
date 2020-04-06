@@ -16,6 +16,6 @@ create function auto_buy() returns trigger as $$
 
 create trigger buy_from_publisher
 	after update
-	on warehouse
+	on game_ware
 	for each row
 	execute procedure auto_buy()
