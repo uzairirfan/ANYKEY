@@ -115,11 +115,32 @@ class BankInfoState extends State {
     );
   }
 
-  void _submitForm() {
+  void _submitForm() async{
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
         print(_formData);
-        Database().checkOut(addressForm, _formData);
+        bool done = await Database().checkOut(addressForm, _formData,context);
+        if (!done){
+          return showDialog<void>(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Not in stock'),
+                content: const Text('One or more of the item\'s in your cart are out of stock'),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('Ok'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        }
         Navigator.pop(context);
         Navigator.pop(context);
       }
