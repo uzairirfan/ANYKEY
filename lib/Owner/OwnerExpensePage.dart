@@ -80,6 +80,27 @@ class OwnerExpensePageState extends State<OwnerExpensePage> {
                 }
               },
             ),
+    RaisedButton(
+      onPressed: () {
+        showDialog(
+            context: context,
+            builder: (BuildContext context){
+              return AlertDialog(
+                title: Text("Would you like to pay the publishers?"),
+                  actions: <Widget>[
+              FlatButton(
+              child: const Text('PAY'),
+              onPressed: () {
+                Database().payPublisher();
+              Navigator.of(context).pop();
+              },
+              ),]
+              );
+            }
+        );
+    },
+    child: Text('PAY PUBLISHERS'),
+    ),
    ]) );
   }
   Widget body(Map data) {

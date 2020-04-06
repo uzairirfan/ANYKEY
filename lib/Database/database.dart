@@ -323,6 +323,14 @@ class Database {
     return genreData;
   }
 
+
+  void payPublisher() async {
+    await connection.open();
+    var query = "delete from amount_owed";
+    await connection.query(query);
+    await connection.close();
+  }
+
   Future<Map<String, List<int>>> getPublisherData() async{
     await connection.open();
     Map<String, List<int>> genreData = new Map<String, List<int>>();
