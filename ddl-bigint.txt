@@ -86,8 +86,7 @@ CREATE TABLE public.warehouse (
 CREATE TABLE public.game_ware (
     ware_id bigint NOT NULL,
     appid bigint not null,
-    quantity bigint not null,
-	unique(ware_id)
+    quantity bigint not null
 );
 
 CREATE TABLE public.game_order (
