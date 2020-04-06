@@ -76,6 +76,7 @@ class UserCheckoutPage extends StatelessWidget {
                                           title: Text(
                                               'Would you like to change the quantity for ${games[position].name}?'),
                                           content: new TextField(
+                                            keyboardType: TextInputType.number,
                                             autofocus: true,
                                             decoration: new InputDecoration(
                                                 labelText: 'Quantity',

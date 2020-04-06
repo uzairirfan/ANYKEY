@@ -146,6 +146,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
                     title: Text('Would you like to add "${post.title}" to your cart?'),
                     content:
                     new TextField(
+                      keyboardType: TextInputType.number,
                       autofocus: true,
                       decoration: new InputDecoration(
                           labelText: 'Quantity', hintText: 'eg. 1, 2, etc.'),

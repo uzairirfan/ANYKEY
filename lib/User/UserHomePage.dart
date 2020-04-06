@@ -75,6 +75,7 @@ class UserHomePage extends StatelessWidget {
                                                           title: Text('Would you like to add "${i.name}" to your cart?'),
                                                           content:
                                                           new TextField(
+                                                            keyboardType: TextInputType.number,
                                                             autofocus: true,
                                                             decoration: new InputDecoration(
                                                                 labelText: 'Quantity', hintText: 'eg. 1, 2, etc.'),
@@ -131,70 +132,6 @@ class UserHomePage extends StatelessWidget {
                             enlargeCenterPage: true,
                             scrollDirection: Axis.horizontal,
                           )
-                              // child: ListView.separated(
-                              //   scrollDirection: Axis.vertical,
-                              //   shrinkWrap: true,
-                              //   itemBuilder: (context, position) {
-                              //     return ListTile(
-                              //         leading: ConstrainedBox(
-                              //           constraints: BoxConstraints(
-                              //             minWidth: 44,
-                              //             minHeight: 44,
-                              //             maxWidth: 64,
-                              //             maxHeight: 64,
-                              //           ),
-                              //           child: Image.network(
-                              //               'https://steamcdn-a.akamaihd.net/steam/apps/${featured[position].appid}/header.jpg'),
-                              //         ),
-                              //         title: Text(featured[position].name),
-                              //         subtitle:
-                              //             Text(featured[position].toString()),
-                              //         onTap: () {
-                              //           return showDialog(
-                              //             context: context,
-                              //             barrierDismissible:
-                              //                 false, // user must tap button for close dialog!
-                              //             builder: (BuildContext context) {
-                              //               return AlertDialog(
-                              //                 title: Text(
-                              //                     'Would you like to add "${featured[position].name}" to your cart?'),
-                              //                 content: new TextField(
-                              //                   autofocus: true,
-                              //                   decoration: new InputDecoration(
-                              //                       labelText: 'Quantity',
-                              //                       hintText: 'eg. 1, 2, etc.'),
-                              //                   onChanged: (value) {
-                              //                     quantity = int.parse(value);
-                              //                   },
-                              //                 ),
-                              //                 actions: <Widget>[
-                              //                   FlatButton(
-                              //                     child: const Text('CANCEL'),
-                              //                     onPressed: () {
-                              //                       Navigator.of(context).pop();
-                              //                     },
-                              //                   ),
-                              //                   FlatButton(
-                              //                     child: const Text('ACCEPT'),
-                              //                     onPressed: () {
-                              //                       Database().addToCart(
-                              //                           featured[position]
-                              //                               .appid,
-                              //                           quantity);
-                              //                       Navigator.of(context).pop();
-                              //                     },
-                              //                   )
-                              //                 ],
-                              //               );
-                              //             },
-                              //           );
-                              //         });
-                              //   },
-                              //   itemCount: featured.length,
-                              //   separatorBuilder: (context, index) {
-                              //     return Divider();
-                              //   },
-                              // )
                               ),
                           Padding(
                               padding: EdgeInsets.all(20.0),
@@ -248,6 +185,7 @@ class UserHomePage extends StatelessWidget {
                                                       title: Text('Would you like to add "${games[position].name}" to your cart?'),
                                                       content:
                                                       new TextField(
+                                                        keyboardType: TextInputType.number,
                                                         autofocus: true,
                                                         decoration: new InputDecoration(
                                                             labelText: 'Quantity', hintText: 'eg. 1, 2, etc.'),
