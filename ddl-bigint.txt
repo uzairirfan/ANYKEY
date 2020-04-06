@@ -79,8 +79,14 @@ CREATE TABLE public.users (
 
 CREATE TABLE public.warehouse (
     ware_id bigint NOT NULL,
-    appid bigint NOT NULL,
-    quantity smallint NOT NULL,
+    name character varying(30) not null,
+	unique(ware_id)
+);
+
+CREATE TABLE public.game_ware (
+    ware_id bigint NOT NULL,
+    appid bigint not null,
+    quantity bigint not null,
 	unique(ware_id)
 );
 
@@ -156,7 +162,7 @@ ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (email);
 
 ALTER TABLE ONLY public.warehouse
-    ADD CONSTRAINT warehouse_pkey PRIMARY KEY (ware_id, appid);
+    ADD CONSTRAINT warehouse_pkey PRIMARY KEY (ware_id);
     
 ALTER TABLE ONLY public.expense
     ADD CONSTRAINT expense_pkey PRIMARY KEY (id, email);
@@ -203,8 +209,11 @@ ALTER TABLE ONLY public.restock_order
 ALTER TABLE ONLY public.restock_order
     ADD CONSTRAINT restock_order_email_fkey FOREIGN KEY (email) REFERENCES public.admin(email);
 
-ALTER TABLE ONLY public.warehouse
-    ADD CONSTRAINT warehouse_appid_fkey FOREIGN KEY (appid) REFERENCES public.game(appid);
+ALTER TABLE ONLY public.game_ware
+    ADD CONSTRAINT game_ware_appid_fkey FOREIGN KEY (appid) REFERENCES public.game(appid);
+    
+ALTER TABLE ONLY public.game_ware
+    ADD CONSTRAINT game_ware_ware_id_fkey FOREIGN KEY (ware_id) REFERENCES public.warehouse(ware_id);
 
 ALTER TABLE ONLY public.game
     ADD CONSTRAINT game_dev_id_fkey FOREIGN KEY (dev_id) REFERENCES public.developer(dev_id);
