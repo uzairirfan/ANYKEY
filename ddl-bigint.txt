@@ -110,13 +110,13 @@ quantity int NOT NULL
 create table amount_owned(
 pub_email character varying(60) NOT NULL,
 email character varying (30) NOT NULL,
-pub_name character varying(100) NOT NULL,
+pub_name character varying(100) NOT NULL
 );
 
 create table expense(
 email character varying (30) NOT NULL,
 id bigint not null,
-date big int not null,
+date bigint not null,
 reason character varying(280),
 amount bigint not null
 );
