@@ -19,7 +19,8 @@ class _OwnerReportPageState extends State<OwnerReportPage> {
     Map<String, List<int>> genreData = await Database().getGenreData();
     Map<String, List<int>> devData = await Database().getDeveloperData();
     Map<String, List<int>> pubData = await Database().getPublisherData();
-
+    print(genreData);
+    print(pubData);
     List<GraphData> soldGenre = [];
     List<GraphData> salesGenre = [];
     List<GraphData> expenseGenre = [];

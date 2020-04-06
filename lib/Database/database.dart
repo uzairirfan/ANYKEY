@@ -237,50 +237,60 @@ class Database {
     await connection.open();
     Map<String, List<int>> genreData = new Map<String, List<int>>();
     String query ="select sum(quantity)::smallint, genre, sum(sell_price), "
-        "sum(buy_price) from game_order natural join game natural join game_gen "
+        "avg(percentage)::smallint from game_order natural join game natural join game_gen "
         "group by genre";
     var results = await connection.query(query);
     for (final row in results) {
       List<int> i = new List<int>();
+      print (row[0]);
+      print (row[1]);
+      print (row[2]);
+      print (row[3]);
+
       i.add(row[0]);
       i.add(row[2]);
-      i.add(row[3]);
-
+      int x = (row[2]*(row[3]/100)).toInt();
+      i.add(x);
       genreData['${row[1]}'] = i;
     }
     await connection.close();
+    print (genreData);
     return genreData;
   }
 
   Future<Map<String, List<int>>> getPublisherData() async{
     await connection.open();
     Map<String, List<int>> genreData = new Map<String, List<int>>();
-    String query ="select sum(quantity)::smallint, pub_name, sum(sell_price), sum(buy_price) from game_order natural join game natural join publisher group by pub_name";
+    String query ="select sum(quantity)::smallint, pub_name, sum(sell_price), avg(percentage)::smallint from game_order natural join game natural join publisher group by pub_name";
     var results = await connection.query(query);
     for (final row in results) {
       List<int> i = new List<int>();
       i.add(row[0]);
       i.add(row[2]);
-      i.add(row[3]);
+      int x = (row[2]*(row[3]/100)).toInt();
+      i.add(x);
       genreData['${row[1]}'] = i;
     }
     await connection.close();
+    print (genreData);
     return genreData;
   }
 
   Future<Map<String, List<int>>> getDeveloperData() async{
     await connection.open();
     Map<String, List<int>> genreData = new Map<String, List<int>>();
-    String query ="select sum(quantity)::smallint, dev_name, sum(sell_price), sum(buy_price) from game_order natural join game natural join developer group by dev_name";
+    String query ="select sum(quantity)::smallint, dev_name, sum(sell_price), avg(percentage)::smallint from game_order natural join game natural join developer group by dev_name";
     var results = await connection.query(query);
     for (final row in results) {
       List<int> i = new List<int>();
       i.add(row[0]);
       i.add(row[2]);
-      i.add(row[3]);
+      int x = (row[2]*(row[3]/100)).toInt();
+      i.add(x);
       genreData['${row[1]}'] = i;
     }
     await connection.close();
+    print (genreData);
     return genreData;
   }
 
