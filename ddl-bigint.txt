@@ -126,37 +126,51 @@ ALTER TABLE ONLY public.address
 
 ALTER TABLE ONLY public.admin
     ADD CONSTRAINT admin_pkey PRIMARY KEY (email);
-
-
+    
 ALTER TABLE ONLY public.bank_info
-    ADD CONSTRAINT bank_info_pkey PRIMARY KEY (card);
+    ADD CONSTRAINT bank_info_pkey PRIMARY KEY (card, email, street_no, street, city);
 
 ALTER TABLE ONLY public.developer
     ADD CONSTRAINT developer_pkey PRIMARY KEY (dev_id);
+    
+ALTER TABLE ONLY public.publisher
+    ADD CONSTRAINT publisher_pkey PRIMARY KEY (pub_email);
 
 ALTER TABLE ONLY public.game
-    ADD CONSTRAINT game_pkey PRIMARY KEY (appid);
+    ADD CONSTRAINT game_pkey PRIMARY KEY (appid, dev_id, pub_email);
 
 ALTER TABLE ONLY public.genre
     ADD CONSTRAINT genre_pkey PRIMARY KEY (genre);
 
 ALTER TABLE ONLY public.orders
-    ADD CONSTRAINT orders_pkey PRIMARY KEY (order_id);
-
-ALTER TABLE ONLY public.publisher
-    ADD CONSTRAINT publisher_pkey PRIMARY KEY (pub_email);
+    ADD CONSTRAINT orders_pkey PRIMARY KEY (order_id, card, email, street_no, street, city);
 
 ALTER TABLE ONLY public.restock_order
-    ADD CONSTRAINT restock_order_pkey PRIMARY KEY (order_id);
+    ADD CONSTRAINT restock_order_pkey PRIMARY KEY (order_id, pub_email, ware_id, email, appid);
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (email);
 
 ALTER TABLE ONLY public.warehouse
-    ADD CONSTRAINT warehouse_pkey PRIMARY KEY (ware_id);
+    ADD CONSTRAINT warehouse_pkey PRIMARY KEY (ware_id, appid);
     
 ALTER TABLE ONLY public.expense
-    ADD CONSTRAINT expense_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT expense_pkey PRIMARY KEY (id, email);
+    
+ALTER TABLE ONLY public.amount_owed
+    ADD CONSTRAINT amount_owed_pkey PRIMARY KEY (pub_email, email);
+    
+ALTER TABLE ONLY public.game_gen
+    ADD CONSTRAINT game_gen_pkey PRIMARY KEY (appid, dev_id, pub_email);
+    
+ALTER TABLE ONLY public.game_order
+    ADD CONSTRAINT game_order_pkey PRIMARY KEY (appid, order_id);
+    
+ALTER TABLE ONLY public.admin_bank
+    ADD CONSTRAINT admin_bank_pkey PRIMARY KEY(email, card);
+    
+ ALTER TABLE ONLY public.user_bank
+    ADD CONSTRAINT user_bank_pkey PRIMARY KEY (email, card);
 
 ALTER TABLE ONLY public.bank_info
     ADD CONSTRAINT bank_info_street_no_street_city_fkey FOREIGN KEY (street_no, street, city) REFERENCES public.address(street_no, street, city);
@@ -224,7 +238,7 @@ ALTER TABLE ONLY public.user_cart
 ALTER TABLE ONLY public.user_cart
     ADD CONSTRAINT user_cart_appid_fkey FOREIGN KEY (appid) REFERENCES public.game(appid);
 
-ALTER TABLE ONLY public.amount_owned
+ALTER TABLE ONLY public.amount_owed
     ADD CONSTRAINT amount_owned_pub_email_fkey FOREIGN KEY (pub_email) REFERENCES public.publisher(pub_email);
 
 ALTER TABLE ONLY public.expense
