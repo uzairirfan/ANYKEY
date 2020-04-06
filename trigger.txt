@@ -36,7 +36,7 @@ create function sell_stock() returns trigger as $$
 
 
 create trigger sell_stock_warhouse
-	after update
+	after insert
 	on game_order
 	for each row
 	execute procedure sell_stock()
