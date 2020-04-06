@@ -119,11 +119,11 @@ class _LoginPageState extends State<LoginPage> {
                                 )),
                       );
                     }),
-                    // RaisedButton(
-                    // child: Text("ADD DATA"),
-                    // onPressed: () {
-                    //   Database().testing();
-                    // })
+                    RaisedButton(
+                    child: Text("ADD DATA"),
+                    onPressed: () {
+                      Database().testing();
+                    })
               ],
             )),
       ),

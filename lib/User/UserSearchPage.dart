@@ -94,7 +94,7 @@ class _UserSearchPageState extends State<UserSearchPage> {
             child: CircularProgressIndicator(),
           ),
           placeHolder: Center(
-            child: Text("Placeholder"),
+            child: Text(""),
           ),
           onError: (error) {
             return Center(
