@@ -10,5 +10,5 @@ create trigger buy_from_publisher
 create trigger sell_stock_warhouse
 	after insert
 	on game_order
-	for each row
+	for each statement
 	execute procedure sell_stock()
