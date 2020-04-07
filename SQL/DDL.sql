@@ -1,3 +1,5 @@
+/*This DDL creates all the tables and assigns the primary keys and foreign keys
+The tables it creates are address, admin, bank_info, developer, game, genre, orders, publisher, restock_order, users, warehouse, game_ware, game_order, admin_bank, user_bank, game_gen, user_cart, amount_owed and expense*/
 CREATE TABLE public.address (
     street_no SMALLINT NOT NULL,
     street character varying(30) NOT NULL,
