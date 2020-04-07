@@ -1,3 +1,5 @@
+--This function is for a trigger to automatically buy more games and insert the restock order into  the restock_order relation
+--
 create function auto_buy() returns trigger as $$
 		#variable_conflict use_column
 	begin
