@@ -59,7 +59,7 @@ class SpecificOrderPage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                        ListTile(
-                        leading: Icon(Icons.train, size: 70),
+                        leading: Icon(Icons.local_shipping, size: 70),
                         title: Text("$x",
                             style: TextStyle(color: Colors.black)),
                         subtitle: Text('CURRENTLY ON ROUTE', style: TextStyle(color: Colors.black)),

@@ -12,12 +12,11 @@ class OwnerAddPage extends StatelessWidget {
   String publisher;
   String title;
   String genre;
-  int buyPrice;
+  int percentage;
   int sellPrice;
   int quantity;
   int ratings;
   int playtime;
-TextEditingController _controller = TextEditingController();
 
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -82,23 +81,23 @@ TextEditingController _controller = TextEditingController();
                 TextFormField(
                     validator: (value) {
                       if (value.isNotEmpty) {
-                        buyPrice = int.parse(value);
+                        percentage = int.parse(value);
                         return null;
                       }
-                      return "Please Enter the Game's Buy Price.";
+                      return "Please Enter the Percentage of Earnings for the Publisher.";
                     },
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(labelText: "Buy Price")),
+                    decoration: InputDecoration(labelText: "Royalties")),
                 TextFormField(
                     validator: (value) {
                       if (value.isNotEmpty) {
                         sellPrice = int.parse(value);
                         return null;
                       }
-                      return "Please Enter the Percentage of Earnings for the Publisher.";
+                      return "Please Enter the Game's Selling Price.";
                     },
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(labelText: "Percentage")),
+                    decoration: InputDecoration(labelText: "Sell Price")),
                 TextFormField(
                     validator: (value) {
                       if (value.isNotEmpty) {
@@ -135,7 +134,7 @@ TextEditingController _controller = TextEditingController();
                     onPressed: () async {
                       // save the fields..
                       if (_formKey.currentState.validate()) {
-                        Database().ownerAdd(appid, developer, publisher, title, genre, buyPrice, sellPrice, quantity, ratings, playtime);
+                        Database().ownerAdd(appid, developer, publisher, title, genre, percentage, sellPrice, quantity, ratings, playtime);
                         Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
