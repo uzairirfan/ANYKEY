@@ -183,6 +183,9 @@ ALTER TABLE ONLY public.admin_bank
     
 ALTER TABLE ONLY public.user_bank
     ADD CONSTRAINT user_bank_pkey PRIMARY KEY (email, card);
+   
+ALTER TABLE ONLY public.user_cart
+    ADD CONSTRAINT user_bank_pkey PRIMARY KEY (appid, email);
 
 ALTER TABLE ONLY public.bank_info
     ADD CONSTRAINT bank_info_street_no_street_city_fkey FOREIGN KEY (street_no, street, city) REFERENCES public.address(street_no, street, city);

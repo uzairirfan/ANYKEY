@@ -185,10 +185,10 @@ class _OwnerReportPageState extends State<OwnerReportPage> {
                   indicatorColor: Theme.of(context).accentColor,
                   tabs: [
                     Tab(
-                      icon: Icon(Icons.book),
+                      icon: Icon(Icons.list),
                     ),
-                    Tab(icon: Icon(Icons.check)),
-                    Tab(icon: Icon(Icons.insert_chart)),
+                    Tab(icon: Icon(Icons.create)),
+                    Tab(icon: Icon(Icons.business_center)),
                   ],
                 ),
               ])),

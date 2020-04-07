@@ -111,3 +111,4 @@ select reason, amount from expense
 
 -- getting the amount owed to each publisher
 select pub_name, amount fcrom amount_owed right outer join publisher on amount_owed.pub_email = publisher.pub_email
+

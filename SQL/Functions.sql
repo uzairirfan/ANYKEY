@@ -1,5 +1,5 @@
 create function auto_buy() returns trigger as $$
-	#variable_conflict use_column
+		#variable_conflict use_column
 	begin
 		if new.quantity < 10 then
 			update game_ware set quantity = quantity + (
@@ -7,9 +7,20 @@ create function auto_buy() returns trigger as $$
 			from game_order
 			where game_order.appid = new.appid)
 			where game_ware.appid = new.appid;
+		insert into restock_order
+		values(
+			(SELECT Cast(random()*(999999-111111)+1111111 as bigint)),
+			(select pub_email from game where new.appid = game.appid),
+			new.ware_id,
+			'owner@hotmail.com',
+			new.appid,
+			(select sum(quantity) from game_order where game_order.appid = new.appid),
+			(select cast(extract(epoch from current_date) as integer))
+			  );
 		end if;
 		return new;
 	end;
+	
 	$$ language plpgsql;
 
 
