@@ -24,7 +24,7 @@ class OwnerRemovePage extends StatelessWidget {
     getGames();
     return new Scaffold(
         appBar: AppBar(
-          title: Text('CART',
+          title: Text('REMOVE',
             style: TextStyle(
               color: Colors.purple,
               fontSize: 16.0 ,

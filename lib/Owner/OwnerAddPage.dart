@@ -51,7 +51,7 @@ TextEditingController _controller = TextEditingController();
                       }
                       return "Please Enter the Game's Developer(s).";
                     },
-                    decoration: InputDecoration(labelText: "Game Developer (if multiple separete with ;)")),
+                    decoration: InputDecoration(labelText: "Game Developer (if multiple separate with ;)")),
                 TextFormField(
                     validator: (value) {
                       if (value.isNotEmpty) {

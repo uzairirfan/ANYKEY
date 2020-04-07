@@ -261,7 +261,7 @@ class _OwnerReportPageState extends State<OwnerReportPage> {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          'Time spent on daily tasks',
+                          'Amount Sold, Sales and Expenditures for Developers',
                           style: TextStyle(
                               fontSize: 24.0, fontWeight: FontWeight.bold),
                         ),
@@ -322,7 +322,7 @@ class _OwnerReportPageState extends State<OwnerReportPage> {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          'Sales for the first 5 years',
+                          'Amount Sold, Sales and Expenditures for Publishers',
                           style: TextStyle(
                               fontSize: 24.0, fontWeight: FontWeight.bold),
                         ),
