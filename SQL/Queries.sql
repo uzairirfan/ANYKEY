@@ -1,13 +1,13 @@
-// adding to cart
+--adding to cart
 insert into user_cart values ($appid, '$email', $quantity)
 
-// getting all games
+--getting all games
 select * from game natural join publisher natural join developer where available = true
 
 --removing from available games
 update game set available = false where appid = ${appid}
  
-//get items in user's cart
+--get items in user's cart
 select * from user_cart natural join game natural join publisher natural join developer where email = '$email'
   
 //search for games by title
