@@ -43,7 +43,10 @@ insert into genre values ('$g') on conflict do nothing
 insert into game_gen values ('$g', '${gamelist.games[i].appid}') on conflict do nothing
 
 -- inserting game into warehouse (there's only one warehouse)
-insert into warehouse values ('123456789', '${gamelist.games[i].appid}', 10) on conflict do nothing
+insert into warehouse values ('123456789', 'Game and Ship') on conflict do nothing
+
+--inserting a game into the game_ware relation
+insert into game_ware values ('123456789', '$appid', 10) on conflict do nothing
       
 -- for updating an item in the cart's quantity
 -- if quantity = 0
