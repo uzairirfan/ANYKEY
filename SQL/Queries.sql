@@ -4,7 +4,7 @@ insert into user_cart values ($appid, '$email', $quantity)
 // getting all games
 select * from game natural join publisher natural join developer where available = true
 
-//removing from available games
+--removing from available games
 update game set available = false where appid = ${appid}
  
 //get items in user's cart
