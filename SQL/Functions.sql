@@ -12,14 +12,15 @@ create function auto_buy() returns trigger as $$
 			(SELECT Cast(random()*(999999-111111)+1111111 as bigint)),
 			(select pub_email from game where new.appid = game.appid),
 			new.ware_id,
-			'owner@gmail.com',
+			'owner@hotmail.com',
 			new.appid,
-			(select quantity from game_ware where game_ware.appid = new.appid),
+			(select sum(quantity) from game_order where game_order.appid = new.appid),
 			(select cast(extract(epoch from current_date) as integer))
 			  );
 		end if;
 		return new;
 	end;
+	
 	$$ language plpgsql;
 
 
