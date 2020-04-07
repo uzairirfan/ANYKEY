@@ -1,5 +1,6 @@
 --This function is for a trigger to automatically buy more games and insert the restock order into  the restock_order relation
---
+--If the quantity is less than 10, it will add all the quantities of the game sold and add that back to quantity
+--It will also add this order to restock_order relation
 create function auto_buy() returns trigger as $$
 		#variable_conflict use_column
 	begin
@@ -26,7 +27,8 @@ create function auto_buy() returns trigger as $$
 	$$ language plpgsql;
 
 
-
+--This function is for a trigger to automatically remove games from stock
+--It subtracts quantity with the new quantity
 create function sell_stock() returns trigger as $$
 	#variable_conflict use_column
 	begin
